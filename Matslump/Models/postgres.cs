@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using Npgsql;
+﻿using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -13,7 +12,7 @@ namespace Matslump.Models
         private NpgsqlCommand _cmd;
         private NpgsqlDataReader _dr;
         private DataTable _table;
-        private MySqlCommand cmd;
+      
 
         public static List<NpgsqlParameter> list { get; set; }
         public postgres()

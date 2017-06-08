@@ -15,6 +15,7 @@ namespace Matslump.Models
 
         public List<Receptmodels> Slumplist(int user_id, DateTime date)
         {
+
             date =datefixer(date);
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
@@ -84,10 +85,33 @@ namespace Matslump.Models
             // Return the week of our adjusted day
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
-            public void SaveSlump(int recept_id,int user_id , DateTime date)
+        public bool checkslump(DateTime date , int user_id)
         {
             postgres m = new postgres();
-            m.SqlNonQuery("INSERT INTO foodlist (user_id,recept_id,date_now) values(@user_id,@recept_id,@date_now)", postgres.list = new List<NpgsqlParameter>()
+            bool check =false;
+            DataTable dt = new DataTable();
+        dt = m.SqlQuery("SELECT EXISTS(SELECT foodlist.date_now,foodlist.recept_id FROM public.foodlist Where foodlist.user_id = @user_id AND date_now = @date_now)", postgres.list = new List<NpgsqlParameter>()
+        {
+               
+               new NpgsqlParameter("@date_now", date),
+               new NpgsqlParameter("@user_id", user_id)
+
+        });
+            foreach (DataRow dr in dt.Rows)
+            {
+                check = (bool)dr["exists"];
+            }
+            return check;
+        }
+        public void SaveSlump(int recept_id,int user_id , DateTime date , bool check)
+        {
+            string sql= "INSERT INTO foodlist (user_id,recept_id,date_now) values(@user_id,@recept_id,@date_now)";
+            if(check)
+            {
+                sql = "UPDATE foodlist SET recept_id = @recept_id WHERE date_now=@date_now AND user_id = @user_id";
+            }
+            postgres m = new postgres();
+            m.SqlNonQuery(sql, postgres.list = new List<NpgsqlParameter>()
         {
                new NpgsqlParameter("@recept_id", recept_id),
                new NpgsqlParameter("@date_now", date),

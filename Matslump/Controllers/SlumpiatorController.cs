@@ -48,13 +48,16 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult Create(Receptmodels model)
         {
-            model.recept = (List<Receptmodels>)TempData["receptlista"];
-
             int user = Convert.ToInt16(User.Identity.Name);
+            model.recept = (List<Receptmodels>)TempData["receptlista"];
+            slump checkslump = new slump();
+            bool check= checkslump.checkslump(model.recept[0].date, user);
+            
+            
             foreach (var item in model.recept)
             {
                 slump slump = new slump();
-                slump.SaveSlump(item.id, user, item.date);
+                slump.SaveSlump(item.id, user, item.date,check);
             }
 
             return RedirectToAction("Index");
