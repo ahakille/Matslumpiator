@@ -26,6 +26,7 @@ namespace Matslump.Controllers
             {
                 // om inte rätt format
                 return View(model);
+            
             }
             Accountmodels acc = new Accountmodels();
             var result  = acc.AuthenticationUser(model.Password, model.user);
@@ -34,7 +35,7 @@ namespace Matslump.Controllers
                
                 var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name,Convert.ToString(result.Item1)),
-                    new Claim(ClaimTypes.Role,result.Item3) }, "ApplicationCookie");
+                    new Claim(ClaimTypes.Role,result.Item3)}, "ApplicationCookie");
 
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;

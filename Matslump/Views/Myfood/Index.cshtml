@@ -16,8 +16,11 @@
 @foreach (var item in Model.recept) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
+            <a href="#@item.id" data-toggle="collapse">@item.name</a>
+            <div id="@item.id" class="collapse">
+                @item.description
+           </div>
+</td>
          <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |*@

@@ -10,11 +10,12 @@ namespace Matslump.Models
     public class Receptmodels
     {
         public int id { get; set; }
+        [Display(Name = "Namnet")]
         public string name { get; set; }
         public List<keyword> listaKeyword { get; set; }
         public List<string> ind { get; set; }
-        [Display(Name = "De här behövs")]
-        public string indstring { get; set; }
+        [Display(Name = "Beskrivning")]
+        public string description { get; set; }
         public List<string> doing { get; set; }
         [Display(Name = "Så här gör du ")]
         public string doingstring { get; set; }
@@ -36,6 +37,7 @@ namespace Matslump.Models
                 Receptmodels r = new Receptmodels();
                 r.id = Convert.ToInt16(dr["id_recept"].ToString());
                 r.name = dr["name"].ToString();
+                r.description = (string)dr["description"];
                 
 
                 mt.Add(r);

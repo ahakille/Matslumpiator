@@ -13,7 +13,9 @@ namespace Matslump.Controllers
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
             re.recept = re.getFood("SELECT * FROM recept ",Convert.ToInt32(User.Identity.Name));
-            ViewBag.food = food_list;
+            ViewBag.Myfood= re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+
+            ViewBag.food = re.recept;
             return View(re);
         }
         public ActionResult AddNewFood()

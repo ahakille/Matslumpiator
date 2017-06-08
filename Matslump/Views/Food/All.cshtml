@@ -15,17 +15,40 @@
         
     </tr>
 
-@foreach (var item in Model.recept) {
+@foreach (var item in ViewBag.food)
+{
+    bool check = false;
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.name)
+            <a href="#@item.id" data-toggle="collapse">@item.name</a>
+            <div id="@item.id" class="collapse">
+                @item.description
+            </div>
         </td>
         <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |*@
-            @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id=item.id })
-            @*<i class="fa fa-check" style="color:forestgreen" aria-hidden="true"></i>*@
+           
+           
+            @foreach (var item1 in ViewBag.Myfood)
+            {
+                if (item.id == item1.id)
+                {
+                    check = true;
+                }
+             
+            }
+            @if (check)
+            {
+                <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
+            }
+            else
+            {
+                @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.id })
+            }
+           | @Html.ActionLink("Ändra", "Edit", new { id = item.id }) 
+            
+            
         </td>
+        
     </tr>
 }
 

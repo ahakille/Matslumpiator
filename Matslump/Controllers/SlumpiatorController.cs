@@ -11,7 +11,7 @@ namespace Matslump.Controllers
        
         public ActionResult Index()
         {
-            Email.SendEmail("gorlingy@hotmail.com", "nicklas", "Testmail", "Hejhej");
+            //Email.SendEmail("gorlingy@hotmail.com", "nicklas", "Testmail", "Hejhej");
             int user_id = Convert.ToInt32(User.Identity.Name);
             slump slump = new slump();
             DateTime date;
