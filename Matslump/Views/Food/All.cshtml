@@ -1,0 +1,33 @@
+﻿@model Matslump.Models.Receptmodels
+
+@{
+    ViewBag.Title = "All";
+}
+
+<h2>All</h2>
+
+<p>
+    @Html.ActionLink("Lägg till nytt recept", "addnewfood")
+</p>
+<table id="food" class="table">
+    <tr>
+     
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.recept) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |*@
+            @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id=item.id })
+            @*<i class="fa fa-check" style="color:forestgreen" aria-hidden="true"></i>*@
+        </td>
+    </tr>
+}
+
+</table>
+

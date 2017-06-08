@@ -1,0 +1,37 @@
+﻿@model Matslump.Models.Receptmodels
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Ditt matförslag</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.ActionLink("Slumpa fram ny", "Create", null, new { @class = "btn btn-default" })
+        @if(ViewBag.check != 6)
+        {<input type="submit" value="Spara veckomeny" class="btn btn-default" />}
+        @Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-default" })
+    </p>
+    <table class="table">
+
+        @foreach (var item in Model.recept)
+        {
+            <tr>
+                <td>
+                    @item.date.ToShortDateString() @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.id })*@
+                </td>
+            </tr>}
+
+
+
+    </table>
+}
+
+

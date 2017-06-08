@@ -1,0 +1,75 @@
+﻿@model Matslump.Models.Receptmodels
+
+@{
+    ViewBag.Title = "AddNewFood";
+}
+
+<h2>AddNewFood</h2>
+
+
+@using (Html.BeginForm())
+{
+
+    <style>
+        input {
+            display: block;
+        }
+    </style>
+    <div class="form-horizontal">
+        <h4>Receptmodels</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class=" form-group">
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.indstring, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextAreaFor(model => model.indstring, new { htmlAttributes = new { @class = "form-control" } })
+                @*<div class="col-md-6">
+                <div id="strings">
+                    <input type="text" name="allStrings[0]" value="First" />
+                </div>
+                <div id="newstring" style="display:none;">
+                    <input type="text" name="allStrings[#]" />
+                </div>
+                <button type="button" id="addstring">Add</button>
+
+            </div>*@
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.doingstring )
+                @Html.TextAreaFor(model => model.doingstring)
+            </div>
+        </div>
+       
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "All")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@*<script>
+        var container = $('#strings');
+        $('#addstring').click(function () {
+            var index = container.children('input').length;
+            var clone = $('#newstring').clone();
+            clone.html($(clone).html().replace(/\[#\]/g, '[' + index + ']'));
+            container.append(clone.html());
+            container.children('input').last().focus();
+        });
+</script>*@

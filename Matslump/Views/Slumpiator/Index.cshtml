@@ -1,0 +1,86 @@
+﻿@model Matslump.Models.slump
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Slumpiator - Översikt</h2>
+
+
+<p>
+    @Html.ActionLink("Slumpa - Den här veckan", "create" , DateTime.Now, new { @class = "btn btn-default" })
+    @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-default" })
+</p>
+<table>
+    <tr>
+        <th>
+            <h4>Den här veckan</h4>
+        </th>
+    </tr>
+    @foreach (var item in ViewBag.thisweek)
+    {<tr>
+         <td>
+             @item.date.ToShortDateString() <span></span>@item.name
+         </td>
+    </tr>
+   
+        
+    }
+</table>
+
+
+
+    <table id="food" style="width:40%">
+        <tr>
+            <th>
+                <h4>Gamla veckomenyer</h4>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.list)
+        {
+            <tr>
+                <td>
+                    <a href="#@item.Weeknumber" data-toggle="collapse" class="btn btn-default btn-block">Vecka @item.Weeknumber</a>
+
+
+
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table id="@item.Weeknumber" class="collapse">
+                        @foreach (var item1 in Model.recepts)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item1.doingstring == item.Weeknumber)
+                                {
+                                    @item1.date.ToShortDateString() <span></span>
+                                    @Html.DisplayFor(m => item1.name)
+                                }
+
+                            </td>
+                        </tr>
+                        }
+
+                    </table>
+
+
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+
+<div class="col-md-12">
+   
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

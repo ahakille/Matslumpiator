@@ -1,0 +1,29 @@
+﻿@model Matslump.Models.Receptmodels
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Mina maträtter</h2>
+
+
+<table class="table">
+    <tr>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.recept) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+         <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |*@
+            @Html.ActionLink("Ta bort från min lista", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
