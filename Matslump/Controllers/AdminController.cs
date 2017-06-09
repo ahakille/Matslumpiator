@@ -13,6 +13,10 @@ namespace Matslump.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+            Users us = new Users();
+
+            Users model;
+            model.
             return View();
         }
         public ActionResult NewUser()
