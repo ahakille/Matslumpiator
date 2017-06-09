@@ -16,7 +16,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "" })
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "" }) *
             <div>
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
@@ -24,10 +24,13 @@
         </div>
         <div class=" form-group">
             <div>
-                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "" })
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "" }) *
                 <div>
-                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control textarea1"}})
-                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.description, new { htmlAttributes = new { @class = "form-control"}})
+                    <div>
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                   
                 </div>
                 
                 @*<div class="col-md-6">

@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FoodController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyfoodController.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\Receptmodels.cs" />
     <Compile Include="Models\slump.cs" />
     <Compile Include="Models\slumpmain.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +230,8 @@
     <Content Include="Views\Account\NewUser.cshtml" />
     <Content Include="Views\Slumpiator\Create.cshtml" />
     <Content Include="Views\Slumpiator\Index.cshtml" />
+    <Content Include="Views\Food\EditFood.cshtml" />
+    <Content Include="Views\Admin\NewUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -26,12 +26,25 @@ namespace Matslump.Controllers
         public ActionResult AddNewFood(Receptmodels model)
         {
             Receptmodels re = new Receptmodels();
-        //    re.addNewFood(model.name);
-            return Redirect("All");
+            re.addNewFood(model.name,model.description,Convert.ToInt16(User.Identity.Name));
+            return RedirectToAction("ALL", "Food");
         }
-        public ActionResult EditFood()
+        public ActionResult EditFood(int id)
         {
-            return View();
+            Receptmodels re = new Receptmodels();
+            re.recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
+            re.id = re.recept[0].id;
+            re.name = re.recept[0].name;
+            re.description = re.recept[0].description;
+
+            return View(re);
+        }
+        [HttpPost]
+        public ActionResult EditFood(Receptmodels model)
+        {
+            Receptmodels re = new Receptmodels();
+            re.EditFood(model.id, model.name, model.description);
+            return RedirectToAction("ALL", "Food");
         }
 
         public ActionResult AddToMyFood(int id)

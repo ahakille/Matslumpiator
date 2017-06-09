@@ -11,9 +11,11 @@ namespace Matslump.Models
     {
         public int id { get; set; }
         [Display(Name = "Namnet")]
+        [Required]
         public string name { get; set; }
         public List<keyword> listaKeyword { get; set; }
         public List<string> ind { get; set; }
+        [Required]
         [Display(Name = "Beskrivning")]
         public string description { get; set; }
         public List<string> doing { get; set; }
@@ -84,18 +86,30 @@ namespace Matslump.Models
 
             return mt;
         }
-        public void addNewFood(string pname, List<string> doolist , List<string> innlist, int user_id)
+        public void addNewFood(string pname,string des, int user_id)
         {
-            string doo = String.Join(",", doolist);
-            string inn = String.Join(",", innlist);
-            //Fullösning
+            
+    
             postgres m = new postgres();
-            m.SqlNonQuery("INSERT INTO recept (name,inn,doo, created_by_user) values(@name,@inn,@doo,@user_id)", postgres.list = new List<NpgsqlParameter>()
+            m.SqlNonQuery("INSERT INTO recept (name,description, created_by_user) values(@name,@description,@user_id)", postgres.list = new List<NpgsqlParameter>()
         {
                new NpgsqlParameter("@name", pname),
-               new NpgsqlParameter("@inn", inn),
-               new NpgsqlParameter("@doo", doo),
+               new NpgsqlParameter("@description", des),
                new NpgsqlParameter("@user_id", user_id)
+
+        });
+        }
+        public void EditFood(int recept_id, string pname , string des)
+        {
+
+
+            postgres m = new postgres();
+            m.SqlNonQuery("UPDATE recept SET name = @name ,description = @description WHERE id_recept = @recept_id", postgres.list = new List<NpgsqlParameter>()
+        {
+               new NpgsqlParameter("@recept_id", recept_id),
+               new NpgsqlParameter("@name", pname),
+               new NpgsqlParameter("@description", des)
+
 
         });
         }

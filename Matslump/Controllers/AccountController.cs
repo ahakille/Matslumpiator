@@ -59,7 +59,7 @@ namespace Matslump.Controllers
 
         // POST: User/newuser
         [HttpPost]
-        public ActionResult Newpassword(Accountmodels.NewpasswordViewModel model)
+        public ActionResult Newpassword(Users model)
         {
             //    if (!ModelState.IsValid)
             //    {
@@ -78,7 +78,7 @@ namespace Matslump.Controllers
                 new NpgsqlParameter("@par3", password.Item2)
             });
 
-                return RedirectToAction("Newpassword");
+                return RedirectToAction("index", "home");
             }
             catch
             {
@@ -90,7 +90,7 @@ namespace Matslump.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult NewUser(Accountmodels.NewpasswordViewModel model)
+        public ActionResult NewUser(Users model)
         {
             try
             {

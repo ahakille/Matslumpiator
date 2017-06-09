@@ -13,16 +13,17 @@ namespace Matslump.Controllers
         {
             //Email.SendEmail("gorlingy@hotmail.com", "nicklas", "Testmail", "Hejhej");
             int user_id = Convert.ToInt32(User.Identity.Name);
-            slump slump = new slump();
+            slump slumpe = new slump();
             DateTime date;
             date = DateTime.Now;
-            date = slump.datefixer(date);
-            slump.recepts =slump.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
-            slump.list = slump.Weeknumbers(slump.recepts);
-            ViewBag.thisweek = slump.Oldslumps(user_id, date.AddDays(-1), date.AddDays(5));
+            date = slumpe.datefixer(date);
+            slumpe.recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
+            slumpe.list = slumpe.Weeknumbers(slumpe.recepts);
+            ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(5));
+            ViewBag.date = slump.GetIso8601WeekOfYear(DateTime.Now);
   
 
-            return View(slump);
+            return View(slumpe);
         }
 
         // GET: Slumpiator/Details/5
@@ -34,11 +35,12 @@ namespace Matslump.Controllers
         // GET: Slumpiator/Create
         public ActionResult Create(DateTime date)
         {
-            slump slump = new slump();
+            slump slumpe = new slump();
             Receptmodels re = new Receptmodels();
-            re.recept = slump.Slumplist(Convert.ToInt32(User.Identity.Name),date);
+            re.recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
             ViewBag.check = re.recept[0].id;
             TempData["receptlista"] = re.recept;
+            ViewBag.date = slump.GetIso8601WeekOfYear(date);
             
             
             return View(re);

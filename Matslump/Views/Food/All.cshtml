@@ -7,7 +7,7 @@
 <h2>Receptdatabasen</h2>
 
 <p>
-    @Html.ActionLink("Lägg till nytt recept", "addnewfood")
+    @Html.ActionLink("Lägg till nytt recept", "addnewfood",null, new { @class = "btn btn-default" })
 </p>
 <table id="food" class="table">
     <tr>
@@ -44,7 +44,7 @@
             {
                 @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.id })
             }
-           | @Html.ActionLink("Ändra", "Edit", new { id = item.id }) 
+           | @Html.ActionLink("Ändra", "Editfood", new { id = item.id }) 
             
             
         </td>

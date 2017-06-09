@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Ditt matförslag</h2>
+<h2>Ditt matförslag för vecka @ViewBag.date</h2>
 
 @using (Html.BeginForm())
 {
@@ -20,7 +20,7 @@
         {
             <tr>
                 <td>
-                    @item.date.ToShortDateString() @Html.DisplayFor(modelItem => item.name)
+                    @item.date.DayOfWeek; <span> - </span> @Html.DisplayFor(modelItem => item.name)
                 </td>
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |

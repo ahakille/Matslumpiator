@@ -14,13 +14,13 @@
 <table>
     <tr>
         <th>
-            <h4>Den här veckan</h4>
+            <h4>Den här veckan, vecka @ViewBag.date </h4>
         </th>
     </tr>
     @foreach (var item in ViewBag.thisweek)
     {<tr>
          <td>
-             @item.date.ToShortDateString() <span></span>@item.name
+             @item.date.DayOfWeek<span> - </span>@item.name
          </td>
     </tr>
    
@@ -57,7 +57,7 @@
                                 <td>
                                     @if (item1.doingstring == item.Weeknumber)
                                 {
-                                    @item1.date.ToShortDateString() <span></span>
+                                    @item1.date.DayOfWeek <span> - </span>
                                     @Html.DisplayFor(m => item1.name)
                                 }
 
