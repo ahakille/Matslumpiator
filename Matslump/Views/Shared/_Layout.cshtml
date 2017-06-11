@@ -35,9 +35,9 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Alla användare", "index", "Admin")</li>
                                     <li>@Html.ActionLink("Ny Användare", "NewUser", "Admin")</li>
-                                    <li><a href="#">Page 1-2</a></li>
-                                    <li><a href="#">Page 1-3</a></li>
+                                    
                                 </ul>
                             </li>
 
@@ -47,8 +47,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
-                        <li>@Html.ActionLink("Logga ut", "logoff", "Account")</li>
+                        <li><a href="~/account/newpassword"><span class="glyphicon glyphicon-user"></span> Inställningar</a></li>
+                        <li><a href="~/account/logoff"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
                     }
                    
                 </ul>

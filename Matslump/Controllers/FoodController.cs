@@ -33,7 +33,7 @@ namespace Matslump.Controllers
         {
             Receptmodels re = new Receptmodels();
             re.recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
-            re.id = re.recept[0].id;
+            re.Id = re.recept[0].Id;
             re.name = re.recept[0].name;
             re.description = re.recept[0].description;
 
@@ -43,7 +43,7 @@ namespace Matslump.Controllers
         public ActionResult EditFood(Receptmodels model)
         {
             Receptmodels re = new Receptmodels();
-            re.EditFood(model.id, model.name, model.description);
+            re.EditFood(model.Id, model.name, model.description);
             return RedirectToAction("ALL", "Food");
         }
 

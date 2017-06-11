@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Matslump.Models.Users>
+﻿@model Matslump.Models.Users
 
 @{
     ViewBag.Title = "Index";
@@ -18,27 +18,43 @@
             @Html.DisplayNameFor(model => model.email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.active)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
+            @Html.DisplayNameFor(model => model.Roles_id)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in ViewBag.userlist) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.User)
+            @item.User
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.email)
+            @item.email
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            @if (item.active == true)
+            {
+                <p>Aktivt</p>
+            }
+            else
+            {
+                <p>Ej aktiverat</p>
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ConfirmPassword)
+            @if (item.Roles_id == 1)
+            {
+                <p>Admin</p>
+            }
+            else
+            {
+                <p>Användare</p>
+            }
+
+            
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Web;
 
@@ -29,5 +31,36 @@ namespace Matslump.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        [Display(Name = "Aktivt konto")]
+        public bool active { get; set; }
+        [Display(Name = "Roll")]
+        public int Roles_id { get; set; }
+
+        public List<Users> Getuser(int id , string sql)
+        {
+            postgres m = new postgres();
+            DataTable dt = new DataTable();
+            List<Users> mt = new List<Users>();
+            dt = m.SqlQuery(sql, postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id", id)
+            });
+            foreach (DataRow dr in dt.Rows)
+            {
+               
+                Users r = new Users();
+                r.User_id = (int)dr["user_id"];
+                r.User = dr["username"].ToString();
+                r.email = (string)dr["email"];
+                r.active = (bool)dr["acc_active"];
+                r.Roles_id = (int)dr["roles_id"];
+
+
+                mt.Add(r);
+            }
+
+            return mt;
+        }
+
     }
 }

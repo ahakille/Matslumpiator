@@ -9,7 +9,7 @@ namespace Matslump.Models
 {
     public class Receptmodels
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Namnet")]
         [Required]
         public string name { get; set; }
@@ -35,9 +35,9 @@ namespace Matslump.Models
             });
             foreach (DataRow dr in dt.Rows)
             {
-                string test;
+               
                 Receptmodels r = new Receptmodels();
-                r.id = Convert.ToInt16(dr["id_recept"].ToString());
+                r.Id = Convert.ToInt16(dr["id_recept"].ToString());
                 r.name = dr["name"].ToString();
                 r.description = (string)dr["description"];
                 
@@ -60,7 +60,7 @@ namespace Matslump.Models
             {
                 string inn, doo;
                 Receptmodels r = new Receptmodels();
-                r.id = Convert.ToInt16(dr["id_recept"].ToString());
+                r.Id = Convert.ToInt16(dr["id_recept"].ToString());
                 r.name = dr["name"].ToString();
                 inn = dr["inn"].ToString();
                 doo = dr["doo"].ToString();
@@ -71,7 +71,7 @@ namespace Matslump.Models
                 List<keyword> lista = new List<keyword>();
                 dt2 = m1.SqlQuery("SELECT * FROM keyword WHERE id_keyword IN(SELECT keyword_id FROM recept_has_keyword WHERE recept_id = @id)", postgres.list = new List<NpgsqlParameter>()
             {
-                   new NpgsqlParameter("@id",r.id)
+                   new NpgsqlParameter("@id",r.Id)
             });
                 foreach (DataRow dr1 in dt2.Rows)
                 {

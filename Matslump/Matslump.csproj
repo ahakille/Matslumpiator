@@ -227,12 +227,12 @@
     <Content Include="Views\Food\Myfood.cshtml" />
     <Content Include="Views\Food\AddNewFood.cshtml" />
     <Content Include="Views\Myfood\Index.cshtml" />
-    <Content Include="Views\Account\NewUser.cshtml" />
     <Content Include="Views\Slumpiator\Create.cshtml" />
     <Content Include="Views\Slumpiator\Index.cshtml" />
     <Content Include="Views\Food\EditFood.cshtml" />
     <Content Include="Views\Admin\NewUser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

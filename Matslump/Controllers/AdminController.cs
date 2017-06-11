@@ -15,11 +15,16 @@ namespace Matslump.Controllers
         {
             Users us = new Users();
 
-            Users model;
-            model.
+            ViewBag.userlist= us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id FROM public.login");
+            
             return View();
         }
         public ActionResult NewUser()
+        {
+            return View();
+        }
+
+        public ActionResult Edit()
         {
             return View();
         }
@@ -38,7 +43,7 @@ namespace Matslump.Controllers
                 new NpgsqlParameter("@par3", password.Item2)
             });
 
-                return RedirectToAction("index", "home");
+                return RedirectToAction("index", "admin");
             }
             catch
             {

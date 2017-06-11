@@ -36,7 +36,7 @@ namespace Matslump.Models
 
                     foreach (var item in random_list)
                     {
-                        if (item.id == food_list[number].id)
+                        if (item.Id == food_list[number].Id)
                         {
                             check = false;
                         }
@@ -55,7 +55,7 @@ namespace Matslump.Models
             }
             if (maxnumber <= 7)
             {
-                re.id = 6;
+                re.Id = 6;
                 re.name = "Inte tillräckligt med maträtter för att slumpa fram en vecka!!!";
                 random_list.Add(re);
             }
@@ -137,7 +137,7 @@ namespace Matslump.Models
             {
 
                 Receptmodels r = new Receptmodels();
-                r.id = (int)dr["recept_id"];
+                r.Id = (int)dr["recept_id"];
                 r.name = dr["name"].ToString();
                 r.date = (DateTime)dr["date_now"];
                 r.doingstring = GetIso8601WeekOfYear(r.date).ToString();

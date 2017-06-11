@@ -38,7 +38,7 @@ namespace Matslump.Controllers
             slump slumpe = new slump();
             Receptmodels re = new Receptmodels();
             re.recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
-            ViewBag.check = re.recept[0].id;
+            ViewBag.check = re.recept[0].Id;
             TempData["receptlista"] = re.recept;
             ViewBag.date = slump.GetIso8601WeekOfYear(date);
             
@@ -59,7 +59,7 @@ namespace Matslump.Controllers
             foreach (var item in model.recept)
             {
                 slump slump = new slump();
-                slump.SaveSlump(item.id, user, item.date,check);
+                slump.SaveSlump(item.Id, user, item.date,check);
             }
 
             return RedirectToAction("Index");
