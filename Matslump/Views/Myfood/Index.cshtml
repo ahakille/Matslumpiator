@@ -16,15 +16,15 @@
 @foreach (var item in Model.recept) {
     <tr>
         <td>
-            <a href="#@item.id" data-toggle="collapse">@item.name</a>
-            <div id="@item.id" class="collapse">
+            <a href="#@item.Id" data-toggle="collapse">@item.name</a>
+            <div id="@item.Id" class="collapse">
                 @item.description
            </div>
 </td>
          <td>
             @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |*@
-            @Html.ActionLink("Ta bort från min lista", "Delete", new { id=item.id })
+            @Html.ActionLink("Ta bort från min lista", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
