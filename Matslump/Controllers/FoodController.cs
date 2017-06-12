@@ -12,10 +12,10 @@ namespace Matslump.Controllers
         {
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
-            re.recept = re.getFood("SELECT * FROM recept ",Convert.ToInt32(User.Identity.Name));
+            re.Recept = re.getFood("SELECT * FROM recept ",Convert.ToInt32(User.Identity.Name));
             ViewBag.Myfood= re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
 
-            ViewBag.food = re.recept;
+            ViewBag.food = re.Recept;
             return View(re);
         }
         public ActionResult AddNewFood()
@@ -26,16 +26,16 @@ namespace Matslump.Controllers
         public ActionResult AddNewFood(Receptmodels model)
         {
             Receptmodels re = new Receptmodels();
-            re.addNewFood(model.name,model.description,Convert.ToInt16(User.Identity.Name));
+            re.addNewFood(model.Name,model.Description,Convert.ToInt16(User.Identity.Name));
             return RedirectToAction("ALL", "Food");
         }
         public ActionResult EditFood(int id)
         {
             Receptmodels re = new Receptmodels();
-            re.recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
-            re.Id = re.recept[0].Id;
-            re.name = re.recept[0].name;
-            re.description = re.recept[0].description;
+            re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
+            re.Id = re.Recept[0].Id;
+            re.Name = re.Recept[0].Name;
+            re.Description = re.Recept[0].Description;
 
             return View(re);
         }
@@ -43,7 +43,7 @@ namespace Matslump.Controllers
         public ActionResult EditFood(Receptmodels model)
         {
             Receptmodels re = new Receptmodels();
-            re.EditFood(model.Id, model.name, model.description);
+            re.EditFood(model.Id, model.Name, model.Description);
             return RedirectToAction("ALL", "Food");
         }
 

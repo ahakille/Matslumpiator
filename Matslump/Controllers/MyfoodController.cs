@@ -12,7 +12,7 @@ namespace Matslump.Controllers
         {
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
-            re.recept = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
+            re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
             ViewBag.food = food_list;
             return View(re);
         }

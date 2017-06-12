@@ -6,28 +6,61 @@
 
 <h2>Slumpiator - Översikt</h2>
 
-
+<div class="row">
+    <div class="col-md-5">
+        @Html.ActionLink("Slumpa - Den här veckan", "create", DateTime.Now, new { @class = "btn btn-default" })
+    </div>
+    <div class="col-md-4">
+        @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-default" })
+    </div>
+</div>
 <p>
-    @Html.ActionLink("Slumpa - Den här veckan", "create" , DateTime.Now, new { @class = "btn btn-default" })
-    @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-default" })
+    
+  
 </p>
-<table>
-    <tr>
-        <th>
-            <h4>Den här veckan, vecka @ViewBag.date </h4>
-        </th>
-    </tr>
-    @foreach (var item in ViewBag.thisweek)
-    {<tr>
-         <td>
-             @item.date.DayOfWeek<span> - </span>@item.name
-         </td>
-    </tr>
-   
-        
-    }
-</table>
+<div class="row">
 
+
+    <div class="col-md-5">
+        <table>
+            <tr>
+                <th>
+                    <h4>Den här veckan, vecka @ViewBag.date </h4>
+                </th>
+            </tr>
+            @foreach (var item in ViewBag.thisweek)
+            {
+                <tr>
+                    <td>
+                        @item.date.DayOfWeek<span> - </span>@item.Name
+                    </td>
+                </tr>
+
+
+            }
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table>
+            <tr>
+                <th>
+                    <h4>Nästa veckan, vecka @ViewBag.date1 </h4>
+            </th>
+        </tr>
+        @foreach (var item in ViewBag.nextweek)
+        {
+            <tr>
+                <td>
+                    @item.date.DayOfWeek<span> - </span>@item.Name
+                </td>
+            </tr>
+
+
+        }
+    </table>
+</div>
+
+</div>
 
 
     <table id="food" style="width:40%">
@@ -55,10 +88,10 @@
                         {
                             <tr>
                                 <td>
-                                    @if (item1.doingstring == item.Weeknumber)
-                                {
-                                    @item1.date.DayOfWeek <span> - </span>
-                                    @Html.DisplayFor(m => item1.name)
+                                    @if (item1.Weeknumbers == item.Weeknumber)
+                                    {
+                                    @item1.Date.DayOfWeek <span> - </span>
+                                    @Html.DisplayFor(m => item1.Name)
                                 }
 
                             </td>

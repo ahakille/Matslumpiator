@@ -19,9 +19,13 @@ namespace Matslump.Controllers
             date = slumpe.datefixer(date);
             slumpe.recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
             slumpe.list = slumpe.Weeknumbers(slumpe.recepts);
-            ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(5));
+            ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(6));
             ViewBag.date = slump.GetIso8601WeekOfYear(DateTime.Now);
-  
+            ViewBag.date1 = slump.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));
+            date = DateTime.Now;
+            date = slumpe.datefixer(date);
+            ViewBag.nextweek = slumpe.Oldslumps(user_id, date.AddDays(6), date.AddDays(14));
+
 
             return View(slumpe);
         }
@@ -37,9 +41,9 @@ namespace Matslump.Controllers
         {
             slump slumpe = new slump();
             Receptmodels re = new Receptmodels();
-            re.recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
-            ViewBag.check = re.recept[0].Id;
-            TempData["receptlista"] = re.recept;
+            re.Recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
+            ViewBag.check = re.Recept[0].Id;
+            TempData["receptlista"] = re.Recept;
             ViewBag.date = slump.GetIso8601WeekOfYear(date);
             
             
@@ -51,15 +55,15 @@ namespace Matslump.Controllers
         public ActionResult Create(Receptmodels model)
         {
             int user = Convert.ToInt16(User.Identity.Name);
-            model.recept = (List<Receptmodels>)TempData["receptlista"];
+            model.Recept = (List<Receptmodels>)TempData["receptlista"];
             slump checkslump = new slump();
-            bool check= checkslump.checkslump(model.recept[0].date, user);
+            bool check= checkslump.checkslump(model.Recept[0].Date, user);
             
             
-            foreach (var item in model.recept)
+            foreach (var item in model.Recept)
             {
                 slump slump = new slump();
-                slump.SaveSlump(item.Id, user, item.date,check);
+                slump.SaveSlump(item.Id, user, item.Date,check);
             }
 
             return RedirectToAction("Index");

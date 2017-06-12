@@ -13,12 +13,12 @@
         
     </tr>
 
-@foreach (var item in Model.recept) {
+@foreach (var item in Model.Recept) {
     <tr>
         <td>
-            <a href="#@item.Id" data-toggle="collapse">@item.name</a>
+            <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
             <div id="@item.Id" class="collapse">
-                @item.description
+                @item.Description
            </div>
 </td>
          <td>

@@ -12,17 +12,20 @@ namespace Matslump.Models
         public int Id { get; set; }
         [Display(Name = "Namnet")]
         [Required]
-        public string name { get; set; }
+        public string Name { get; set; }
         public List<keyword> listaKeyword { get; set; }
-        public List<string> ind { get; set; }
+        [Required]
+        [Display(Name = "Bild")]
+        public string Url_pic { get; set; }
         [Required]
         [Display(Name = "Beskrivning")]
-        public string description { get; set; }
-        public List<string> doing { get; set; }
+        public string Description { get; set; }
+
+        public string Url_recept { get; set; }
         [Display(Name = "Så här gör du ")]
-        public string doingstring { get; set; }
-        public DateTime date { get; set; }
-        public List<Receptmodels> recept { get; set; }
+        public string Weeknumbers { get; set; }
+        public DateTime Date { get; set; }
+        public List<Receptmodels> Recept { get; set; }
 
         public List<Receptmodels> getFood(string psql, int pid_user)
         {
@@ -38,54 +41,57 @@ namespace Matslump.Models
                
                 Receptmodels r = new Receptmodels();
                 r.Id = Convert.ToInt16(dr["id_recept"].ToString());
-                r.name = dr["name"].ToString();
-                r.description = (string)dr["description"];
-                
+                r.Name = dr["name"].ToString();
+                r.Description = (string)dr["description"];
+                r.Url_pic = (string)dr["url_pic"];
+                r.Url_recept = (string)dr["url_recept"];
+
+
 
                 mt.Add(r);
             }
 
             return mt;
         }
-        public List<Receptmodels> getrecept(string id)
-        {
-            postgres m = new postgres();
-            DataTable dt = new DataTable();
-            List<Receptmodels> mt = new List<Receptmodels>();
-            dt = m.SqlQuery("SELECT * FROM recept WHERE id_recept =@id", postgres.list = new List<NpgsqlParameter>()
-        {
-               new NpgsqlParameter("@id", id)
-        });
-            foreach (DataRow dr in dt.Rows)
-            {
-                string inn, doo;
-                Receptmodels r = new Receptmodels();
-                r.Id = Convert.ToInt16(dr["id_recept"].ToString());
-                r.name = dr["name"].ToString();
-                inn = dr["inn"].ToString();
-                doo = dr["doo"].ToString();
-                r.ind = inn.Split(',').ToList();
-                r.doing = doo.Split(',').ToList();
-                postgres m1 = new postgres();
-                DataTable dt2 = new DataTable();
-                List<keyword> lista = new List<keyword>();
-                dt2 = m1.SqlQuery("SELECT * FROM keyword WHERE id_keyword IN(SELECT keyword_id FROM recept_has_keyword WHERE recept_id = @id)", postgres.list = new List<NpgsqlParameter>()
-            {
-                   new NpgsqlParameter("@id",r.Id)
-            });
-                foreach (DataRow dr1 in dt2.Rows)
-                {
-                    keyword k = new keyword();
-                    k.id = Convert.ToInt16(dr1["id_keyword"].ToString());
-                    k.name = dr1["keyword"].ToString();
-                    lista.Add(k);
-                }
-                r.listaKeyword = lista;
-                mt.Add(r);
-            }
+        //public List<Receptmodels> getrecept(string id)
+        //{
+        //    postgres m = new postgres();
+        //    DataTable dt = new DataTable();
+        //    List<Receptmodels> mt = new List<Receptmodels>();
+        //    dt = m.SqlQuery("SELECT * FROM recept WHERE id_recept =@id", postgres.list = new List<NpgsqlParameter>()
+        //{
+        //       new NpgsqlParameter("@id", id)
+        //});
+        //    foreach (DataRow dr in dt.Rows)
+        //    {
+        //        string inn, doo;
+        //        Receptmodels r = new Receptmodels();
+        //        r.Id = Convert.ToInt16(dr["id_recept"].ToString());
+        //        r.name = dr["name"].ToString();
+        //        inn = dr["inn"].ToString();
+        //        doo = dr["doo"].ToString();
+        //        r.ind = inn.Split(',').ToList();
+        //        r.doing = doo.Split(',').ToList();
+        //        postgres m1 = new postgres();
+        //        DataTable dt2 = new DataTable();
+        //        List<keyword> lista = new List<keyword>();
+        //        dt2 = m1.SqlQuery("SELECT * FROM keyword WHERE id_keyword IN(SELECT keyword_id FROM recept_has_keyword WHERE recept_id = @id)", postgres.list = new List<NpgsqlParameter>()
+        //    {
+        //           new NpgsqlParameter("@id",r.Id)
+        //    });
+        //        foreach (DataRow dr1 in dt2.Rows)
+        //        {
+        //            keyword k = new keyword();
+        //            k.id = Convert.ToInt16(dr1["id_keyword"].ToString());
+        //            k.name = dr1["keyword"].ToString();
+        //            lista.Add(k);
+        //        }
+        //        r.listaKeyword = lista;
+        //        mt.Add(r);
+        //    }
 
-            return mt;
-        }
+        //    return mt;
+        //}
         public void addNewFood(string pname,string des, int user_id)
         {
             

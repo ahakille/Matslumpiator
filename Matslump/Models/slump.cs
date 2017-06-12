@@ -43,7 +43,7 @@ namespace Matslump.Models
                     }
                     if (check)
                     {
-                        food_list[number].date = date;
+                        food_list[number].Date = date;
                         random_list.Add(food_list[number]);
                         i++;
                         date =date.AddDays(1);
@@ -56,7 +56,7 @@ namespace Matslump.Models
             if (maxnumber <= 7)
             {
                 re.Id = 6;
-                re.name = "Inte tillräckligt med maträtter för att slumpa fram en vecka!!!";
+                re.Name = "Inte tillräckligt med maträtter för att slumpa fram en vecka!!!";
                 random_list.Add(re);
             }
 
@@ -138,9 +138,9 @@ namespace Matslump.Models
 
                 Receptmodels r = new Receptmodels();
                 r.Id = (int)dr["recept_id"];
-                r.name = dr["name"].ToString();
-                r.date = (DateTime)dr["date_now"];
-                r.doingstring = GetIso8601WeekOfYear(r.date).ToString();
+                r.Name = dr["name"].ToString();
+                r.Date = (DateTime)dr["date_now"];
+                r.Weeknumbers = GetIso8601WeekOfYear(r.Date).ToString();
 
 
                 mt.Add(r);
@@ -160,12 +160,12 @@ namespace Matslump.Models
             string check = "";
             foreach (var item in lista)
             {
-                if(check !=item.doingstring)
+                if(check !=item.Weeknumbers)
                 {
                     slump sl = new slump();
-                    sl.Weeknumber = item.doingstring;
+                    sl.Weeknumber = item.Weeknumbers;
                     list.Add(sl);
-                    check = item.doingstring;
+                    check = item.Weeknumbers;
                 }
                
             }
