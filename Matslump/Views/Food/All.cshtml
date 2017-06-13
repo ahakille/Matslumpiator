@@ -22,19 +22,18 @@
         <td>
             <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
             <div id="@item.Id" class="collapse">
-               <div class="media">
-                   <div class="m">
+               <div class="row">
+                   <div class="col-md-3">
                        <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px"/>
                    </div>
-                   <div class="media-body">
-                       @item.Description
-                  </div>  
-                    
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
-                    </div>
+                   <div class="row">
+                       <div class="col-md-4">
+                           @item.Description <br /><a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
+                       </div>
+                      
+                       </div>
+                
+                   
                 </div>
             </div>
         </td>

@@ -20,7 +20,8 @@ namespace Matslump.Models
         [Required]
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
-
+        
+        [Display(Name = "Url till receptet")]
         public string Url_recept { get; set; }
         [Display(Name = "Så här gör du ")]
         public string Weeknumbers { get; set; }
@@ -92,28 +93,32 @@ namespace Matslump.Models
 
         //    return mt;
         //}
-        public void addNewFood(string pname,string des, int user_id)
+        public void addNewFood(string pname,string des,string url_pic,string url_recept, int user_id)
         {
             
     
             postgres m = new postgres();
-            m.SqlNonQuery("INSERT INTO recept (name,description, created_by_user) values(@name,@description,@user_id)", postgres.list = new List<NpgsqlParameter>()
+            m.SqlNonQuery("INSERT INTO recept (name,description, created_by_user, url_pic,url_recept) values(@name,@description,@user_id,@url_pic,@url_recept)", postgres.list = new List<NpgsqlParameter>()
         {
                new NpgsqlParameter("@name", pname),
                new NpgsqlParameter("@description", des),
+               new NpgsqlParameter("@url_pic", url_pic),
+               new NpgsqlParameter("@url_recept", url_recept),
                new NpgsqlParameter("@user_id", user_id)
 
         });
         }
-        public void EditFood(int recept_id, string pname , string des)
+        public void EditFood(int recept_id, string pname , string des,string url_pic,string url_recept)
         {
 
 
             postgres m = new postgres();
-            m.SqlNonQuery("UPDATE recept SET name = @name ,description = @description WHERE id_recept = @recept_id", postgres.list = new List<NpgsqlParameter>()
+            m.SqlNonQuery("UPDATE recept SET name = @name ,description = @description, url_pic =@url-pic,url_recept=@url_recept WHERE id_recept = @recept_id", postgres.list = new List<NpgsqlParameter>()
         {
                new NpgsqlParameter("@recept_id", recept_id),
                new NpgsqlParameter("@name", pname),
+               new NpgsqlParameter("@url_pic", url_pic),
+               new NpgsqlParameter("@url_recept", url_recept),
                new NpgsqlParameter("@description", des)
 
 

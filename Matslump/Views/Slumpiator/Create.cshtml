@@ -16,11 +16,11 @@
     </p>
     <table class="table">
 
-        @foreach (var item in Model.recept)
+        @foreach (var item in Model.Recept)
         {
             <tr>
                 <td>
-                    @item.date.DayOfWeek <span> - </span> @Html.DisplayFor(modelItem => item.name)
+                    @item.Date.DayOfWeek <span> - </span> @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { id=item.id }) |

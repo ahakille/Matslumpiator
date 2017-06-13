@@ -16,18 +16,34 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" })
+            <div class="">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" })
+            <div class="">
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control textarea1" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url_pic, htmlAttributes: new { @class = "" }) *
+            <div>
+                @Html.EditorFor(model => model.Url_pic, new { htmlAttributes = new { @class = "form-control" } })
+                <br /><p> Exempel - http://www.ica.se/recept/torskfile-med-rodvinssas-1484/</p>
+                @Html.ValidationMessageFor(model => model.Url_pic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url_recept, htmlAttributes: new { @class = "" }) *
+            <div>
+                @Html.EditorFor(model => model.Url_recept, new { htmlAttributes = new { @class = "form-control" } })
+                <br /><p>Exempel -  http://www.ica.se/recept/torskfile-med-rodvinssas-1484/</p>
+                @Html.ValidationMessageFor(model => model.Url_recept, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">

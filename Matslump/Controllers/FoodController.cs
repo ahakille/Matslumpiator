@@ -25,8 +25,16 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult AddNewFood(Receptmodels model)
         {
+            if(model.Url_pic == "")
+            {
+                model.Url_pic = "http://www.ica.se/imagevaultfiles/id_53491/cf_6901/ica_recept.png";
+            }
+            if(model.Url_recept == "")
+            {
+                model.Url_recept = "#";
+            }
             Receptmodels re = new Receptmodels();
-            re.addNewFood(model.Name,model.Description,Convert.ToInt16(User.Identity.Name));
+            re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
             return RedirectToAction("ALL", "Food");
         }
         public ActionResult EditFood(int id)
@@ -35,6 +43,8 @@ namespace Matslump.Controllers
             re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
             re.Id = re.Recept[0].Id;
             re.Name = re.Recept[0].Name;
+            re.Url_pic = re.Recept[0].Url_pic;
+            re.Url_recept = re.Recept[0].Url_recept;
             re.Description = re.Recept[0].Description;
 
             return View(re);
@@ -42,8 +52,16 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult EditFood(Receptmodels model)
         {
+            if (model.Url_pic == "")
+            {
+                model.Url_pic = "http://www.ica.se/imagevaultfiles/id_53491/cf_6901/ica_recept.png";
+            }
+            if (model.Url_recept == "")
+            {
+                model.Url_recept = "#";
+            }
             Receptmodels re = new Receptmodels();
-            re.EditFood(model.Id, model.Name, model.Description);
+            re.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept);
             return RedirectToAction("ALL", "Food");
         }
 
