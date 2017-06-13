@@ -15,14 +15,6 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.User_id, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.User_id, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.User_id, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
@@ -46,9 +38,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
                 @*@ <select class="list-group" id="membercategory" name="membercategory" required>
                     @foreach (var list in Model.Membercategory)
                     {
@@ -58,8 +47,6 @@
                                                                             </option>
                     }
                 </select>*@
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.active, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -73,12 +60,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />@Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-default" })
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

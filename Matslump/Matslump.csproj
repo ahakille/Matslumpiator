@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyfoodController.cs" />
     <Compile Include="Controllers\SlumpiatorController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,7 +233,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\index.cshtml" />
-    <Content Include="Views\Account\Newpassword.cshtml" />
+    <Content Include="Views\Users\Newpassword.cshtml" />
     <Content Include="Views\Food\All.cshtml" />
     <Content Include="Views\Food\AddNewFood.cshtml" />
     <Content Include="Views\Myfood\Index.cshtml" />

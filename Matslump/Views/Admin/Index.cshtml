@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Roles_id)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Last_login)
+        </th>
         <th></th>
     </tr>
 
@@ -55,6 +58,9 @@
             }
 
             
+        </td>
+        <td>
+            @item.Last_login
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |

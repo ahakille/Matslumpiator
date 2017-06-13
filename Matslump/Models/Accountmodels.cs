@@ -60,7 +60,12 @@ namespace Matslump.Models
                     }
                     else
                     {
-
+                        postgres p = new postgres();
+                        p.SqlNonQuery("UPDATE public.login SET last_login=@d WHERE user_id = @user_id;", postgres.list = new List<NpgsqlParameter>()
+                        {
+                         new NpgsqlParameter("@d", DateTime.Now),
+                         new NpgsqlParameter("@user_id", user_id)
+                         });
                         return Tuple.Create(user_id, true, role);
                     }
 

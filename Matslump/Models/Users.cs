@@ -35,6 +35,8 @@ namespace Matslump.Models
         public bool active { get; set; }
         [Display(Name = "Roll")]
         public int Roles_id { get; set; }
+        [Display(Name = "Senast inloggad")]
+        public DateTime Last_login { get; set; }
 
         public List<Users> Getuser(int id , string sql)
         {
@@ -54,6 +56,7 @@ namespace Matslump.Models
                 r.email = (string)dr["email"];
                 r.active = (bool)dr["acc_active"];
                 r.Roles_id = (int)dr["roles_id"];
+                r.Last_login = (DateTime)dr["last_login"];
 
 
                 mt.Add(r);
