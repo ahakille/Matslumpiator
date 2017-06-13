@@ -234,7 +234,6 @@
     <Content Include="Views\Account\index.cshtml" />
     <Content Include="Views\Account\Newpassword.cshtml" />
     <Content Include="Views\Food\All.cshtml" />
-    <Content Include="Views\Food\Myfood.cshtml" />
     <Content Include="Views\Food\AddNewFood.cshtml" />
     <Content Include="Views\Myfood\Index.cshtml" />
     <Content Include="Views\Slumpiator\Create.cshtml" />

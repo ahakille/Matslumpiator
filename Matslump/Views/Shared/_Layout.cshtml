@@ -47,7 +47,16 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li><a href="~/account/newpassword"><span class="glyphicon glyphicon-user"></span> Inställningar</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Inställningar
+                                
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="~/account/newpassword">Ändra lösenord</a></li>           
+                            </ul>
+                        </li>
                         <li><a href="~/account/logoff"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
                     }
                    
