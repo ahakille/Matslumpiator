@@ -1,68 +1,89 @@
-﻿@model Matslump.Models.Receptmodels
+﻿@model Matslump.Models.IndexViewModel
 
 @{
     ViewBag.Title = "All";
 }
 
 <h2>Receptdatabasen</h2>
-
+<hr />
 <p>
     @Html.ActionLink("Lägg till nytt recept", "addnewfood",null, new { @class = "btn btn-default" })
 </p>
-<table id="food" class="table">
-    <tr>
-     
-        
-    </tr>
-
-@foreach (var item in ViewBag.food)
+@foreach (var item in Model.Items)
 {
     bool check = false;
-    <tr>
-        <td>
-            <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
-            <div id="@item.Id" class="collapse">
-               <div class="row">
-                   <div class="col-md-3">
-                       <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px"/>
-                   </div>
-                   <div class="row">
-                       <div class="col-md-4">
-                           @item.Description <br /><a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
-                       </div>
-                      
-                       </div>
-                
-                   
+<div class="row table">
+    <div class="col-md-6">
+        <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+        <div id="@item.Id" class="collapse">
+            <div class="row">
+                <div class="col-md-3">
+                    <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px" />
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @item.Description <br /><a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
+                    </div>
+
+                </div>
+
+
             </div>
-        </td>
-        <td>
-           
-           
-            @foreach (var item1 in ViewBag.Myfood)
+        </div>
+    </div>
+    <div class="col-md-4">
+        @foreach (var item1 in ViewBag.Myfood)
+        {
+            if (item.Id == item1.Id)
             {
-                if (item.Id == item1.Id)
-                {
-                    check = true;
-                }
-             
+                check = true;
             }
-            @if (check)
-            {
-                <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
-            }
-            else
-            {
-                @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id })
-            }
-           | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id }) 
-            
-            
-        </td>
+
+        }
+        @if (check)
+        {
+            <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
+        }
+        else
+        {
+            @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage })
+        }
+        | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id })
         
-    </tr>
+    </div>
+</div>
 }
 
-</table>
+@if (Model.Pager.EndPage > 1)
+{
+    <ul class="pagination">
+        @if (Model.Pager.CurrentPage > 1)
+        {
+            <li>
+                <a href="~/Food/All">Första</a>
+            </li>
+                            <li>
+                                <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)">Tidigare</a>
+                            </li>
+        }
+
+        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+        {
+            <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
+                <a href="~/Food/All?page=@page">@page</a>
+            </li>    }
+
+        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+            <li>
+                <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)">Nästa</a>
+            </li>
+                            <li>
+                                <a href="~/Food/All?page=@(Model.Pager.TotalPages)">Sista</a>
+                            </li>
+        }
+    </ul>
+}
+
+				
 

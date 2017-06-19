@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="Models\Accountmodels.cs" />
     <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\pagination.cs" />
     <Compile Include="Models\keyword.cs" />
     <Compile Include="Models\postgres.cs" />
     <Compile Include="Models\Receptmodels.cs" />
