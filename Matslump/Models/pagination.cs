@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Matslump.Models
 {
-        public class IndexViewModel
+    public class IndexViewModel
         {
             public IEnumerable<Receptmodels> Items { get; set; }
             public Pager Pager { get; set; }
