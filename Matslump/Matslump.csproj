@@ -191,6 +191,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\apa.jpg" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cake-1971552_960_720.jpg" />
+    <Content Include="Content\croissants-569075_960_720.jpg" />
+    <Content Include="Content\food-715539_960_720.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
