@@ -93,7 +93,7 @@ namespace Matslump.Models
         }
         public string GeneratePassword()
         {
-            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789#+@&$ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string strPwd = "";
             Random rnd = new Random();
             for (int i = 0; i <= 7; i++)
@@ -105,17 +105,10 @@ namespace Matslump.Models
         }
         public void RegisterNewUser(string username, string email)
         {
-            Accountmodels User = new Accountmodels();
-            string pass = User.GeneratePassword();
-            Tuple<byte[], byte[]> password = User.Generatepass(pass);
-            postgres sql = new postgres();
-            sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id, email) VALUES (@par2,@par3,@par1,'1',@email )", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@par1", username),
-                new NpgsqlParameter("@par2", password.Item1),
-                new NpgsqlParameter("@email", email),
-                new NpgsqlParameter("@par3", password.Item2)
-            });
+            
+            string pass = GeneratePassword();
+            Users us = new Users();
+            us.CreateUser(username, email, true, pass);
             Email.SendEmail(email, username, "Ditt lösenord", "Ditt lösenord är: " + pass);
         }
     }
