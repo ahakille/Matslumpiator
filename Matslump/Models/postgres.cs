@@ -59,10 +59,10 @@ namespace Matslump.Models
             try
 
             {
-                bool check;
+                
                 _cmd = new NpgsqlCommand(sqlquery, _conn);
                 _cmd.Parameters.AddRange(parametrar.ToArray());
-                check = (bool)_cmd.ExecuteScalar();
+                bool check =(bool)_cmd.ExecuteScalar();
 
               
                 return check;
