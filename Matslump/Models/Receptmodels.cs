@@ -112,7 +112,7 @@ namespace Matslump.Models
 
 
             postgres m = new postgres();
-            m.SqlNonQuery("UPDATE recept SET name = @name ,description = @description, url_pic =@url-pic,url_recept=@url_recept WHERE id_recept = @recept_id", postgres.list = new List<NpgsqlParameter>()
+            m.SqlNonQuery("UPDATE recept SET name = @name ,description = @description, url_pic =@url_pic,url_recept=@url_recept WHERE id_recept = @recept_id", postgres.list = new List<NpgsqlParameter>()
         {
                new NpgsqlParameter("@recept_id", recept_id),
                new NpgsqlParameter("@name", pname),

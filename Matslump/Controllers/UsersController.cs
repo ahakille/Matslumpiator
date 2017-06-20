@@ -11,7 +11,18 @@ namespace Matslump.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View();
+            int id = Convert.ToInt32(User.Identity.Name);
+            Users us = new Users();
+            List<Users> list = new List<Users>();
+            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login FROM public.login WHERE user_id = @id");
+            us.active = list[0].active;
+            us.email = list[0].email;
+            us.User = list[0].User;
+            us.Roles_id = list[0].Roles_id;
+            us.Last_login = list[0].Last_login;
+            us.User_id = id;
+            return View(us);
+           
         }
         public ActionResult Newpassword()
         {
@@ -20,11 +31,7 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult Newpassword(Users model)
         {
-            //    if (!ModelState.IsValid)
-            //    {
-            //        // om inte rätt format
-            //        return View(model);
-            //    }
+
             try
             {
                 Accountmodels User1 = new Accountmodels();
@@ -43,6 +50,26 @@ namespace Matslump.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult Edit()
+        {
+            int id = Convert.ToInt32(User.Identity.Name);
+            Users us = new Users();
+            List<Users> list = new List<Users>();
+            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login FROM public.login WHERE user_id = @id");
+            us.active = list[0].active;
+            us.email = list[0].email;
+            us.User = list[0].User;
+            us.Roles_id = list[0].Roles_id;
+            us.User_id = id;
+            return View(us);
+        }
+        [HttpPost]
+        public ActionResult Edit(Users model)
+        {
+            Users us = new Users();
+            us.UpdateUser(model.User_id, model.User, model.email, model.active);
+            return RedirectToAction("index");
         }
     }
 }

@@ -35,6 +35,8 @@ namespace Matslump.Models
         public int Roles_id { get; set; }
         [Display(Name = "Senast inloggad")]
         public DateTime Last_login { get; set; }
+        [Display(Name = "Registeringskod")]
+        public string Secret { get; set; }
 
         public List<Users> Getuser(int id , string sql)
         {
@@ -62,6 +64,35 @@ namespace Matslump.Models
 
             return mt;
         }
+        public void CreateUser(string user,string email,bool active,string Password)
+        {
+            Accountmodels User = new Accountmodels();
+            Tuple<byte[], byte[]> password = User.Generatepass(Password);
+            postgres sql = new postgres();
+            sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id,email,acc_active,last_login) VALUES (@par2,@par3,@par1,'2',@email,@active,@last_login)", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", user),
+                new NpgsqlParameter("@par2", password.Item1),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@active", active),
+                new NpgsqlParameter("@last_login", DateTime.Now),
+                new NpgsqlParameter("@par3", password.Item2)
+            });
+        }
+        public void UpdateUser(int User_id,string username,string email,bool active)
+        {
+            postgres sql = new postgres();
+            sql.SqlNonQuery("UPDATE login SET username=@username, email=@email,acc_active=@active WHERE user_id=@user_id", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@username", username),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@active", active),
+                new NpgsqlParameter("@user_id", User_id)
+              
+               
+            });
+        }
+
 
     }
 }

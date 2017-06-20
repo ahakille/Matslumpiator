@@ -22,7 +22,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        @item.Description <br /><a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
+                        @item.Description <br /> @if (item.Url_recept != "#") {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
                     </div>
 
                 </div>
@@ -48,7 +48,7 @@
         {
             @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage })
         }
-        | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id })
+        | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
         
     </div>
 </div>

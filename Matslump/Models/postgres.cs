@@ -53,6 +53,32 @@ namespace Matslump.Models
                 _conn.Close();
             }
         }
+        public bool SqlQueryExist(string sqlquery, List<NpgsqlParameter> parametrar)
+        {
+
+            try
+
+            {
+                bool check;
+                _cmd = new NpgsqlCommand(sqlquery, _conn);
+                _cmd.Parameters.AddRange(parametrar.ToArray());
+                check = (bool)_cmd.ExecuteScalar();
+
+              
+                return check;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+        }
 
         public void SqlNonQuery(string sqlquery, List<NpgsqlParameter> parametrar)
         {

@@ -43,7 +43,7 @@ namespace Matslump.Controllers
             re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
             return RedirectToAction("ALL", "Food");
         }
-        public ActionResult EditFood(int id)
+        public ActionResult EditFood(int id,int page)
         {
             Receptmodels re = new Receptmodels();
             re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
@@ -52,7 +52,8 @@ namespace Matslump.Controllers
             re.Url_pic = re.Recept[0].Url_pic;
             re.Url_recept = re.Recept[0].Url_recept;
             re.Description = re.Recept[0].Description;
-
+            ViewBag.page = page;
+            TempData["page"] = page;
             return View(re);
         }
         [HttpPost]
@@ -66,9 +67,10 @@ namespace Matslump.Controllers
             {
                 model.Url_recept = "#";
             }
+            int page = (int)TempData["page"];
             Receptmodels re = new Receptmodels();
             re.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept);
-            return RedirectToAction("ALL", "Food");
+            return RedirectToAction("ALL", "Food",new { page = page });
         }
 
         public ActionResult AddToMyFood(int id ,int page)

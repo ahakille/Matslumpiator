@@ -54,12 +54,20 @@
                                 
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="~/users/index">Mina uppgifter</a></li>
+                                <li><a href="~/users/edit">Ändra uppgifter</a></li>  
                                 <li><a href="~/users/newpassword">Ändra lösenord</a></li>           
                             </ul>
                         </li>
                         <li><a href="~/account/logoff"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
                     }
-                   
+                    else
+                    {
+                        <li><a href="~/Account/Register"><span class="glyphicon glyphicon-user"></span> Registera</a></li>
+                        <li><a href="~/Account/Index"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
+                        
+                    }
+
                 </ul>
                 
             </div>

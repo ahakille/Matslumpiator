@@ -25,7 +25,8 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            @item.Description <br /><a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>
+                            @item.Description <br />@if (item.Url_recept != "#")
+                            {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
                         </div>
                     </div>
                 </div>

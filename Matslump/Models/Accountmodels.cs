@@ -27,8 +27,9 @@ namespace Matslump.Models
             int user_id =0;
             postgres m = new postgres();
             string role= "";
+            bool active;
 
-           var dt = m.SqlQuery("select salt, key, user_id, name from login LEFT JOIN roles ON roles_id = id_roles where username =@par1", postgres.list = new List<NpgsqlParameter>()
+           var dt = m.SqlQuery("select salt, key, user_id, name, acc_active from login LEFT JOIN roles ON roles_id = id_roles where username =@par1", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", userid),
 
@@ -41,6 +42,7 @@ namespace Matslump.Models
                     key = (byte[])dr["key"];
                     user_id = (int)dr["user_id"];
                     role = (string)dr["name"];
+                    active = (bool)dr["acc_active"];
 
                 }
             }
@@ -88,6 +90,33 @@ namespace Matslump.Models
                 return Tuple.Create(salt, key);
 
             }
+        }
+        public string GeneratePassword()
+        {
+            string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789#+@&$ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            string strPwd = "";
+            Random rnd = new Random();
+            for (int i = 0; i <= 7; i++)
+            {
+                int iRandom = rnd.Next(0, strPwdchar.Length - 1);
+                strPwd += strPwdchar.Substring(iRandom, 1);
+            }
+            return strPwd;
+        }
+        public void RegisterNewUser(string username, string email)
+        {
+            Accountmodels User = new Accountmodels();
+            string pass = User.GeneratePassword();
+            Tuple<byte[], byte[]> password = User.Generatepass(pass);
+            postgres sql = new postgres();
+            sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id, email) VALUES (@par2,@par3,@par1,'1',@email )", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", username),
+                new NpgsqlParameter("@par2", password.Item1),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@par3", password.Item2)
+            });
+            Email.SendEmail(email, username, "Ditt lösenord", "Ditt lösenord är: " + pass);
         }
     }
 }
