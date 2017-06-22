@@ -37,4 +37,46 @@ textarea1 {
     .navbar-inverse .navbar-nav > li > a {
         color: #e3eeee;
     }
+.headninghelp {
+    width:80%;
+    margin: 0px 0 0px 0;
+    padding: 0px;
+    display: inline-block;
+}
+.helpbutton {
+    display: inline-block;
+}
+.color {
+    margin: 10px 10px 10px 10px;
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.80);
+    padding: 2px 5px 5px 10px;
+    border-radius: 5px;
+   
+}
+.containermain {
+    margin: 0px 0px 0px 0px;
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.90);
+    padding: 2px 0px 0px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.bodymat {
+    background-size: contain;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.test {
+ text-align:center;
+ width:auto;
+
+}
+body {
+    background-color: #f3f0eb;
+    /*background-image: url(pic/background-2369807_960_720.jpg);
+    background-size: cover*/
+}
 

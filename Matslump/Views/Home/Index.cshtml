@@ -1,62 +1,50 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Din räddning i vardagen";
 }
-<div class="row">
-    <div class="col-md-2"> </div>
-    <div class="col-md-7 center-block">
-        <div id="myCarousel" class="carousel slide " data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner ">
-                <div class="item active ">
-                    <img src="~/Content/cake-1971552_960_720.jpg" alt="cake"/>
-                </div>
-
-                <div class="item">
-
-                    <img src="~/Content/croissants-569075_960_720.jpg" />
-                </div>
-
-                <div class="item">
-
-                    <img src="~/Content/food-715539_960_720.jpg" />
-                </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="color test"> <h1>Matslumpiatorn - Vi löser dina matproblem</h1></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-md-10"> <img src="~/Content/pic/eat-1339061_960_720.jpg" class="img-responsive bodymat"/></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12"></div>
             </div>
 
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
+
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Planera veckans mat</h2>
-        <p>
-            Planera veckans mat direkt,Vad är du sugen på?
-        </p>
-        <p><a class="btn btn-default" href="/slumpiator/Index">Matplan &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Se över dina recept</h2>
-        <p>Titta över din receptdatabas, vad har du ättit för mycket av?</p>
-        <p><a class="btn btn-default" href="/Myfood/Index">Mina recept &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Leta nya maträtter</h2>
-        <p>Sök i vår stora databas och hitta nya favoriter.</p>
-        <p><a class="btn btn-default" href="/Food/All">Inspiration &raquo;</a></p>
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="color">
+                <h2>Planera veckans mat</h2>
+                <p>
+                    Planera veckans mat direkt,Vad är du sugen på?
+                </p>
+                <p><a class="btn btn-default" href="/slumpiator/Index">Matplan &raquo;</a></p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="color">
+
+                <h2 class="color2">Se över dina recept</h2>
+                <p>Titta i din receptdatabas,vad vill du äta?</p>
+                <p><a class="btn btn-default" href="/Myfood/Index">Mina recept &raquo;</a></p>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="color">
+                <h2>Leta nya maträtter</h2>
+                <p>Sök i vår stora databas och hitta nya favoriter.</p>
+                <p><a class="btn btn-default" href="/Food/All">Inspiration &raquo;</a></p>
+            </div>
+        </div>
     </div>
 </div>

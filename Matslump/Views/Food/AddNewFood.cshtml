@@ -5,74 +5,97 @@
 }
 
 
-<h2>Nytt Recept</h2>
 
-@using (Html.BeginForm())
-{
+<div class="container">
+    <div class="headninghelp">
 
- 
-    <div class="form-horizontal">
-        
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" }) *
-            <div>
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class=" form-group">
-            <div>
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" }) *
-                <div>
-                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control test"},  style = "width:24%" })
-                    <div>
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                    </div>
-                   
+        <h2>Nytt Recept</h2>
+    </div>
+    <div class="helpbutton">
+        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hjälp - Lägga till recept</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Här kan du skapa nya recept. Lägg till namn, beskrivning länkning till bild, <br />samt extern länkning till recept.</p>
+                    <p>Har du ingen bild eller länkning till extern recept så lämna dessa tomma så fyller <br />programmet själv i en exempelbild. </p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
                 </div>
             </div>
-       
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Url_pic, htmlAttributes: new { @class = "" }) *
-            <div>
-                @Html.EditorFor(model => model.Url_pic, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Url_pic, "", new { @class = "text-danger" })
+    </div>
+    @using (Html.BeginForm())
+    {
+
+
+        <div class="form-horizontal">
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" }) *
+                <div>
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Url_recept, htmlAttributes: new { @class = "" }) *
-            <div>
-                @Html.EditorFor(model => model.Url_recept, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Url_recept, "", new { @class = "text-danger" })
+            <div class=" form-group">
+                <div>
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" }) *
+                    <div>
+                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control test" }, style = "width:24%" })
+                        <div>
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-        </div>
-       
+            <div class="form-group">
+                @Html.LabelFor(model => model.Url_pic, htmlAttributes: new { @class = "" }) *
+                <div>
+                    @Html.EditorFor(model => model.Url_pic, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Url_pic, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Url_recept, htmlAttributes: new { @class = "" }) *
+                <div>
+                    @Html.EditorFor(model => model.Url_recept, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Url_recept, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-10">
-                    <input type="submit" value="Spara" class="btn btn-default" /> @Html.ActionLink("Avbryt", "All" , null,new {@class = "btn btn-default" })
+                    <input type="submit" value="Spara" class="btn btn-default" /> @Html.ActionLink("Avbryt", "All", null, new { @class = "btn btn-default" })
                 </div>
             </div>
         </div>
 
-}
+    }
 
-<div>
-    
+    <div>
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-@*<script>
-        var container = $('#strings');
-        $('#addstring').click(function () {
-            var index = container.children('input').length;
-            var clone = $('#newstring').clone();
-            clone.html($(clone).html().replace(/\[#\]/g, '[' + index + ']'));
-            container.append(clone.html());
-            container.children('input').last().focus();
-        });
-</script>*@

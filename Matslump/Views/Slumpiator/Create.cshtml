@@ -3,20 +3,20 @@
 @{
     ViewBag.Title = "Create";
 }
+<div class="container containermain">
+    <h2>Ditt matförslag för vecka @ViewBag.date</h2>
 
-<h2>Ditt matförslag för vecka @ViewBag.date</h2>
-
-@using (Html.BeginForm())
-{
-    <p>
-        @Html.ActionLink("Slumpa fram ny", "Create", Model.Recept[0].Date, new { @class = "btn btn-default" })
-        @if(ViewBag.check != 6)
-        {<input type="submit" value="Spara veckomeny" class="btn btn-default" />}
-        @Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-default" })
-    </p>
-    foreach (var item in Model.Recept)
-    {<div class="row table">
-        <div class="col-md-10">          
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.ActionLink("Slumpa fram ny", "Create", Model.Recept[0].Date, new { @class = "btn btn-default" })
+            @if (ViewBag.check != 6)
+            {<input type="submit" value="Spara veckomeny" class="btn btn-default" />}
+            @Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-default" })
+        </p>
+        foreach (var item in Model.Recept)
+        {<div class="row table">
+        <div class="col-md-10">
             <a href="#@item.Id" data-toggle="collapse">@item.Date.DayOfWeek <span> - </span>  @item.Name</a>
             <div id="@item.Id" class="collapse">
                 <div class="row">
@@ -33,14 +33,15 @@
             </div>
         </div>
     </div>
+        }
+
+
+
+
+
+
+
     }
-
-
-
-
-
-
-
-}
+</div>
 
 

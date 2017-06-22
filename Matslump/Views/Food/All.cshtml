@@ -3,87 +3,122 @@
 @{
     ViewBag.Title = "All";
 }
+<div class="container containermain">
+    
+    <div class="headninghelp">
 
-<h2>Receptdatabasen</h2>
-<hr />
-<p>
-    @Html.ActionLink("Lägg till nytt recept", "addnewfood",null, new { @class = "btn btn-default" })
-</p>
-@foreach (var item in Model.Items)
-{
-    bool check = false;
-<div class="row table">
-    <div class="col-md-6">
-        <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
-        <div id="@item.Id" class="collapse">
-            <div class="row">
-                <div class="col-md-3">
-                    <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px" />
+        <h2>Receptdatabasen</h2>
+    </div>
+    <div class="helpbutton">
+        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hjälp Receptdatabasen</h4>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        @item.Description <br /> @if (item.Url_recept != "#") {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
-                    </div>
-
+                <div class="modal-body">
+                    <p>Här kan du skapa nya recept, ändra recept och även lägga till recept i din lista</p>
+                    <p>För att se beskrivning och bild klicka på rubriken på receptet, om de finns en extern länk visas den </p>
+                    <p>Texten med "Redan tillagd" betyder att recepten redan finns i din lista.</p>
                 </div>
-
-
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        @foreach (var item1 in ViewBag.Myfood)
-        {
-            if (item.Id == item1.Id)
+
+
+    <div class="row">
+        <hr />
+    </div>
+
+    @foreach (var item in Model.Items)
+    {
+        bool check = false;
+        <div class="row table">
+            <div class="col-md-6">
+                <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+                <div id="@item.Id" class="collapse">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px" />
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                @item.Description <br /> @if (item.Url_recept != "#")
+                                {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                @foreach (var item1 in ViewBag.Myfood)
+                {
+                    if (item.Id == item1.Id)
+                    {
+                        check = true;
+                    }
+
+                }
+                @if (check)
+                {
+                    <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
+                }
+                else
+                {
+                    @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage })
+                }
+                | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
+
+            </div>
+        </div>
+    }
+
+    @if (Model.Pager.EndPage > 1)
+    {
+        <ul class="pagination">
+            @if (Model.Pager.CurrentPage > 1)
             {
-                check = true;
+                <li>
+                    <a href="~/Food/All">Första</a>
+                </li>
+                <li>
+                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)">Tidigare</a>
+                </li>
             }
 
-        }
-        @if (check)
-        {
-            <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
-        }
-        else
-        {
-            @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage })
-        }
-        | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
-        
-    </div>
+            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
+                    <a href="~/Food/All?page=@page">@page</a>
+                </li>    }
+
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li>
+                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)">Nästa</a>
+                </li>
+                <li>
+                    <a href="~/Food/All?page=@(Model.Pager.TotalPages)">Sista</a>
+                </li>
+            }
+        </ul>
+    }
 </div>
-}
-
-@if (Model.Pager.EndPage > 1)
-{
-    <ul class="pagination">
-        @if (Model.Pager.CurrentPage > 1)
-        {
-            <li>
-                <a href="~/Food/All">Första</a>
-            </li>
-                            <li>
-                                <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)">Tidigare</a>
-                            </li>
-        }
-
-        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
-        {
-            <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                <a href="~/Food/All?page=@page">@page</a>
-            </li>    }
-
-        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-        {
-            <li>
-                <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)">Nästa</a>
-            </li>
-                            <li>
-                                <a href="~/Food/All?page=@(Model.Pager.TotalPages)">Sista</a>
-                            </li>
-        }
-    </ul>
-}
 
 				
 

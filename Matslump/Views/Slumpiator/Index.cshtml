@@ -4,116 +4,150 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Slumpiator - Översikt</h2>
-<hr />
-<div class="row">
-    <div class="col-md-5">
-        @Html.ActionLink("Slumpa - Den här veckan", "create", DateTime.Now, new { @class = "btn btn-default" })
-    </div>
-    <div class="col-md-4">
-        @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-default" })
-    </div>
-</div>
-<p>
+
+<div class="container containermain">
     
-  
-</p>
-<div class="row">
+    <div class="headninghelp">
+
+        <h2>Slumpiator - Översikt</h2>
+    </div>
+    <div class="helpbutton">
+        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+    </div>
 
 
-    <div class="col-md-5">
-        <table>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hjälp Slumpiatorn</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Här kan du slumpa fram dina matsedlar, Tryck på den vecka du vill slumpa fram</p>
+                    <p>Under knapparna visas dina slumpade veckor. Under gamla veckor kan du se vad du senast åt.</p>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-5">
+                @Html.ActionLink("Slumpa - Den här veckan", "create", DateTime.Now, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-default" })
+            </div>
+        </div>
+        <p>
+
+
+        </p>
+        <div class="row">
+
+
+            <div class="col-md-5">
+                <table>
+                    <tr>
+                        <th>
+                            <h4>Den här veckan, vecka @ViewBag.date </h4>
+                        </th>
+                    </tr>
+                    @foreach (var item in ViewBag.thisweek)
+            {
+                        <tr>
+                            <td>
+                                @item.Date.DayOfWeek<span> - </span>@item.Name
+                            </td>
+                        </tr>
+
+
+                    }
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table>
+                    <tr>
+                        <th>
+                            <h4>Nästa veckan, vecka @ViewBag.date1 </h4>
+                        </th>
+                    </tr>
+                    @foreach (var item in ViewBag.nextweek)
+                    {
+                        <tr>
+                            <td>
+                                @item.Date.DayOfWeek<span> - </span>@item.Name
+                            </td>
+                        </tr>
+
+
+                    }
+                </table>
+            </div>
+
+        </div>
+
+
+        <table id="food" style="width:40%">
             <tr>
                 <th>
-                    <h4>Den här veckan, vecka @ViewBag.date </h4>
-                </th>
+                    <h4>Gamla veckomenyer</h4>
+                <th></th>
             </tr>
-            @foreach (var item in ViewBag.thisweek)
+
+            @foreach (var item in Model.list)
             {
                 <tr>
                     <td>
-                        @item.Date.DayOfWeek<span> - </span>@item.Name
+                        <a href="#@item.Weeknumber" data-toggle="collapse" class=""><h4> Vecka @item.Weeknumber</h4> </a>
+
+
+
+
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <table id="@item.Weeknumber" class="collapse">
+                            @foreach (var item1 in Model.recepts)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (item1.Weeknumbers == item.Weeknumber)
+                                        {
+                                            @item1.Date.DayOfWeek <span> - </span>
+                                            @Html.DisplayFor(m => item1.Name)
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
 
 
+
+
+                    </td>
+                </tr>
             }
+
         </table>
+
+        <div class="col-md-12">
+
+        </div>
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
     </div>
-    <div class="col-md-4">
-        <table>
-            <tr>
-                <th>
-                    <h4>Nästa veckan, vecka @ViewBag.date1 </h4>
-            </th>
-        </tr>
-        @foreach (var item in ViewBag.nextweek)
-        {
-            <tr>
-                <td>
-                    @item.Date.DayOfWeek<span> - </span>@item.Name
-                </td>
-            </tr>
-
-
-        }
-    </table>
-</div>
-
-</div>
-
-
-    <table id="food" style="width:40%">
-        <tr>
-            <th>
-                <h4>Gamla veckomenyer</h4>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model.list)
-        {
-            <tr>
-                <td>
-                    <a href="#@item.Weeknumber" data-toggle="collapse" class=""><h4> Vecka @item.Weeknumber</h4> </a>
-
-
-
-
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table id="@item.Weeknumber" class="collapse">
-                        @foreach (var item1 in Model.recepts)
-                        {
-                            <tr>
-                                <td>
-                                    @if (item1.Weeknumbers == item.Weeknumber)
-                                    {
-                                    @item1.Date.DayOfWeek <span> - </span>
-                                    @Html.DisplayFor(m => item1.Name)
-                                }
-
-                            </td>
-                        </tr>
-                        }
-
-                    </table>
-
-
-
-
-                </td>
-            </tr>
-        }
-
-    </table>
-
-<div class="col-md-12">
-   
-</div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

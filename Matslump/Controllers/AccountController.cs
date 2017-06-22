@@ -55,13 +55,14 @@ namespace Matslump.Controllers
 
         }
         [AllowAnonymous]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Register()
         {
             return View();
         }
         [AllowAnonymous]
         [HttpPost]
+        [RequireHttps]
         public ActionResult Register(Users model)
         {
             if (model.Secret == "Nicklas" || model.Secret == "nicklas")
