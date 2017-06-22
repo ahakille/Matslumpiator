@@ -28,23 +28,23 @@ namespace Matslump.Models
                     client.UseDefaultCredentials = false;
                     client.Credentials = new NetworkCredential(Sender, Password);
 
-                    var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Content/apa.jpg"));
-                    inlineLogo.ContentId = Guid.NewGuid().ToString();
-
+                    //var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Content/apa.jpg"));
+                    //inlineLogo.ContentId = Guid.NewGuid().ToString();
+                    //            <img src=""cid:{2}"" />
                     string body = string.Format(@"
-                    <p>{0}</p>
+                    <b>{0}</b>
                     <p>{1}</p>
-                    //<img src=""cid:{2}"" />
+
                     <p>Ha en trevlig dag</p>
                     <p>Med vänliga hälsningar Matslumpiatorn</p> 
-                    ", "Hej " + name , Message, inlineLogo.ContentId);
+                    ", "Hej " + name , Message /*,inlineLogo.ContentId*/);
 
                     mail = new MailMessage(Sender, epost, Subject, Message);
                     mail.BodyEncoding = Encoding.UTF8;
                     mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
                     var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-                    view.LinkedResources.Add(inlineLogo);
+                    //view.LinkedResources.Add(inlineLogo);
                     mail.AlternateViews.Add(view);
                
 

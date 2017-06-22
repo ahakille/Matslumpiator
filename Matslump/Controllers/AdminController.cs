@@ -9,6 +9,7 @@ namespace Matslump.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [HttpGet]
         public ActionResult Index()
         {
             Users us = new Users();
@@ -58,6 +59,20 @@ namespace Matslump.Controllers
             {
                 return View();
             }
+        }
+        public ActionResult SendMessage(FormCollection form)
+        {
+            string message =Request.Form["message"];
+            string subject = Request.Form["subject"];
+            Users us = new Users();
+
+            List<Users> list = us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login FROM public.login");
+            foreach (var item in list)
+            {
+                Email.SendEmail(item.email, item.User, subject, message);
+                
+            }
+            return RedirectToAction("index", "admin");
         }
     }
 }
