@@ -34,7 +34,7 @@ namespace Matslump.Models
                     string body = string.Format(@"
                     <p>{0}</p>
                     <p>{1}</p>
-                    <img src=""cid:{2}"" />
+                    //<img src=""cid:{2}"" />
                     <p>Ha en trevlig dag</p>
                     <p>Med vänliga hälsningar Matslumpiatorn</p> 
                     ", "Hej " + name , Message, inlineLogo.ContentId);
