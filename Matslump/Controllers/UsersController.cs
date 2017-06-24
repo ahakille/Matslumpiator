@@ -14,7 +14,7 @@ namespace Matslump.Controllers
             int id = Convert.ToInt32(User.Identity.Name);
             Users us = new Users();
             List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login FROM public.login WHERE user_id = @id");
+            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login,login.day_of_slumpcron FROM public.login WHERE user_id = @id");
             us.active = list[0].active;
             us.email = list[0].email;
             us.User = list[0].User;
@@ -56,7 +56,7 @@ namespace Matslump.Controllers
             int id = Convert.ToInt32(User.Identity.Name);
             Users us = new Users();
             List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login FROM public.login WHERE user_id = @id");
+            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login,login.day_of_slumpcron FROM public.login WHERE user_id = @id");
             us.active = list[0].active;
             us.email = list[0].email;
             us.User = list[0].User;

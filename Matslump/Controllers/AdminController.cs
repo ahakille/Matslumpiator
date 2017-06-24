@@ -14,7 +14,7 @@ namespace Matslump.Controllers
         {
             Users us = new Users();
 
-            ViewBag.userlist= us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login FROM public.login");
+            ViewBag.userlist= us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login, login.day_of_slumpcron FROM public.login");
             
             return View();
         }
@@ -27,7 +27,7 @@ namespace Matslump.Controllers
         {
             Users us = new Users();
             List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login FROM public.login WHERE user_id = @id");
+            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login,login.day_of_slumpcron FROM public.login WHERE user_id = @id");
             us.active = list[0].active;
             us.email = list[0].email;
             us.User = list[0].User;
@@ -66,7 +66,7 @@ namespace Matslump.Controllers
             string subject = Request.Form["subject"];
             Users us = new Users();
 
-            List<Users> list = us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login FROM public.login");
+            List<Users> list = us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login,login.day_of_slumpcron FROM public.login");
             foreach (var item in list)
             {
                 Email.SendEmail(item.email, item.User, subject,Email.EmailOther(subject,message));
