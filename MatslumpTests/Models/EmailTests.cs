@@ -16,5 +16,12 @@ namespace Matslump.Models.Tests
         {
             Assert.Fail();
         }
+
+        [TestMethod()]
+        public void EmailslumplistTest()
+        {
+            Slumpcron target = new Slumpcron();
+            
+        }
     }
 }

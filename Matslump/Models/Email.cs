@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Matslump.Models
 {
     public class Email
     {
-        public static void SendEmail(string epost , string name, string Subject, string Message)
+        public static void SendEmail(string epost , string name, string Subject, string body)
         {
 
             string Sender = "mat@nppc.se";
@@ -31,15 +32,15 @@ namespace Matslump.Models
                     //var inlineLogo = new LinkedResource(HttpContext.Current.Server.MapPath("~/Content/apa.jpg"));
                     //inlineLogo.ContentId = Guid.NewGuid().ToString();
                     //            <img src=""cid:{2}"" />
-                    string body = string.Format(@"
-                    <b>{0}</b>
-                    <p>{1}</p>
+                    //string body = string.Format(@"
+                    //<b>{0}</b>
+                    //<p>{1}</p>
 
-                    <p>Ha en trevlig dag</p>
-                    <p>Med vänliga hälsningar Matslumpiatorn</p> 
-                    ", "Hej " + name , Message /*,inlineLogo.ContentId*/);
+                    //<p>Ha en trevlig dag</p>
+                    //<p>Med vänliga hälsningar Matslumpiatorn</p> 
+                    //", "Hej " + name , Message /*,inlineLogo.ContentId*/);
 
-                    mail = new MailMessage(Sender, epost, Subject, Message);
+                    mail = new MailMessage(Sender, epost, Subject, body);
                     mail.BodyEncoding = Encoding.UTF8;
                     mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
@@ -57,6 +58,39 @@ namespace Matslump.Models
                     string error = ex.Message;
                 }
             
+        }
+        public static string Emailslumplist(string name , string Message, List<Receptmodels> lista)
+        {
+            string test;
+            test = "<style>table {width:420px;}table, th, td { border: 1px solid black;border-collapse: collapse;}th, td {padding: 5px;text-align: left;}</style><table>";
+            foreach (var item in lista)
+            {
+                test +="<tr> <th>" + item.Date.ToShortDateString()+ " "+item.Date.DayOfWeek + "</th><th>" + item.Name + "</th> </tr>";
+            }
+            test += "</table>";    
+        
+            string link = "<a href=\"https://mat.nppc.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
+            string body = string.Format(@"
+                    <b>{0}</b>
+                    <p>{1}</p>
+                    <p>{2}</p>
+
+                    <p>Ha en trevlig dag</p>
+                    <p>Med vänlig hälsning {3} </p>
+                    ", "Hej " + name, Message ,test,link);
+            return body;
+        }
+        public static string EmailOther(string name , string Message)
+        {
+            string link = "<a href=\"https://mat.nppc.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
+            string body = string.Format(@"
+            <b>{0}</b>
+            <p>{1}</p>
+
+            <p>Ha en trevlig dag</p>
+            <p>Med vänlig hälsning {2}</p>
+            ", "Hej " + name, Message , link); /*,inlineLogo.ContentId*/
+            return body;
         }
     }
 }

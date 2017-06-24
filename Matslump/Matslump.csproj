@@ -191,7 +191,7 @@
     <Compile Include="Models\postgres.cs" />
     <Compile Include="Models\Receptmodels.cs" />
     <Compile Include="Models\slump.cs" />
-    <Compile Include="Models\slumpmain.cs" />
+    <Compile Include="Models\Slumpcron.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -199,8 +199,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Cron.cs" />
-    <Compile Include="Tools\Slumpjob.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

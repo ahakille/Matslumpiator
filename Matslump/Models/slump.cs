@@ -55,7 +55,7 @@ namespace Matslump.Models
             }
             if (maxnumber <= 7)
             {
-                re.Id = 6;
+                re.Id = 10;
                 re.Name = "Inte tillräckligt med maträtter för att slumpa fram en vecka!!!";
                 random_list.Add(re);
             }
@@ -66,7 +66,7 @@ namespace Matslump.Models
         }
         public DateTime datefixer(DateTime date)
         {
-            int test = ((int)date.DayOfWeek);
+            int test = ((int)date.DayOfWeek ==0)?7: (int)date.DayOfWeek;
             test--;
             date = date.AddDays(-test);
             return date;
@@ -85,7 +85,7 @@ namespace Matslump.Models
             // Return the week of our adjusted day
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
-        public bool checkslump(DateTime date , int user_id)
+        public bool Checkslump(DateTime date , int user_id)
         {
             postgres m = new postgres();
             bool check =false;
@@ -172,5 +172,6 @@ namespace Matslump.Models
             return list;
 
         }
+
     }
 }

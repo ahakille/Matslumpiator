@@ -109,7 +109,7 @@ namespace Matslump.Models
             string pass = GeneratePassword();
             Users us = new Users();
             us.CreateUser(username, email, true, pass);
-            Email.SendEmail(email, username, "Ditt lösenord", "Ditt lösenord är: " + pass);
+            Email.SendEmail(email, username, "Ditt lösenord", Email.EmailOther("Ditt lösenord är: ",pass));
         }
     }
 }

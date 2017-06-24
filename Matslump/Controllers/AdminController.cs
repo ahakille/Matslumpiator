@@ -69,7 +69,7 @@ namespace Matslump.Controllers
             List<Users> list = us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login FROM public.login");
             foreach (var item in list)
             {
-                Email.SendEmail(item.email, item.User, subject, message);
+                Email.SendEmail(item.email, item.User, subject,Email.EmailOther(subject,message));
                 
             }
             return RedirectToAction("index", "admin");

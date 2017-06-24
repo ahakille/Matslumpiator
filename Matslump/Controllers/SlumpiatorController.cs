@@ -57,7 +57,7 @@ namespace Matslump.Controllers
             int user = Convert.ToInt16(User.Identity.Name);
             model.Recept = (List<Receptmodels>)TempData["receptlista"];
             slump checkslump = new slump();
-            bool check= checkslump.checkslump(model.Recept[0].Date, user);
+            bool check= checkslump.Checkslump(model.Recept[0].Date, user);
             
             
             foreach (var item in model.Recept)
