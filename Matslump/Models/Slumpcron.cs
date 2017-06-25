@@ -9,8 +9,11 @@ namespace Matslump.Models
      public static void StartCron()
         {
             Users user = new Users();
-            List<Users> list = user.Getuser(6, "SELECT login.user_id, login.username, login.roles_id, login.email, login.acc_active, login.last_login, login.day_of_slumpcron FROM public.login WHERE login.day_of_slumpcron =@id ;");
             slump checkslump = new slump();
+            DateTime crondate = DateTime.Now;
+            int checkcron = ((int)crondate.DayOfWeek == 0) ? 7 : (int)crondate.DayOfWeek;
+            List<Users> list = user.Getuser(checkcron, "SELECT login.user_id, login.username, login.roles_id, login.email, login.acc_active, login.last_login, login.day_of_slumpcron FROM public.login WHERE login.day_of_slumpcron =@id ;");
+           
             foreach (var item in list)
             {
                 DateTime date = checkslump.datefixer(DateTime.Now);
