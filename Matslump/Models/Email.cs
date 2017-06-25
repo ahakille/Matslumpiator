@@ -69,7 +69,7 @@ namespace Matslump.Models
             }
             test += "</table>";    
         
-            string link = "<a href=\"https://mat.nppc.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
+            string link = "<a href=\"https://matslumpiator.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
             string body = string.Format(@"
                     <b>{0}</b>
                     <p>{1}</p>
@@ -82,7 +82,7 @@ namespace Matslump.Models
         }
         public static string EmailOther(string name , string Message)
         {
-            string link = "<a href=\"https://mat.nppc.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
+            string link = "<a href=\"https://matslumpiator.se/\" target = \"_blank\" >Matslumpiatorn </ a > ";
             string body = string.Format(@"
             <b>{0}</b>
             <p>{1}</p>

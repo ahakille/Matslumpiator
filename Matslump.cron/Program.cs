@@ -54,15 +54,15 @@ namespace Matslump.Cron
                 IJobDetail job = JobBuilder.Create<Slumpjob>().Build();
 
                 ITrigger trigger = TriggerBuilder.Create()
-                      //.WithDailyTimeIntervalSchedule
-                      //  (s =>
-                      //     s.WithIntervalInHours(24)
-                      //    .OnEveryDay()
-                      //    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(21, 16))
-                      //  )
-                      .WithSimpleSchedule(x => x
-                            .WithIntervalInMinutes(5)
-                            .RepeatForever())
+                      .WithDailyTimeIntervalSchedule
+                        (s =>
+                           s.WithIntervalInHours(24)
+                          .OnEveryDay()
+                          .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(12, 00))
+                        )
+                    //.WithSimpleSchedule(x => x
+                    //      .WithIntervalInMinutes(5)
+                    //      .RepeatForever())
                     .Build();
 
                 scheduler.ScheduleJob(job, trigger);
