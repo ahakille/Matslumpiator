@@ -10,6 +10,7 @@ namespace Matslump.Controllers
     {
         // GET: Admin
         [HttpGet]
+        [Authorize(Roles="1")]
         public ActionResult Index()
         {
             Users us = new Users();
@@ -18,11 +19,12 @@ namespace Matslump.Controllers
             
             return View();
         }
+        [Authorize(Roles = "1")]
         public ActionResult NewUser()
         {
             return View();
         }
-
+        [Authorize(Roles = "1")]
         public ActionResult Edit(int id)
         {
             Users us = new Users();
@@ -36,6 +38,7 @@ namespace Matslump.Controllers
             return View(us);
         }
         [HttpPost]
+        [Authorize(Roles = "1")]
         public ActionResult NewUser(Users model)
         {
             try
@@ -60,6 +63,7 @@ namespace Matslump.Controllers
                 return View();
             }
         }
+        [Authorize(Roles = "1")]
         public ActionResult SendMessage(FormCollection form)
         {
             string message =Request.Form["message"];
