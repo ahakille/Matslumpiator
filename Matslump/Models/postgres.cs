@@ -79,6 +79,32 @@ namespace Matslump.Models
                 _conn.Close();
             }
         }
+        public int SqlQueryString(string sqlquery, List<NpgsqlParameter> parametrar)
+        {
+
+            try
+
+            {
+
+                _cmd = new NpgsqlCommand(sqlquery, _conn);
+                _cmd.Parameters.AddRange(parametrar.ToArray());
+                int check = (int)_cmd.ExecuteScalar();
+
+
+                return check;
+
+            }
+            catch (Exception ex)
+            {
+                return 0;
+
+            }
+
+            finally
+            {
+                _conn.Close();
+            }
+        }
 
         public void SqlNonQuery(string sqlquery, List<NpgsqlParameter> parametrar)
         {

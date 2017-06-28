@@ -12,7 +12,7 @@ namespace Matslump.Controllers
     {
         // GET: Account
         [AllowAnonymous]
-        [RequireHttps]
+        //[RequireHttps]
         public ActionResult Index(string returnUrl)
         {
             
@@ -21,7 +21,7 @@ namespace Matslump.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        [RequireHttps]
+        //[RequireHttps]
         public ActionResult Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
@@ -55,20 +55,20 @@ namespace Matslump.Controllers
 
         }
         [AllowAnonymous]
-        [RequireHttps]
+        //[RequireHttps]
         public ActionResult Register()
         {
             return View();
         }
         [AllowAnonymous]
         [HttpPost]
-        [RequireHttps]
+        //[RequireHttps]
         public ActionResult Register(Users model)
         {
             if (model.Secret == "Nicklas" || model.Secret == "nicklas")
             {
                 postgres sql = new postgres();
-                bool check = sql.SqlQueryExist("Select exists(SELECT login.username FROM public.login WHERE login.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
+                bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
                 if (!check)
                 {
                     Accountmodels User = new Accountmodels();
@@ -90,38 +90,38 @@ namespace Matslump.Controllers
            
            
         }
-        public ActionResult Newpassword()
+        //[RequireHttps]
+        [AllowAnonymous]
+        public ActionResult Forgetpassword()
         {
+
             return View();
         }
-
-        // POST: User/newuser
         [HttpPost]
-        public ActionResult Newpassword(Users model)
+        //[RequireHttps]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Forgetpassword(Users model)
         {
-            //    if (!ModelState.IsValid)
-            //    {
-            //        // om inte rätt format
-            //        return View(model);
-            //    }
-            try
-            {
-                Accountmodels User1 = new Accountmodels();
-                Tuple<byte[], byte[]> password = User1.Generatepass(model.Password);
-                postgres sql = new postgres();
-                sql.SqlNonQuery("UPDATE login set salt= @par2, key =@par3 WHERE user_id =@par1", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@par1", Convert.ToInt16(User.Identity.Name)),
-                new NpgsqlParameter("@par2", password.Item1),
-                new NpgsqlParameter("@par3", password.Item2)
-            });
+            Accountmodels acc = new Accountmodels();
 
-                return RedirectToAction("index", "home");
-            }
-            catch
+            bool result = acc.Forgetpassword(model.User);
+            if(result)
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
+            ModelState.AddModelError("", "Något gick fel");
+            return View(model);
+        }
+        public ActionResult Resetpassword(string validate)
+        {
+            if(string.IsNullOrEmpty(validate))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
+
+            return View()
         }
 
         public ActionResult LogOff()

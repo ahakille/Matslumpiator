@@ -38,6 +38,8 @@ namespace Matslump.Models
         [Display(Name = "Registeringskod")]
         public string Secret { get; set; }
         public int Day_of_slumpcron { get; set; }
+        
+        public int Login_id { get; set; }
 
         public List<Users> Getuser(int id , string sql)
         {
@@ -58,7 +60,7 @@ namespace Matslump.Models
                 r.active = (bool)dr["acc_active"];
                 r.Roles_id = (int)dr["roles_id"];
                 r.Last_login = (DateTime)dr["last_login"];
-                r.Day_of_slumpcron = (int)dr["day_of_slumpcron"];
+                r.Day_of_slumpcron = (int)dr["settings_id"];
 
 
                 mt.Add(r);
@@ -71,20 +73,33 @@ namespace Matslump.Models
             Accountmodels User = new Accountmodels();
             Tuple<byte[], byte[]> password = User.Generatepass(Password);
             postgres sql = new postgres();
-            sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id,email,acc_active,last_login) VALUES (@par2,@par3,@par1,'2',@email,@active,@last_login)", postgres.list = new List<NpgsqlParameter>()
+            // Behöver skrivas om! klart!
+            postgres sql2 = new postgres();
+            int id = sql2.SqlQueryString("INSERT INTO login (salt, hash) VALUES (@salt ,@hash) RETURNING login_id;", postgres.list = new List<NpgsqlParameter>()
+            {
+                
+                new NpgsqlParameter("@salt", password.Item1),
+                new NpgsqlParameter("@hash", password.Item2)
+            });
+            sql.SqlNonQuery("INSERT INTO users (username,roles_id,email,acc_active,last_login,login_id) VALUES (@par1,'2',@email,@active,@last_login,@login_id)", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", user),
-                new NpgsqlParameter("@par2", password.Item1),
                 new NpgsqlParameter("@email", email),
                 new NpgsqlParameter("@active", active),
-                new NpgsqlParameter("@last_login", DateTime.Now),
-                new NpgsqlParameter("@par3", password.Item2)
+                new NpgsqlParameter("@login_id", id),
+                new NpgsqlParameter("@last_login", DateTime.Now)
+                
             });
+       
+
+
+            
         }
         public void UpdateUser(int User_id,string username,string email,bool active)
         {
             postgres sql = new postgres();
-            sql.SqlNonQuery("UPDATE login SET username=@username, email=@email,acc_active=@active WHERE user_id=@user_id", postgres.list = new List<NpgsqlParameter>()
+            //Behöver skrivas OM! klar
+            sql.SqlNonQuery("UPDATE users SET username=@username, email=@email,acc_active=@active WHERE user_id=@user_id", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@username", username),
                 new NpgsqlParameter("@email", email),
@@ -92,6 +107,19 @@ namespace Matslump.Models
                 new NpgsqlParameter("@user_id", User_id)
               
                
+            });
+        }
+        public void Newpassword(int login_id,string newpassword)
+        {
+            Accountmodels User1 = new Accountmodels();
+            Tuple<byte[], byte[]> password = User1.Generatepass(newpassword);
+            postgres sql = new postgres();
+            // behöver skrivas om! klart
+            sql.SqlNonQuery("UPDATE login set salt= @par2, hash =@par3 WHERE login_id =@par1", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", login_id),
+                new NpgsqlParameter("@par2", password.Item1),
+                new NpgsqlParameter("@par3", password.Item2)
             });
         }
 

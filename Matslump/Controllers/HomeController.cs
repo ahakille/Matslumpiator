@@ -9,7 +9,7 @@ namespace Matslump.Controllers
     public class HomeController : Controller
     {
         [AllowAnonymous]
-        [RequireHttps]
+        //[RequireHttps]
         public ActionResult Index()
         {
 

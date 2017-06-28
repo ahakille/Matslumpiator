@@ -10,26 +10,27 @@ namespace Matslump.Controllers
     {
         // GET: Admin
         [HttpGet]
-        [Authorize(Roles="1")]
+        [Authorize(Roles= "Admin")]
         public ActionResult Index()
         {
             Users us = new Users();
-
-            ViewBag.userlist= us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login, login.day_of_slumpcron FROM public.login");
+            //Behöver skrivas om! klar
+            ViewBag.userlist= us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login, users.day_of_slumpcron FROM public.users");
             
             return View();
         }
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "Admin")]
         public ActionResult NewUser()
         {
             return View();
         }
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             Users us = new Users();
             List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id,last_login,login.day_of_slumpcron FROM public.login WHERE user_id = @id");
+            // Behöver skrivas om! klar
+            list = us.Getuser(id, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id,last_login,users.day_of_slumpcron FROM public.users WHERE user_id = @id");
             us.active = list[0].active;
             us.email = list[0].email;
             us.User = list[0].User;
@@ -38,7 +39,7 @@ namespace Matslump.Controllers
             return View(us);
         }
         [HttpPost]
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "Admin")]
         public ActionResult NewUser(Users model)
         {
             try
@@ -46,6 +47,7 @@ namespace Matslump.Controllers
                 Accountmodels User = new Accountmodels();
                 Tuple<byte[], byte[]> password = User.Generatepass(model.Password);
                 postgres sql = new postgres();
+                // Behöver skrivas om
                 sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id,email,acc_active,last_login) VALUES (@par2,@par3,@par1,'2',@email,@active,@last_login)", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", model.User),
@@ -63,14 +65,14 @@ namespace Matslump.Controllers
                 return View();
             }
         }
-        [Authorize(Roles = "1")]
+        [Authorize(Roles = "Admin")]
         public ActionResult SendMessage(FormCollection form)
         {
             string message =Request.Form["message"];
             string subject = Request.Form["subject"];
             Users us = new Users();
-
-            List<Users> list = us.Getuser(0, "SELECT login.user_id,login.username,login.email,login.acc_active,login.roles_id ,login.last_login,login.day_of_slumpcron FROM public.login");
+            // Behöver skrivas om! klar
+            List<Users> list = us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login,users.day_of_slumpcron FROM public.users");
             foreach (var item in list)
             {
                 Email.SendEmail(item.email, item.User, subject,Email.EmailOther(subject,message));
