@@ -119,9 +119,9 @@ namespace Matslump.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
 
-            return View()
+
+            return View();
         }
 
         public ActionResult LogOff()
