@@ -138,16 +138,48 @@ namespace Matslump.Models
             }
             string hash = GeneratePassword(60);
             postgres sql1 = new postgres();
+            DateTime date = DateTime.UtcNow;
+            date = date.AddHours(3);
             sql1.SqlNonQuery("UPDATE login set reset_hash=@hash , reset_time =@time WHERE login_id=@id  ", postgres.list = new List<NpgsqlParameter>()
                         {
                          new NpgsqlParameter("@id",r.Login_id),
                          new NpgsqlParameter("@hash",hash),
-                         new NpgsqlParameter("@time",DateTime.Now)
+                         new NpgsqlParameter("@time",date)
                          });
-            string message =Email.EmailOther(r.User, "Här kommer din återställningslänk: <a href=\"https://matslumpiator.se/validate=" + hash + "\" target=\"_blank\" >Återställlösenorder </a>");
+            string message =Email.EmailOther(r.User, "Här kommer din återställningslänk: <a href=\"https://matslumpiator.se/Account/Resetpassword?validate=" + hash + "\" target=\"_blank\" >Återställlösenordet </a>");
             Email.SendEmail(r.email, r.User, "Återställning Lösenord", message);
             return true;
             
+        }
+        public Tuple<int,bool,string> Resetpassword(string validate)
+        {
+            postgres sql = new postgres();
+            DataTable dt = new DataTable();
+            dt = sql.SqlQuery("SELECT login.login_id, login.reset_hash, login.reset_time, users.username FROM login LEFT JOIN users ON users.login_id = login.login_id WHERE reset_hash = @hash;", postgres.list = new List<NpgsqlParameter>()
+                        {
+                         new NpgsqlParameter("@hash", validate)
+                         });
+            string hash ="";
+            DateTime date = DateTime.Now;
+            int login_id =0;
+            string username = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+
+
+
+                hash = dr["reset_hash"].ToString();
+                username = dr["username"].ToString();
+                date = (DateTime)dr["reset_time"];
+                login_id = (int)dr["login_id"];
+            }
+            if (!string.IsNullOrEmpty(hash))
+            {
+                if (validate == hash && date >= DateTime.UtcNow)
+                return Tuple.Create(login_id, true, username);
+            }
+
+            return Tuple.Create(login_id, false, username);
         }
     }
 }

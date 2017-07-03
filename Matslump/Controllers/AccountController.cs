@@ -92,9 +92,13 @@ namespace Matslump.Controllers
         }
         //[RequireHttps]
         [AllowAnonymous]
-        public ActionResult Forgetpassword()
+        public ActionResult Forgetpassword(string error)
         {
-
+            if(error == "1")
+            {
+                ModelState.AddModelError("", "Din tid för byte har gått ut eller felaktigt återställningskod. Vänligen skapa en ny");
+                return View();
+            }
             return View();
         }
         [HttpPost]
@@ -110,18 +114,35 @@ namespace Matslump.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "Något gick fel");
+            ModelState.AddModelError("", "Användaren finns inte eller så är kontot inte aktiverat");
             return View(model);
         }
+        [AllowAnonymous]
         public ActionResult Resetpassword(string validate)
         {
             if(string.IsNullOrEmpty(validate))
             {
                 return RedirectToAction("Index", "Home");
             }
-
-
-            return View();
+            Users us = new Users();
+            Accountmodels acc = new Accountmodels();
+            Tuple<int,bool,string> reset = acc.Resetpassword(validate);
+            if (reset.Item2)
+            {
+                us.Login_id = reset.Item1;
+                us.User = reset.Item3;
+                return View(us);
+            }
+            return RedirectToAction("Forgetpassword", "Account","error=1");
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Resetpassword(Users model)
+        {
+            Users us = new Users();
+            us.Newpassword(model.Login_id, model.Password);
+            return RedirectToAction("Index", "Account");
         }
 
         public ActionResult LogOff()
