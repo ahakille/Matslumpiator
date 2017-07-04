@@ -92,9 +92,9 @@ namespace Matslump.Controllers
         }
         //[RequireHttps]
         [AllowAnonymous]
-        public ActionResult Forgetpassword(string error)
+        public ActionResult Forgetpassword(int id)
         {
-            if(error == "1")
+            if(id == 1)
             {
                 ModelState.AddModelError("", "Din tid för byte har gått ut eller felaktigt återställningskod. Vänligen skapa en ny");
                 return View();
@@ -133,7 +133,7 @@ namespace Matslump.Controllers
                 us.User = reset.Item3;
                 return View(us);
             }
-            return RedirectToAction("Forgetpassword", "Account","error=1");
+            return RedirectToAction("Forgetpassword", "Account",1);
         }
         [HttpPost]
         [AllowAnonymous]
