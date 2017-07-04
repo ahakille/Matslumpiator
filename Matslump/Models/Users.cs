@@ -75,18 +75,26 @@ namespace Matslump.Models
             postgres sql = new postgres();
             // Behöver skrivas om! klart!
             postgres sql2 = new postgres();
-            int id = sql2.SqlQueryString("INSERT INTO login (salt, hash) VALUES (@salt ,@hash) RETURNING login_id;", postgres.list = new List<NpgsqlParameter>()
+            
+            int id = sql2.SqlQueryString("INSERT INTO login (salt, hash, reset_time, reset_hash) VALUES (@salt ,@hash, @time, 1) RETURNING login_id;", postgres.list = new List<NpgsqlParameter>()
             {
                 
                 new NpgsqlParameter("@salt", password.Item1),
-                new NpgsqlParameter("@hash", password.Item2)
+                new NpgsqlParameter("@hash", password.Item2),
+                new NpgsqlParameter("@time", Convert.ToDateTime("1970-01-01 00:00:00"))
             });
-            sql.SqlNonQuery("INSERT INTO users (username,roles_id,email,acc_active,last_login,login_id) VALUES (@par1,'2',@email,@active,@last_login,@login_id)", postgres.list = new List<NpgsqlParameter>()
+            postgres sql3 = new postgres();
+            int id_setting = sql3.SqlQueryString("INSERT INTO usersettings (day_of_slumpcron) VALUES (6) RETURNING setting_id;", postgres.list = new List<NpgsqlParameter>()
+            { 
+            });
+
+            sql.SqlNonQuery("INSERT INTO users (username,roles_id,email,acc_active,last_login,login_id,settings_id) VALUES (@par1,'2',@email,@active,@last_login,@login_id,@settings_id)", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", user),
                 new NpgsqlParameter("@email", email),
                 new NpgsqlParameter("@active", active),
                 new NpgsqlParameter("@login_id", id),
+                new NpgsqlParameter("@settings_id", id_setting),
                 new NpgsqlParameter("@last_login", DateTime.Now)
                 
             });

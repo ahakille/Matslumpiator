@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using Matslump.Tools;
 
 namespace Matslump.Models
 {
@@ -24,7 +25,7 @@ namespace Matslump.Models
             }
             catch (Exception ex)
             {
-
+                LogWriter log = new LogWriter(ex.Message);
             }
         }
   
@@ -44,6 +45,7 @@ namespace Matslump.Models
             }
             catch (Exception ex)
             {
+                LogWriter log = new LogWriter(ex.Message);
                 return null;
                 
             }
@@ -70,6 +72,7 @@ namespace Matslump.Models
             }
             catch (Exception ex)
             {
+                LogWriter log = new LogWriter(ex.Message);
                 return false;
 
             }
@@ -96,6 +99,7 @@ namespace Matslump.Models
             }
             catch (Exception ex)
             {
+                LogWriter log = new LogWriter(ex.Message);
                 return 0;
 
             }
@@ -117,7 +121,7 @@ namespace Matslump.Models
             }
             catch (Exception ex)
             {
-               
+                LogWriter log = new LogWriter(ex.Message);
             }
 
             finally
