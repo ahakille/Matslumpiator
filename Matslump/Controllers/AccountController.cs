@@ -13,6 +13,7 @@ namespace Matslump.Controllers
         // GET: Account
         [AllowAnonymous]
         //[RequireHttps]
+       
         public ActionResult Index(string returnUrl)
         {
             
@@ -21,6 +22,7 @@ namespace Matslump.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         //[RequireHttps]
         public ActionResult Index(Accountmodels model)
         {

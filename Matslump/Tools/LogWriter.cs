@@ -12,8 +12,8 @@ namespace Matslump.Tools
             LogWrite(logMessage);
         }
         public void LogWrite(string logMessage)
-        {
-            m_exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        {//Assembly.GetExecutingAssembly().Location
+            m_exePath = Path.GetDirectoryName(@"C:\inetpub\wwwroot\matslumpiator\logs\");
             try
             {
                 using (StreamWriter w = File.AppendText(m_exePath + "\\" + "log.txt"))
