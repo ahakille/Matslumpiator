@@ -37,7 +37,7 @@ namespace Matslump.Models
         public DateTime Last_login { get; set; }
         [Display(Name = "Registeringskod")]
         public string Secret { get; set; }
-        public int Day_of_slumpcron { get; set; }
+        public int Settings_id { get; set; }
         
         public int Login_id { get; set; }
 
@@ -60,7 +60,7 @@ namespace Matslump.Models
                 r.active = (bool)dr["acc_active"];
                 r.Roles_id = (int)dr["roles_id"];
                 r.Last_login = (DateTime)dr["last_login"];
-                r.Day_of_slumpcron = (int)dr["settings_id"];
+                r.Settings_id = (int)dr["settings_id"];
 
 
                 mt.Add(r);

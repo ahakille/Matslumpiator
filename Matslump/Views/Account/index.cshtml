@@ -8,14 +8,14 @@
     <hr />
 </div>
 
-@Html.AntiForgeryToken
+
 
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Index", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-             
+            {@Html.AntiForgeryToken()
+
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(m => m.user, new { @class = "col-md-2 control-label" })

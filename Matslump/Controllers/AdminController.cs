@@ -15,7 +15,7 @@ namespace Matslump.Controllers
         {
             Users us = new Users();
             //Behöver skrivas om! klar
-            ViewBag.userlist= us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login, users.day_of_slumpcron FROM public.users");
+            ViewBag.userlist= us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users");
             
             return View();
         }
@@ -30,7 +30,7 @@ namespace Matslump.Controllers
             Users us = new Users();
             List<Users> list = new List<Users>();
             // Behöver skrivas om! klar
-            list = us.Getuser(id, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id,last_login,users.day_of_slumpcron FROM public.users WHERE user_id = @id");
+            list = us.Getuser(id, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id,last_login,users.settings_id FROM public.users WHERE user_id = @id");
             us.active = list[0].active;
             us.email = list[0].email;
             us.User = list[0].User;

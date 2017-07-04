@@ -12,7 +12,7 @@ namespace Matslump.Models
             slump checkslump = new slump();
             DateTime crondate = DateTime.Now;
             int checkcron = ((int)crondate.DayOfWeek == 0) ? 7 : (int)crondate.DayOfWeek;
-            List<Users> list = user.Getuser(checkcron, "SELECT users.user_id, users.username, users.email, users.acc_active,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON users.settings_id = usersettings.setting_id  WHERE usersettings.day_of_slumpcron =@id ;");
+            List<Users> list = user.Getuser(checkcron, "SELECT users.user_id, users.username, users.email, users.acc_active,users.roles_id,users.settings_id,users.last_login FROM public.users LEFT JOIN usersettings ON users.settings_id = usersettings.setting_id  WHERE usersettings.day_of_slumpcron =@id ;");
            
             foreach (var item in list)
             {

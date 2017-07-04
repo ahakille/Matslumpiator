@@ -67,10 +67,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Matslump.cron\Matslump.cron.csproj">
-      <Project>{508E4479-0D54-4A7A-86FC-9DB364ADD30B}</Project>
-      <Name>Matslump.cron</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Matslump\Matslump.csproj">
       <Project>{F514DBC7-0DAC-47F1-B02B-F9315FA2F36A}</Project>
       <Name>Matslump</Name>
