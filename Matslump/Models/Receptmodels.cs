@@ -13,7 +13,7 @@ namespace Matslump.Models
         [Required]
         public string Name { get; set; }
         public List<keyword> listaKeyword { get; set; }
-        [Required]
+        
         [Display(Name = "Bild")]
         public string Url_pic { get; set; }
         [Required]

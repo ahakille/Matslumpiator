@@ -15,7 +15,7 @@ namespace Matslump.Controllers
         {
             Users us = new Users();
             //Behöver skrivas om! klar
-            ViewBag.userlist= us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users");
+            ViewBag.userlist= us.Getuser(0, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users ORDER BY users.last_login DESC");
             
             return View();
         }

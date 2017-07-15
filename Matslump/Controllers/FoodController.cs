@@ -31,11 +31,11 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult AddNewFood(Receptmodels model)
         {
-            if(model.Url_pic == "")
+            if(string.IsNullOrWhiteSpace(model.Url_pic))
             {
                 model.Url_pic = "http://www.ica.se/imagevaultfiles/id_53491/cf_6901/ica_recept.png";
             }
-            if(model.Url_recept == "")
+            if(string.IsNullOrWhiteSpace(model.Url_recept))
             {
                 model.Url_recept = "#";
             }
@@ -59,11 +59,11 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult EditFood(Receptmodels model)
         {
-            if (model.Url_pic == "")
+            if (string.IsNullOrWhiteSpace(model.Url_pic))
             {
                 model.Url_pic = "http://www.ica.se/imagevaultfiles/id_53491/cf_6901/ica_recept.png";
             }
-            if (model.Url_recept == "")
+            if (string.IsNullOrWhiteSpace(model.Url_recept))
             {
                 model.Url_recept = "#";
             }

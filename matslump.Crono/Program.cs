@@ -15,8 +15,14 @@ namespace matslump.Crono
         {
             try
             {
-                Cron.Start();
+                Console.WriteLine("Enter time for crono, Add hours");
+                int hours = Convert.ToInt16( Console.ReadLine());
+                Console.WriteLine("Add min");
+                int min = Convert.ToInt16(Console.ReadLine());
+                Cron.Start(hours,min);
                 Console.WriteLine("CronJob started");
+                
+                
             }
 
             catch (SchedulerException se)
@@ -29,13 +35,13 @@ namespace matslump.Crono
             public void Execute(IJobExecutionContext context)
             {
                 Slumpcron.StartCron();
-
+                Console.WriteLine("Crono run " + DateTime.Now);
             }
 
         }
         public class Cron
         {
-            public static void Start()
+            public static void Start(int hours ,int min)
             {
                 IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
                 scheduler.Start();
@@ -47,13 +53,13 @@ namespace matslump.Crono
                       (s =>
                          s.WithIntervalInHours(24)
                         .OnEveryDay()
-                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(16, 15))
+                        .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(hours, min))
                       )
                     //.WithSimpleSchedule(x => x
                     //      .WithIntervalInMinutes(5)
                     //      .RepeatForever())
                     .Build();
-
+                
                 scheduler.ScheduleJob(job, trigger);
             }
         }
