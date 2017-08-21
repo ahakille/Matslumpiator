@@ -12,6 +12,7 @@ namespace Matslump.Models
         [Display(Name = "Namnet")]
         [Required]
         public string Name { get; set; }
+        
         public List<keyword> listaKeyword { get; set; }
         
         [Display(Name = "Bild")]
@@ -39,6 +40,34 @@ namespace Matslump.Models
             foreach (DataRow dr in dt.Rows)
             {
                
+                Receptmodels r = new Receptmodels();
+                r.Id = Convert.ToInt16(dr["id_recept"].ToString());
+                r.Name = dr["name"].ToString();
+                r.Description = (string)dr["description"];
+                r.Url_pic = (string)dr["url_pic"];
+                r.Url_recept = (string)dr["url_recept"];
+
+
+
+                mt.Add(r);
+            }
+
+            return mt;
+        }
+        public List<Receptmodels> SearchFood(string psql, int pid_user, string search)
+        {
+            postgres m = new postgres();
+            DataTable dt = new DataTable();
+            List<Receptmodels> mt = new List<Receptmodels>();
+            string modal = "%";
+            dt = m.SqlQuery(psql, postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id_user", pid_user),
+                new NpgsqlParameter("@search",modal += search +="%")
+            });
+            foreach (DataRow dr in dt.Rows)
+            {
+
                 Receptmodels r = new Receptmodels();
                 r.Id = Convert.ToInt16(dr["id_recept"].ToString());
                 r.Name = dr["name"].ToString();

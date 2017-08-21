@@ -8,11 +8,21 @@ namespace Matslump.Controllers
     public class FoodController : Controller
     {
         // GET: Food
+        [HttpGet]
         public ActionResult All(int? page)
         {
+            string search = Request.QueryString["search"];
             Receptmodels re = new Receptmodels();
-            re.Recept = re.getFood("SELECT * FROM recept ",Convert.ToInt32(User.Identity.Name));
-            ViewBag.Myfood= re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            if (!string.IsNullOrEmpty(search))
+            {
+                re.Recept = re.SearchFood("SELECT * FROM recept WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name), search);
+                ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            }
+            else
+            {
+                re.Recept = re.getFood("SELECT * FROM recept ", Convert.ToInt32(User.Identity.Name));
+                ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            }
             var recept = re.Recept;
             ViewBag.food = re.Recept;
             var pager = new Pager(re.Recept.Count, page);
@@ -20,9 +30,35 @@ namespace Matslump.Controllers
             var viewModel = new IndexViewModel
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
-                Pager = pager
+                Pager = pager,
+                Sökord = search
+               
             };
             return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult All(int? page ,IndexViewModel search)
+        {
+            
+            Receptmodels re = new Receptmodels();
+            if (string.IsNullOrWhiteSpace(search.Sökord))
+            {
+                RedirectToAction("All");
+            }
+            re.Recept = re.SearchFood("SELECT * FROM recept WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name),search.Sökord);
+            ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            var recept = re.Recept;
+            ViewBag.food = re.Recept;
+            var pager = new Pager(re.Recept.Count, page);
+
+            var viewModel = new IndexViewModel
+            {
+                Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
+                Pager = pager,
+                Sökord = search.Sökord
+        };
+            return View(viewModel);
+            
         }
         public ActionResult AddNewFood()
         {

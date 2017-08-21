@@ -4,10 +4,13 @@ using System.Collections.Generic;
 namespace Matslump.Models
 {
     public class IndexViewModel
-        {
-            public IEnumerable<Receptmodels> Items { get; set; }
-            public Pager Pager { get; set; }
-        }
+    {
+        public IEnumerable<Receptmodels> Items { get; set; }
+        public Pager Pager { get; set; }
+
+        public string Sökord { get; set; }
+    }
+    
 
         public class Pager
         {

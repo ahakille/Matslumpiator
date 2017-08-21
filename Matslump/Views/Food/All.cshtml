@@ -36,7 +36,17 @@
             </div>
         </div>
     </div>
+    <div class="row">
+@using (Html.BeginForm())
+{
+        <div class="col-md-6">
+            @Html.EditorFor(m => Model.Sökord, new { htmlAttributes = new { @class = "form-horizontal", @placeholder = "Sök på valfrit ord..." } })
+             <button type="submit" class="btn btn-default">Sök</button> @Html.ActionLink("Rensa", "All", null, new { @class = "btn btn-default" })
+        </div>
+}
 
+
+    </div>
 
     <div class="row">
         <hr />
@@ -97,23 +107,32 @@
                     <a href="~/Food/All">Första</a>
                 </li>
                 <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)">Tidigare</a>
+                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }">Tidigare</a>
+
                 </li>
             }
 
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
             {
                 <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a href="~/Food/All?page=@page">@page</a>
+                    <a href="~/Food/All?page=@page@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }">@page</a>
                 </li>    }
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
                 <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)">Nästa</a>
+                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }">Nästa</a>
                 </li>
                 <li>
-                    <a href="~/Food/All?page=@(Model.Pager.TotalPages)">Sista</a>
+                    <a href="~/Food/All?page=@(Model.Pager.TotalPages)@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }">Sista</a>
                 </li>
             }
         </ul>
