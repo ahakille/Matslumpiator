@@ -25,7 +25,7 @@ namespace Matslump.Tools
             }
             catch (Exception ex)
             {
-                Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", ex.Message);
+                
             }
         }
 
@@ -42,7 +42,7 @@ namespace Matslump.Tools
             }
             catch (Exception ex)
             {
-                Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", ex.Message);
+               
             }
         }
     }

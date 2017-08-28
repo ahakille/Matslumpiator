@@ -55,7 +55,7 @@ namespace Matslump.Models
             }
             if (maxnumber <= 7)
             {
-                re.Id = 10;
+                re.Id = -10;
                 re.Name = "Inte tillräckligt med maträtter för att slumpa fram en vecka!!!";
                 random_list.Add(re);
             }

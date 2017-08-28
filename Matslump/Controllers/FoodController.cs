@@ -37,7 +37,7 @@ namespace Matslump.Controllers
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult All(int? page ,IndexViewModel search)
+        public ActionResult All(IndexViewModel search)
         {
             
             Receptmodels re = new Receptmodels();
@@ -49,7 +49,8 @@ namespace Matslump.Controllers
             ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             var recept = re.Recept;
             ViewBag.food = re.Recept;
-            var pager = new Pager(re.Recept.Count, page);
+
+            var pager = new Pager(re.Recept.Count, 1);
 
             var viewModel = new IndexViewModel
             {
