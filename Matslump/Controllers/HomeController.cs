@@ -16,16 +16,16 @@ namespace Matslump.Controllers
             return View();
         }
         [RequireHttps]
-        public ActionResult About()
+        public ActionResult Notfound()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "404 - Not Found.";
 
             return View();
         }
         [RequireHttps]
-        public ActionResult Contact()
+        public ActionResult Error()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "500 - An error occurred while processing your request ";
 
             return View();
         }

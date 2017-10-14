@@ -29,7 +29,7 @@ namespace Matslump.Models
                     
                     slump slumpa = new slump();
                     List<Receptmodels> lista = slumpa.Slumplist(item.User_id, date);
-                    if(lista[0].Id != 10)
+                    if(lista[0].Id != -10)
                     {
                         string body = Email.Emailslumplist(item.User, "Här kommer nästa veckas mat. Hoppas de ska smaka!", lista);
                         Email.SendEmail(item.email, item.User, "Här kommer nästa veckas mat.", body);

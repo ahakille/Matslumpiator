@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
+
 namespace Matslump.Models
 {
     public class Users
@@ -38,7 +39,9 @@ namespace Matslump.Models
         [Display(Name = "Registeringskod")]
         public string Secret { get; set; }
         public int Settings_id { get; set; }
-        
+        [Display(Name = "Dag för automatisk slumpning")]
+        public int CronoDay { get; set; }
+
         public int Login_id { get; set; }
 
         public List<Users> Getuser(int id , string sql)
