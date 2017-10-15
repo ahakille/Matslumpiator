@@ -1,4 +1,5 @@
 ﻿using Matslump.Models;
+using Matslump.Services;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Matslump.Controllers
     {
         // GET: Account
         [AllowAnonymous]
-        //[RequireHttps]
-       
+        [RequireHttps]
+
         public ActionResult Index(string returnUrl)
         {
             
@@ -23,7 +24,7 @@ namespace Matslump.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
@@ -57,14 +58,14 @@ namespace Matslump.Controllers
 
         }
         [AllowAnonymous]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Register()
         {
             return View();
         }
         [AllowAnonymous]
         [HttpPost]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Register(Users model)
         {
             if (model.Secret == "Nicklas" || model.Secret == "nicklas")
@@ -92,7 +93,7 @@ namespace Matslump.Controllers
            
            
         }
-        //[RequireHttps]
+        [RequireHttps]
         [AllowAnonymous]
         public ActionResult Forgetpassword(int id)
         {
@@ -104,7 +105,7 @@ namespace Matslump.Controllers
             return View();
         }
         [HttpPost]
-        //[RequireHttps]
+        [RequireHttps]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Forgetpassword(Users model)
@@ -154,6 +155,31 @@ namespace Matslump.Controllers
 
             authManager.SignOut("ApplicationCookie");
             return RedirectToAction("Index", "Home");
+        }
+        [RequireHttps]
+        public ActionResult Newpassword()
+        {
+            return View();
+        }
+        [RequireHttps]
+        [HttpPost]
+        public ActionResult Newpassword(Users model)
+        {
+
+            try
+            {
+                postgres sql = new postgres();
+                int id = sql.SqlQueryString("SELECT login_id FROM users WHERE user_id = @id", postgres.list = new List<NpgsqlParameter>()
+                     {  new NpgsqlParameter("@id",Convert.ToInt16(User.Identity.Name)) });
+                Users us = new Users();
+                us.Newpassword(id, model.Password);
+
+                return RedirectToAction("index", "users");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
     

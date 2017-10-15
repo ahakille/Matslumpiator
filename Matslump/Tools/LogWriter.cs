@@ -10,8 +10,8 @@ namespace Matslump.Tools
         private string m_exePath = string.Empty;
         public LogWriter(string logMessage)
         {
-            LogWrite(logMessage);
-            Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", logMessage);
+            //LogWrite(logMessage);
+        //    Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", logMessage);
         }
         public void LogWrite(string logMessage)
         {//Assembly.GetExecutingAssembly().Location

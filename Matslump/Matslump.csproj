@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44327</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -184,13 +183,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Accountmodels.cs" />
-    <Compile Include="Models\Email.cs" />
+    <Compile Include="Services\Email.cs" />
     <Compile Include="Models\pagination.cs" />
     <Compile Include="Models\keyword.cs" />
-    <Compile Include="Models\postgres.cs" />
+    <Compile Include="Services\postgres.cs" />
     <Compile Include="Models\Receptmodels.cs" />
     <Compile Include="Models\slump.cs" />
-    <Compile Include="Models\Slumpcron.cs" />
+    <Compile Include="Services\Slumpcron.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -265,10 +264,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Notfound.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\index.cshtml" />
-    <Content Include="Views\Users\Newpassword.cshtml" />
+    <Content Include="Views\Account\Newpassword.cshtml" />
     <Content Include="Views\Food\All.cshtml" />
     <Content Include="Views\Food\AddNewFood.cshtml" />
     <Content Include="Views\Myfood\Index.cshtml" />
@@ -284,7 +282,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Forgetpassword.cshtml" />
     <Content Include="Views\Account\Resetpassword.cshtml" />
-    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

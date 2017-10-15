@@ -9,25 +9,20 @@ namespace Matslump.Controllers
     public class HomeController : Controller
     {
         [AllowAnonymous]
-        //[RequireHttps]
+        [RequireHttps]
         public ActionResult Index()
         {
 
             return View();
         }
-        [RequireHttps]
+        
+        [AllowAnonymous]
         public ActionResult Notfound()
         {
             ViewBag.Message = "404 - Not Found.";
 
             return View();
         }
-        [RequireHttps]
-        public ActionResult Error()
-        {
-            ViewBag.Message = "500 - An error occurred while processing your request ";
-
-            return View();
-        }
+ 
     }
 }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Matslump.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Matslump.Models
+namespace Matslump.Services
 {
     public class Slumpcron
     {

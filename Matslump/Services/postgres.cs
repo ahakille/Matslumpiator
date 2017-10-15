@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Data;
 using Matslump.Tools;
 
-namespace Matslump.Models
+namespace Matslump.Services
 {
     public class postgres
     {

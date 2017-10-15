@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Matslump.Tools;
+using Matslump.Services;
 
 namespace Matslump.Controllers
 {
@@ -26,28 +27,7 @@ namespace Matslump.Controllers
             return View(us);
            
         }
-        public ActionResult Newpassword()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Newpassword(Users model)
-        {
 
-            try
-            { postgres sql = new postgres();
-                int id = sql.SqlQueryString("SELECT login_id FROM users WHERE user_id = @id", postgres.list = new List<NpgsqlParameter>()
-                     {  new NpgsqlParameter("@id",Convert.ToInt16(User.Identity.Name)) });
-                Users us = new Users();
-                us.Newpassword(id, model.Password);
-
-                return RedirectToAction("index", "users");
-            }
-            catch
-            {
-                return View();
-            }
-        }
         public ActionResult Edit()
         {
             int id = Convert.ToInt32(User.Identity.Name);

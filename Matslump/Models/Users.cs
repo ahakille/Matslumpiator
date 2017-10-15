@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using Matslump.Services;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,9 @@ namespace Matslump.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "Användarnamn")]
         public string User { get; set; }
+
+        public string First_name { get; set; }
+        public string Last_name { get; set; }
 
         [Required]
         [Display(Name = "E-mail")]
