@@ -14,7 +14,6 @@ namespace Matslump.Controllers
         // GET: Account
         [AllowAnonymous]
         [RequireHttps]
-
         public ActionResult Index(string returnUrl)
         {
             
@@ -66,16 +65,16 @@ namespace Matslump.Controllers
         [AllowAnonymous]
         [HttpPost]
         [RequireHttps]
-        public ActionResult Register(Users model)
+        public ActionResult Register(CreateAccountViewmodel model)
         {
-            if (model.Secret == "Nicklas" || model.Secret == "nicklas")
+            if (model.Secret.ToLower() == "nicklas")
             {
                 postgres sql = new postgres();
                 bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
                 if (!check)
                 {
                     Accountmodels User = new Accountmodels();
-                    User.RegisterNewUser(model.User, model.email);
+                    User.RegisterNewUser(model.User, model.email,model.First_name,model.Last_name);
                     return RedirectToAction("Index", "Account");
                 }
                 else

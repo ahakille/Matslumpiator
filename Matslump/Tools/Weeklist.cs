@@ -13,12 +13,15 @@ namespace Matslump.Tools
         public static List<Weeklist> List()
         {
             List<Weeklist> list = new List<Weeklist>();
-            for (int i = 1; i < 6; i++)
+            for (int i = 0; i < 8; i++)
             {
                 Weeklist w = new Weeklist();
                 w.Id = i;
                 switch (i)
                 {
+                    case 0:
+                        w.Name = "Avstängd";
+                        break;
                     case 1:
                         w.Name = "Måndag";
                         break;
@@ -33,6 +36,12 @@ namespace Matslump.Tools
                         break;
                     case 5:
                         w.Name = "Fredag";
+                        break;
+                    case 6:
+                        w.Name = "Lördag";
+                        break;
+                    case 7:
+                        w.Name = "Söndag";
                         break;
                 }
                 list.Add(w);

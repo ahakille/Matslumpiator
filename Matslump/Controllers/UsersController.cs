@@ -14,40 +14,42 @@ namespace Matslump.Controllers
         public ActionResult Index()
         {
             int id = Convert.ToInt32(User.Identity.Name);
-            Users us = new Users();
-            List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id,last_login,users.settings_id FROM public.users WHERE user_id = @id");
-            us.active = list[0].active;
+            UsersEditViewmodel us = new UsersEditViewmodel();
+            Users us1 = new Users();
+            List<UsersEditViewmodel> list = new List<UsersEditViewmodel>();
+            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name,users.fname,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.user_id WHERE user_id =@id");
+            us.First_name = list[0].First_name;
             us.email = list[0].email;
             us.User = list[0].User;
-            us.Roles_id = list[0].Roles_id;
-            us.Last_login = list[0].Last_login;
+            us.Last_name = list[0].Last_name;
+            us.CronoDay = list[0].CronoDay;
             ViewBag.weeklist = Weeklist.List(); 
             us.User_id = id;
             return View(us);
            
         }
-
         public ActionResult Edit()
         {
             int id = Convert.ToInt32(User.Identity.Name);
-            Users us = new Users();
-            List<Users> list = new List<Users>();
-            list = us.Getuser(id, "SELECT users.user_id,users.username,users.email,users.acc_active,users.roles_id,users.last_login,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.user_id WHERE user_id = @id");
-            us.active = list[0].active;
+            UsersEditViewmodel us = new UsersEditViewmodel();
+            Users us1 = new Users();
+            List<UsersEditViewmodel> list = new List<UsersEditViewmodel>();
+            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name,users.fname,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.settings_id WHERE user_id =@id");
+            us.First_name = list[0].First_name;
             us.email = list[0].email;
             us.User = list[0].User;
-            us.Roles_id = list[0].Roles_id;
+            us.Last_name = list[0].Last_name;
+            us.CronoDay = list[0].CronoDay;
             ViewBag.weeklist = Weeklist.List();
             us.User_id = id;
             return View(us);
         }
         [HttpPost]
-        public ActionResult Edit(Users model)
+        public ActionResult Edit(UsersEditViewmodel model)
         {
             Users us = new Users();
-            us.UpdateUser(model.User_id, model.User, model.email, model.active);
-            return RedirectToAction("index");
+            us.UpdateUser(model.User_id, model.User, model.email, model.First_name,model.Last_name,model.CronoDay);
+            return RedirectToAction("Edit");
         }
     }
 }

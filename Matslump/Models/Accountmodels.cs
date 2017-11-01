@@ -12,7 +12,7 @@ namespace Matslump.Models
     public class Accountmodels
     {
         [Required]
-        [Display(Name = "Användarnamn")]
+        [Display(Name = "Användarnamn eller Email")]
         // [EmailAddress]
         public string user { get; set; }
 
@@ -29,8 +29,17 @@ namespace Matslump.Models
             postgres m = new postgres();
             string role= "";
             bool active;
+            string sql;
+            if(userid.ToLower().Contains("@"))
+            {
+                sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where email =@par1";
+            }
+            else
+            {
+                sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where username =@par1";
+            }
             // Behöver skrivas om! klar
-           var dt = m.SqlQuery("select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where username =@par1", postgres.list = new List<NpgsqlParameter>()
+           var dt = m.SqlQuery(sql, postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@par1", userid),
 
@@ -104,19 +113,28 @@ namespace Matslump.Models
             }
             return strPwd;
         }
-        public void RegisterNewUser(string username, string email)
+        public void RegisterNewUser(string username, string email,string fname,string last_name)
         {
             
             string pass = GeneratePassword(7);
             Users us = new Users();
-            us.CreateUser(username, email, true, pass);
+            us.CreateUser(username, email, true, pass,fname,last_name);
             Email.SendEmail(email, username, "Ditt lösenord", Email.EmailOther("Ditt lösenord är: ",pass));
         }
         public bool Forgetpassword(string username)
         {
             postgres sql = new postgres();
             DataTable dt = new DataTable();
-            dt = sql.SqlQuery("SELECT login_id, username, email, acc_active FROM users WHERE username = @username;", postgres.list = new List<NpgsqlParameter>()
+            string query;
+            if (username.Contains("@"))
+            {
+                query = "SELECT login_id, username, email, acc_active FROM users WHERE email = @username;";
+            }
+            else
+            {
+                query = "SELECT login_id, username, email, acc_active FROM users WHERE username = @username;";
+            }
+            dt = sql.SqlQuery(query, postgres.list = new List<NpgsqlParameter>()
                         {
                          new NpgsqlParameter("@username", username)
                          });
@@ -189,7 +207,12 @@ namespace Matslump.Models
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [Display(Name = "Användarnamn")]
         public string User { get; set; }
-
+        [Required]
+        [Display(Name = "Förnamn")]
+        public string First_name { get; set; }
+        [Required]
+        [Display(Name = "Efternamn")]
+        public string Last_name { get; set; }
         [Required]
         [Display(Name = "E-mail")]
         [EmailAddress]

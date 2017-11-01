@@ -13,7 +13,7 @@ namespace Matslump.Services
             slump checkslump = new slump();
             DateTime crondate = DateTime.Now;
             int checkcron = ((int)crondate.DayOfWeek == 0) ? 7 : (int)crondate.DayOfWeek;
-            List<Users> list = user.Getuser(checkcron, "SELECT users.user_id, users.username, users.email, users.acc_active,users.roles_id,users.settings_id,users.last_login FROM public.users LEFT JOIN usersettings ON users.settings_id = usersettings.setting_id  WHERE usersettings.day_of_slumpcron =@id ;");
+            List<Users> list = user.GetuserAsAdmin(checkcron, "SELECT users.user_id, users.username, users.fname, users.last_name, users.email, users.acc_active,users.roles_id,users.settings_id,users.last_login FROM public.users LEFT JOIN usersettings ON users.settings_id = usersettings.setting_id  WHERE usersettings.day_of_slumpcron =@id ;");
            
             foreach (var item in list)
             {
@@ -32,8 +32,8 @@ namespace Matslump.Services
                     List<Receptmodels> lista = slumpa.Slumplist(item.User_id, date);
                     if(lista[0].Id != -10)
                     {
-                        string body = Email.Emailslumplist(item.User, "Här kommer nästa veckas mat. Hoppas de ska smaka!", lista);
-                        Email.SendEmail(item.email, item.User, "Här kommer nästa veckas mat.", body);
+                        string body = Email.Emailslumplist(item.First_name, "Här kommer nästa veckas mat. Hoppas de ska smaka!", lista);
+                        Email.SendEmail(item.email, item.First_name, "Här kommer nästa veckas mat.", body);
                         foreach (var items in lista)
                         {
 
