@@ -73,7 +73,7 @@ namespace Matslump.Controllers
             string subject = Request.Form["subject"];
             Users us = new Users();
             // Behöver skrivas om! klar
-            List<Users> list = us.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login,users.day_of_slumpcron FROM public.users");
+            List<Users> list = us.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login,users.settings_id FROM public.users");
             foreach (var item in list)
             {
                 Email.SendEmail(item.email, item.User, subject,Email.EmailOther(subject,message));

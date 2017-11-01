@@ -17,7 +17,7 @@ namespace Matslump.Controllers
             UsersEditViewmodel us = new UsersEditViewmodel();
             Users us1 = new Users();
             List<UsersEditViewmodel> list = new List<UsersEditViewmodel>();
-            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name,users.fname,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.user_id WHERE user_id =@id");
+            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name, users.fname, usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.user_id WHERE user_id =@id");
             us.First_name = list[0].First_name;
             us.email = list[0].email;
             us.User = list[0].User;
@@ -34,7 +34,7 @@ namespace Matslump.Controllers
             UsersEditViewmodel us = new UsersEditViewmodel();
             Users us1 = new Users();
             List<UsersEditViewmodel> list = new List<UsersEditViewmodel>();
-            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name,users.fname,usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.settings_id WHERE user_id =@id");
+            list = us1.Getuser(id, "SELECT users.user_id,users.username,users.email,users.last_name, users.fname, usersettings.day_of_slumpcron FROM public.users LEFT JOIN usersettings ON setting_id = users.settings_id WHERE user_id =@id");
             us.First_name = list[0].First_name;
             us.email = list[0].email;
             us.User = list[0].User;
