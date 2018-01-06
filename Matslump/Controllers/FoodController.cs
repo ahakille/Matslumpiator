@@ -9,8 +9,13 @@ namespace Matslump.Controllers
     {
         // GET: Food
         [HttpGet]
-        public ActionResult All(int? page)
+        public ActionResult All(int? page ,int? size)
         {
+            int SizeofPage =20;
+            if(size != null)
+            {
+                SizeofPage = size.Value ;
+            }
             string search = Request.QueryString["search"];
             Receptmodels re = new Receptmodels();
             if (!string.IsNullOrEmpty(search))
@@ -23,15 +28,18 @@ namespace Matslump.Controllers
                 re.Recept = re.getFood("SELECT * FROM recept ", Convert.ToInt32(User.Identity.Name));
                 ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             }
+            
             var recept = re.Recept;
             ViewBag.food = re.Recept;
-            var pager = new Pager(re.Recept.Count, page);
+            var pager = new Pager(re.Recept.Count, page, SizeofPage);
 
             var viewModel = new IndexViewModel
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
-                Sökord = search
+                Sökord = search,
+                Size = SizeofPage
+                
                
             };
             return View(viewModel);
@@ -45,18 +53,21 @@ namespace Matslump.Controllers
             {
                 RedirectToAction("All");
             }
+            if (search.Size == 0)
+                search.Size = 20;
             re.Recept = re.SearchFood("SELECT * FROM recept WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name),search.Sökord);
             ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             var recept = re.Recept;
             ViewBag.food = re.Recept;
 
-            var pager = new Pager(re.Recept.Count, 1);
+            var pager = new Pager(re.Recept.Count, 1,search.Size);
 
             var viewModel = new IndexViewModel
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
-                Sökord = search.Sökord
+                Sökord = search.Sökord,
+                Size = search.Size
         };
             return View(viewModel);
             

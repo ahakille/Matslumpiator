@@ -45,7 +45,11 @@ namespace Matslump.Controllers
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;
                 authManager.SignIn(identity);
-               
+               if (!string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+               {
+                    return Redirect(Request.QueryString["ReturnUrl"]);
+               }
+
                 return Redirect("home/index");
             }
             else

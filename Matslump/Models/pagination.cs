@@ -9,15 +9,17 @@ namespace Matslump.Models
         public Pager Pager { get; set; }
 
         public string Sökord { get; set; }
+        public int Size { get; set; }
     }
     
 
         public class Pager
         {
-            public Pager(int totalItems, int? page, int pageSize = 10)
+            public Pager(int totalItems, int? page, int pageSize)
             {
-                // calculate total, start and end pages
-                var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
+
+            // calculate total, start and end pages
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
                 var currentPage = page != null ? (int)page : 1;
                 var startPage = currentPage - 5;
                 var endPage = currentPage + 4;
