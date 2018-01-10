@@ -13,7 +13,7 @@ namespace Matslump.Controllers
         {
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
-            re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
+            re.Recept = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
             var recept = re.Recept;
             var pager = new Pager(re.Recept.Count, page,20);
 

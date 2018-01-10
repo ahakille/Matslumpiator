@@ -183,9 +183,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Accountmodels.cs" />
+    <Compile Include="Services\Accountservice.cs" />
     <Compile Include="Services\Email.cs" />
     <Compile Include="Models\pagination.cs" />
     <Compile Include="Models\keyword.cs" />
+    <Compile Include="Services\Foodservices.cs" />
     <Compile Include="Services\postgres.cs" />
     <Compile Include="Models\Receptmodels.cs" />
     <Compile Include="Models\slump.cs" />

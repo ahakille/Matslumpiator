@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using Matslump.Services;
 
 namespace Matslump.Controllers
 {
@@ -18,15 +19,16 @@ namespace Matslump.Controllers
             }
             string search = Request.QueryString["search"];
             Receptmodels re = new Receptmodels();
+            Foodservices food = new Foodservices();
             if (!string.IsNullOrEmpty(search))
             {
-                re.Recept = re.SearchFood("SELECT * FROM recept WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name), search);
-                ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+                re.Recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name), search);
+                ViewBag.Myfood = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             }
             else
             {
-                re.Recept = re.getFood("SELECT * FROM recept ", Convert.ToInt32(User.Identity.Name));
-                ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+                re.Recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id", Convert.ToInt32(User.Identity.Name),null);
+                ViewBag.Myfood = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             }
             
             var recept = re.Recept;
@@ -55,8 +57,9 @@ namespace Matslump.Controllers
             }
             if (search.Size == 0)
                 search.Size = 20;
-            re.Recept = re.SearchFood("SELECT * FROM recept WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name),search.Sökord);
-            ViewBag.Myfood = re.getFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            Foodservices food = new Foodservices();
+            re.Recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name),search.Sökord);
+            ViewBag.Myfood = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             var recept = re.Recept;
             ViewBag.food = re.Recept;
 
@@ -94,7 +97,7 @@ namespace Matslump.Controllers
         public ActionResult EditFood(int id,int page)
         {
             Receptmodels re = new Receptmodels();
-            re.Recept = re.getFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
+            re.Recept = re.GetFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
             re.Id = re.Recept[0].Id;
             re.Name = re.Recept[0].Name;
             re.Url_pic = re.Recept[0].Url_pic;

@@ -46,11 +46,11 @@ namespace Matslump.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Lösenord")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Bekräfta Lösenord")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         [Display(Name = "Aktivt konto")]
@@ -123,7 +123,7 @@ namespace Matslump.Models
         }
         public void CreateUser(string user,string email,bool active,string Password,string fname,string last_name)
         {
-            Accountmodels User = new Accountmodels();
+            Accountservice User = new Accountservice();
             Tuple<byte[], byte[]> password = User.Generatepass(Password);
             postgres sql = new postgres();
             // Behöver skrivas om! klart!
@@ -176,7 +176,7 @@ namespace Matslump.Models
         }
         public void Newpassword(int login_id,string newpassword)
         {
-            Accountmodels User1 = new Accountmodels();
+            Accountservice User1 = new Accountservice();
             Tuple<byte[], byte[]> password = User1.Generatepass(newpassword);
             postgres sql = new postgres();
             // behöver skrivas om! klart
