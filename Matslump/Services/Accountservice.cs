@@ -11,7 +11,7 @@ namespace Matslump.Services
 {
     public class Accountservice
     {
-        public Tuple<int, bool, string> AuthenticationUser(string ppassword, string userid)
+        public Tuple<int, bool, string> AuthenticationUser(string ppassword, string userNameOrEmail)
         {
 
             byte[] salt = null, key = null;
@@ -20,18 +20,11 @@ namespace Matslump.Services
             string role = "";
             bool active;
             string sql;
-            if (userid.ToLower().Contains("@"))
-            {
-                sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where email =@par1";
-            }
-            else
-            {
-                sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where username =@par1";
-            }
-            // Behöver skrivas om! klar
+            userNameOrEmail = userNameOrEmail.ToLower();
+            sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where email =@par1 or users.username =@par1 ";
             var dt = m.SqlQuery(sql, postgres.list = new List<NpgsqlParameter>()
             {
-                new NpgsqlParameter("@par1", userid),
+                new NpgsqlParameter("@par1", userNameOrEmail),
 
             });
             try
@@ -91,7 +84,7 @@ namespace Matslump.Services
 
             }
         }
-        public string GeneratePassword(int p)
+        private string GeneratePassword(int p)
         {
             string strPwdchar = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             string strPwd = "";

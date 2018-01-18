@@ -16,8 +16,7 @@ namespace Matslump.Models
 
         public List<Receptmodels> Slumplist(int user_id, DateTime date)
         {
-
-            date =datefixer(date);
+            date = datefixer(date);
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
             food_list = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", user_id);
@@ -27,7 +26,7 @@ namespace Matslump.Models
             List<Receptmodels> random_list = new List<Receptmodels>();
             int i = 0;
             bool check = true;
-            if (maxnumber >7)
+            if (maxnumber > 7)
             {
                 while (i < maxdays)
                 {
@@ -47,7 +46,7 @@ namespace Matslump.Models
                         food_list[number].Date = date;
                         random_list.Add(food_list[number]);
                         i++;
-                        date =date.AddDays(1);
+                        date = date.AddDays(1);
                     }
 
 
@@ -63,11 +62,11 @@ namespace Matslump.Models
 
 
 
-            return random_list; 
+            return random_list;
         }
         public DateTime datefixer(DateTime date)
         {
-            int test = ((int)date.DayOfWeek ==0)?7: (int)date.DayOfWeek;
+            int test = ((int)date.DayOfWeek == 0) ? 7 : (int)date.DayOfWeek;
             test--;
             date = date.AddDays(-test);
             return date;
@@ -86,14 +85,14 @@ namespace Matslump.Models
             // Return the week of our adjusted day
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         }
-        public bool Checkslump(DateTime date , int user_id)
+        public bool Checkslump(DateTime date, int user_id)
         {
             postgres m = new postgres();
-            bool check =false;
+            bool check = false;
             DataTable dt = new DataTable();
-        dt = m.SqlQuery("SELECT EXISTS(SELECT foodlist.date_now,foodlist.recept_id FROM public.foodlist Where foodlist.user_id = @user_id AND date_now = @date_now)", postgres.list = new List<NpgsqlParameter>()
+            dt = m.SqlQuery("SELECT EXISTS(SELECT foodlist.date_now,foodlist.recept_id FROM public.foodlist Where foodlist.user_id = @user_id AND date_now = @date_now)", postgres.list = new List<NpgsqlParameter>()
         {
-               
+
                new NpgsqlParameter("@date_now", date),
                new NpgsqlParameter("@user_id", user_id)
 
@@ -104,10 +103,10 @@ namespace Matslump.Models
             }
             return check;
         }
-        public void SaveSlump(int recept_id,int user_id , DateTime date , bool check)
+        public void SaveSlump(int recept_id, int user_id, DateTime date, bool check)
         {
-            string sql= "INSERT INTO foodlist (user_id,recept_id,date_now) values(@user_id,@recept_id,@date_now)";
-            if(check)
+            string sql = "INSERT INTO foodlist (user_id,recept_id,date_now) values(@user_id,@recept_id,@date_now)";
+            if (check)
             {
                 sql = "UPDATE foodlist SET recept_id = @recept_id WHERE date_now=@date_now AND user_id = @user_id";
             }
@@ -120,10 +119,10 @@ namespace Matslump.Models
 
         });
         }
-        public List<Receptmodels> Oldslumps(int user_id , DateTime date, DateTime dateto)
+        public List<Receptmodels> Oldslumps(int user_id, DateTime date, DateTime dateto)
         {
-            
-            
+
+
             slump Slump = new slump();
             postgres m = new postgres();
             List<Receptmodels> mt = new List<Receptmodels>();
@@ -146,29 +145,29 @@ namespace Matslump.Models
 
                 mt.Add(r);
             }
-                
-                
-            
-            
 
-            
+
+
+
+
+
             return mt;
         }
         public List<slump> Weeknumbers(List<Receptmodels> lista)
         {
-            
+
             List<slump> list = new List<slump>();
             string check = "";
             foreach (var item in lista)
             {
-                if(check !=item.Weeknumbers)
+                if (check != item.Weeknumbers)
                 {
                     slump sl = new slump();
                     sl.Weeknumber = item.Weeknumbers;
                     list.Add(sl);
                     check = item.Weeknumbers;
                 }
-               
+
             }
             return list;
 
