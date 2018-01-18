@@ -32,7 +32,7 @@ namespace Matslump.Controllers
                 return View(model);
             
             }
-            Accountmodels acc = new Accountmodels();
+            Accountservice acc = new Accountservice();
             var result  = acc.AuthenticationUser(model.Password, model.user);
             if (result.Item2 == true)
             {
@@ -45,7 +45,11 @@ namespace Matslump.Controllers
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;
                 authManager.SignIn(identity);
-               
+               if (!string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+               {
+                    return Redirect(Request.QueryString["ReturnUrl"]);
+               }
+
                 return Redirect("home/index");
             }
             else
@@ -73,7 +77,7 @@ namespace Matslump.Controllers
                 bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
                 if (!check)
                 {
-                    Accountmodels User = new Accountmodels();
+                    Accountservice User = new Accountservice();
                     User.RegisterNewUser(model.User, model.email,model.First_name,model.Last_name);
                     return RedirectToAction("Index", "Account");
                 }
@@ -109,7 +113,7 @@ namespace Matslump.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forgetpassword(Users model)
         {
-            Accountmodels acc = new Accountmodels();
+            Accountservice acc = new Accountservice();
 
             bool result = acc.Forgetpassword(model.User);
             if(result)
@@ -127,7 +131,7 @@ namespace Matslump.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Users us = new Users();
-            Accountmodels acc = new Accountmodels();
+            Accountservice acc = new Accountservice();
             Tuple<int,bool,string> reset = acc.Resetpassword(validate);
             if (reset.Item2)
             {

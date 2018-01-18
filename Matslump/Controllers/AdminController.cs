@@ -45,7 +45,7 @@ namespace Matslump.Controllers
         {
             try
             {
-                Accountmodels User = new Accountmodels();
+                Accountservice User = new Accountservice();
                 Tuple<byte[], byte[]> password = User.Generatepass(model.Password);
                 postgres sql = new postgres();
                 // Behöver skrivas om
