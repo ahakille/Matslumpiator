@@ -49,11 +49,10 @@ namespace Matslump.Controllers
         [HttpPost]
         public ActionResult All(IndexViewModel search)
         {
-            
-            Receptmodels re = new Receptmodels();
-            if (string.IsNullOrWhiteSpace(search.Sökord))
+            var re = new Receptmodels();
+            if (search == null)
             {
-                RedirectToAction("All");
+                return RedirectToAction("All");
             }
             if (search.Size == 0)
                 search.Size = 20;
