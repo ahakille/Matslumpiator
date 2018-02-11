@@ -10,9 +10,6 @@
     <div class="helpbutton">
         <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
     </div>
-
-
-
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -34,7 +31,32 @@
             </div>
         </div>
     </div>
-  
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-2 col-md-offset-2">
+        <div class="form-group form-control-sm">
+            <label for="selectbox">Antalsidor</label>
+            <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                <option value="~/Myfood/index?size=10" @if (Model.Size == 10) { @: selected
+                        }>
+                    10
+                </option>
+                <option value="~/Myfood/index?size=20" @if (Model.Size == 20) { @: selected
+                        }>
+                    20
+                </option>
+                <option value="~/Myfood/index?size=50" @if (Model.Size == 50) { @: selected
+                        }>
+                    50
+                </option>
+                <option value="~/Myfood/index?size=100" @if (Model.Size == 100) { @: selected
+                        }>
+                    100
+                </option>
+
+            </select>
+        </div>
+    </div>
     <hr />
     @foreach (var item in Model.Items)
     {
@@ -45,7 +67,7 @@
                 <div id="@item.Id" class="collapse">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px" />
+                            <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -76,23 +98,23 @@
                     <a href="~/Myfood/index">Första</a>
                 </li>
                 <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)">Tidigare</a>
+                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size">Tidigare</a>
                 </li>
             }
 
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
             {
                 <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a href="~/Myfood/index?page=@page">@page</a>
-                </li>    }
+                    <a href="~/Myfood/index?page=@page&size=@Model.Size">@page</a>
+                </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
                 <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)">Nästa</a>
+                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size">Nästa</a>
                 </li>
                 <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.TotalPages)">Sista</a>
+                    <a href="~/Myfood/index?page=@(Model.Pager.TotalPages)&size=@Model.Size">Sista</a>
                 </li>
             }
         </ul>

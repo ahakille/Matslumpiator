@@ -21,7 +21,18 @@ namespace Matslump.Models.Tests
         [TestMethod()]
         public void EmailslumplistTest()
         {
-            Slumpcron target = new Slumpcron();
+            var list = new List<Receptmodels>();
+            var recept = new Receptmodels();
+            recept.Name = "Laxröra";
+            recept.Url_pic = "1480.jpg";
+            recept.Date = DateTime.Now;
+            list.Add(recept);
+
+            var body =Email.Emailslumplist("nicklas", "Hej hej de funkar bra", list);
+
+            Email.SendEmail("gorlingy@hotmail.com", "nicklas", "test", body);
+
+            Assert.IsNotNull(body);
             
         }
     }

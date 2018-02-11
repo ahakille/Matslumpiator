@@ -74,11 +74,13 @@ namespace Matslump.Controllers
             return View(viewModel);
             
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult AddNewFood()
         {
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddNewFood(Receptmodels model)
         {
             if(string.IsNullOrWhiteSpace(model.Url_pic))
@@ -93,6 +95,7 @@ namespace Matslump.Controllers
             re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
             return RedirectToAction("ALL", "Food");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult EditFood(int id,int page)
         {
             Receptmodels re = new Receptmodels();
@@ -107,6 +110,7 @@ namespace Matslump.Controllers
             return View(re);
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditFood(Receptmodels model)
         {
             if (string.IsNullOrWhiteSpace(model.Url_pic))

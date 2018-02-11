@@ -199,7 +199,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\Slumpservices.cs" />
     <Compile Include="Tools\LogWriter.cs" />
+    <Compile Include="Tools\Timetool.cs" />
     <Compile Include="Tools\Weeklist.cs" />
   </ItemGroup>
   <ItemGroup>

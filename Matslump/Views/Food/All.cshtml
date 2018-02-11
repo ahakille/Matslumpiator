@@ -85,7 +85,7 @@
                 <div id="@item.Id" class="collapse">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class="img-responsive img-rounded" src="@item.Url_pic" alt="@item.Name" style="width:180px" />
+                            <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
                         </div>
                         <div class="row">
                             <div class="col-md-8">
@@ -117,7 +117,10 @@
                 {
                     @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage })
                 }
-                | @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
+                @if (User.IsInRole("Admin"))
+                { @:|
+                  @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
+                }
 
             </div>
         </div>

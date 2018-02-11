@@ -61,12 +61,18 @@
     <Compile Include="cron\SlumpjobTests.cs" />
     <Compile Include="Models\EmailTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SlumpservicesTests.cs" />
+    <Compile Include="Tools\TimetoolTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\matslump.Crono\matslump.Crono.csproj">
+      <Project>{58647b2e-c3c6-4933-b178-e296e351f24c}</Project>
+      <Name>matslump.Crono</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matslump\Matslump.csproj">
       <Project>{F514DBC7-0DAC-47F1-B02B-F9315FA2F36A}</Project>
       <Name>Matslump</Name>

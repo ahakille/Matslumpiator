@@ -71,6 +71,12 @@ namespace Matslump.Controllers
    
         }
 
+        public ActionResult AddRandomList(string secure,int user,int food1,int food2,int food3)
+        {
+
+            return View();
+        }
+
         
 
        

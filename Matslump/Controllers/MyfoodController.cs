@@ -9,18 +9,24 @@ namespace Matslump.Controllers
     public class MyfoodController : Controller
     {
         // GET: Myfood
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, int? size)
         {
+            int SizeofPage = 20;
+            if (size != null)
+            {
+                SizeofPage = size.Value;
+            }
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
             re.Recept = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
             var recept = re.Recept;
-            var pager = new Pager(re.Recept.Count, page,20);
+            var pager = new Pager(re.Recept.Count, page, SizeofPage);
 
             var viewModel = new IndexViewModel
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
-                Pager = pager
+                Pager = pager,
+                Size = SizeofPage
             };
             return View(viewModel);
             

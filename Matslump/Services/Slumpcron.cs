@@ -23,7 +23,7 @@ namespace Matslump.Services
                 bool check = checkslump.Checkslump(date, item.User_id);
                 if (check)
                 {
-                    //Email.SendEmail(item.email, item.User, "test", "test" + DateTime.Now);
+                    
                 }
                 else
                 {
