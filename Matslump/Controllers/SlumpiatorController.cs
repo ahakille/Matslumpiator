@@ -71,9 +71,12 @@ namespace Matslump.Controllers
    
         }
 
-        public ActionResult AddRandomList(string secure,int user,int food1,int food2,int food3)
+        public ActionResult AddRandomList(int food1,int food2,int food3)
         {
-
+            var re = new Receptmodels();
+            re.addFood_user(User.Identity.Name,food1);
+            re.addFood_user(User.Identity.Name, food2);
+            re.addFood_user(User.Identity.Name, food3);
             return View();
         }
 

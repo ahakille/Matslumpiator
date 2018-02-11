@@ -44,7 +44,9 @@ namespace Matslump.Services
                     }
                     else
                     {
-                        string body = Email.EmailOther(item.User, "Tyvärr finns det inte tillräckligt med maträtter i din personliga lista. </br> Går gärna in och lägg till de rätter som passar dig så kan vi hjälpa dig med förslag till middag.");
+                        var getlist = new Slumpservices();
+                        var slumplist = getlist.CreateRandomListOfRecept();
+                        string body = Email.EmailRadomlist(item.User, "Tyvärr finns det inte tillräckligt med maträtter i din personliga lista. </br> Går gärna in och lägg till de rätter som passar dig så kan vi hjälpa dig med förslag till middag.<br> Vi skickade med några förslag",slumplist,item.User_id);
                         Email.SendEmail(item.email, item.User, "Vi behöver din hjälp", body);
                     }
                    
