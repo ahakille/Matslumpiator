@@ -108,7 +108,7 @@ namespace Matslump.Services
                 "<div style=\"Padding:5px;\"> <b> Hej " + name + " </b> " +
                 "<p>" + Message + "</p> </div>";
             string link = "<a href=\"https://matslumpiator.se/\" target = \"_blank\" >Matslumpiatorn </a> ";
-            string SaveLink = "<a href=\"https://matslumpiator.se/Slumpiator/AddRandomList?food1=" + lista[0].Id+"&food2="+lista[1].Id+"&food3="+lista[2].Id+"\" target = \"_blank\" >Klicka här för att lägga till de!</a> ";
+            string SaveLink = "<a href=\"https://matslumpiator.se/Slumpiator/AddRandomList?food1=" + lista[0].Id+"&food2="+lista[1].Id+"&food3="+lista[2].Id+"\" target = \"_blank\" >Klicka här för att lägga till de i din lista</a> ";
             string body = string.Format(@"<html>
 
                       {0}

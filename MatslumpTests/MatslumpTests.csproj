@@ -61,6 +61,7 @@
     <Compile Include="cron\SlumpjobTests.cs" />
     <Compile Include="Models\EmailTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmailTests.cs" />
     <Compile Include="Services\SlumpcronTests.cs" />
     <Compile Include="Services\SlumpservicesTests.cs" />
     <Compile Include="Tools\TimetoolTests.cs" />
