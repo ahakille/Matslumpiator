@@ -19,7 +19,8 @@ namespace Matslump
         protected void Application_Error()
         {
             var ex = Server.GetLastError();
-            LogWriter log = new LogWriter(ex.Message);
+            Response.AppendToLog(ex.Data + ex.Message + ex.Source + ex.InnerException);
+       
         }
     }
 }
