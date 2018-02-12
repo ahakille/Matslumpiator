@@ -54,6 +54,32 @@ namespace Matslump.Services
 
             return mt;
         }
+        public List<Receptmodels> GetFood(string psql, int pid_user)
+        {
+            postgres m = new postgres();
+            DataTable dt = new DataTable();
+            List<Receptmodels> mt = new List<Receptmodels>();
+            dt = m.SqlQuery(psql, postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@id_user", pid_user)
+            });
+            foreach (DataRow dr in dt.Rows)
+            {
+
+                Receptmodels r = new Receptmodels();
+                r.Id = Convert.ToInt16(dr["id_recept"].ToString());
+                r.Name = dr["name"].ToString();
+                r.Description = (string)dr["description"];
+                r.Url_pic = (string)dr["url_pic"];
+                r.Url_recept = (string)dr["url_recept"];
+
+
+
+                mt.Add(r);
+            }
+
+            return mt;
+        }
 
     }
 }

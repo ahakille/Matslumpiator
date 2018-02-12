@@ -1,4 +1,5 @@
 ﻿using Matslump.Models;
+using Matslump.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,14 @@ namespace Matslump.Controllers
             {
                 SizeofPage = size.Value;
             }
-            List<Receptmodels> food_list = new List<Receptmodels>();
-            Receptmodels re = new Receptmodels();
-            re.Recept = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
-            var recept = re.Recept;
-            var pager = new Pager(re.Recept.Count, page, SizeofPage);
+            var food_list = new List<Receptmodels>();
+            var re = new Foodservices();
+            food_list = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
+            var pager = new Pager(food_list.Count, page, SizeofPage);
 
             var viewModel = new IndexViewModel
             {
-                Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
+                Items = food_list.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
                 Size = SizeofPage
             };

@@ -19,7 +19,8 @@ namespace Matslump.Models
             date = datefixer(date);
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
-            food_list = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", user_id);
+            var recpet = new Foodservices();
+            food_list = recpet.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", user_id);
             int maxdays = 5;
             int maxnumber = food_list.Count;
             Random rnd = new Random();

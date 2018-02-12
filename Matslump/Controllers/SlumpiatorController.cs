@@ -40,6 +40,10 @@ namespace Matslump.Controllers
         // GET: Slumpiator/Create
         public ActionResult Create(DateTime date)
         {
+            if (date == null)
+            {
+                RedirectToAction("Index");
+            }
             slump slumpe = new slump();
             Receptmodels re = new Receptmodels();
             re.Recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
