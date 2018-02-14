@@ -1,7 +1,7 @@
 ﻿@model Matslump.Models.CreateAccountViewmodel
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Registera dig";
 }
 
 <h2>Register</h2>
@@ -44,17 +44,11 @@
                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Secret, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Secret, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Secret, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Skapa användare" class="btn btn-default" />
             </div>
         </div>
     </div>

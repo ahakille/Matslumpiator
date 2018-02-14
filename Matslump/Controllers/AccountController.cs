@@ -16,7 +16,7 @@ namespace Matslump.Controllers
         [RequireHttps]
         public ActionResult Index(string returnUrl)
         {
-            
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -30,25 +30,25 @@ namespace Matslump.Controllers
             {
                 // om inte rätt format
                 return View(model);
-            
+
             }
             Accountservice acc = new Accountservice();
-            var result  = acc.AuthenticationUser(model.Password, model.user);
+            var result = acc.AuthenticationUser(model.Password, model.user);
             if (result.Item2 == true)
             {
-               
+
                 var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name,Convert.ToString(result.Item1)),
                     new Claim(ClaimTypes.Role,result.Item3),
-                    new Claim(ClaimTypes.GivenName,result.Item3)},"ApplicationCookie");
+                    new Claim(ClaimTypes.GivenName,result.Item3)}, "ApplicationCookie");
 
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;
                 authManager.SignIn(identity);
-               if (!string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
-               {
+                if (!string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+                {
                     return Redirect(Request.QueryString["ReturnUrl"]);
-               }
+                }
 
                 return Redirect("home/index");
             }
@@ -71,36 +71,32 @@ namespace Matslump.Controllers
         [RequireHttps]
         public ActionResult Register(CreateAccountViewmodel model)
         {
-            if (model.Secret.ToLower() == "nicklas")
+
+
+            postgres sql = new postgres();
+            bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
+            if (!check)
             {
-                postgres sql = new postgres();
-                bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
-                if (!check)
-                {
-                    Accountservice User = new Accountservice();
-                    User.RegisterNewUser(model.User, model.email,model.First_name,model.Last_name);
-                    return RedirectToAction("Index", "Account");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Användarnamnet finns redan, Välj ett annat");
-                    return View(model);
-                }
-                
+                Accountservice User = new Accountservice();
+                User.RegisterNewUser(model.User, model.email, model.First_name, model.Last_name);
+                return RedirectToAction("Index", "Account");
             }
             else
             {
-                ModelState.AddModelError("", "Fel Registeringskod");
+                ModelState.AddModelError("", "Användarnamnet finns redan, Välj ett annat");
                 return View(model);
             }
-           
-           
+
+
+
+
+
         }
         [RequireHttps]
         [AllowAnonymous]
         public ActionResult Forgetpassword(int id)
         {
-            if(id == 1)
+            if (id == 1)
             {
                 ModelState.AddModelError("", "Din tid för byte har gått ut eller felaktigt återställningskod. Vänligen skapa en ny");
                 return View();
@@ -116,7 +112,7 @@ namespace Matslump.Controllers
             Accountservice acc = new Accountservice();
 
             bool result = acc.Forgetpassword(model.User);
-            if(result)
+            if (result)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -126,20 +122,20 @@ namespace Matslump.Controllers
         [AllowAnonymous]
         public ActionResult Resetpassword(string validate)
         {
-            if(string.IsNullOrEmpty(validate))
+            if (string.IsNullOrEmpty(validate))
             {
                 return RedirectToAction("Index", "Home");
             }
             Users us = new Users();
             Accountservice acc = new Accountservice();
-            Tuple<int,bool,string> reset = acc.Resetpassword(validate);
+            Tuple<int, bool, string> reset = acc.Resetpassword(validate);
             if (reset.Item2)
             {
                 us.Login_id = reset.Item1;
                 us.User = reset.Item3;
                 return View(us);
             }
-            return RedirectToAction("Forgetpassword", "Account",1);
+            return RedirectToAction("Forgetpassword", "Account", 1);
         }
         [HttpPost]
         [AllowAnonymous]
@@ -185,5 +181,5 @@ namespace Matslump.Controllers
             }
         }
     }
-    
+
 }
