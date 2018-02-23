@@ -25,21 +25,21 @@ namespace Matslump.Models
     public class CreateAccountViewmodel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
-        [Display(Name = "Användarnamn")]
+        [StringLength(100, ErrorMessage = "{0} måste minst vara {2} tecken långt.", MinimumLength = 6)]
+        [Display(Name = "Användarnamn*")]
         public string User { get; set; }
         [Required]
-        [Display(Name = "Förnamn")]
+        [Display(Name = "Förnamn*")]
         public string First_name { get; set; }
         [Required]
-        [Display(Name = "Efternamn")]
+        [Display(Name = "Efternamn*")]
         public string Last_name { get; set; }
         [Required]
-        [Display(Name = "E-mail")]
+        [Display(Name = "E-mail*")]
         [EmailAddress]
         public string email { get; set; }
-        [Display(Name = "Registeringskod")]
-        public string Secret { get; set; }
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Du måste godkänna användarvilkoren")]
+        public bool UserAgreement { get; set; }
 
     }
     public class NewPasswordViewmodel

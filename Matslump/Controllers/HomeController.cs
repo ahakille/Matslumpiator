@@ -23,6 +23,13 @@ namespace Matslump.Controllers
 
             return View();
         }
- 
+        [AllowAnonymous]
+        public ActionResult Useragreement()
+        {
+
+
+            return View();
+        }
+
     }
 }

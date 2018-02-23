@@ -71,7 +71,12 @@ namespace Matslump.Controllers
         [RequireHttps]
         public ActionResult Register(CreateAccountViewmodel model)
         {
+            if (!ModelState.IsValid)
+            {
+                // om inte rätt format
+                return View(model);
 
+            }
 
             postgres sql = new postgres();
             bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
