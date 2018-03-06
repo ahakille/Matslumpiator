@@ -11,27 +11,40 @@ namespace Matslump.Controllers
     {
         // GET: Food
         [HttpGet]
-        public ActionResult All(int? page ,int? size)
+        public ActionResult All(int? page ,int? size )
         {
             int SizeofPage =20;
+            string search = "" ,cookingtime = "Över 60 minuter";
+            bool chicken = false, biff = false ,fish = false , meat = false,pork = false,sausager = false,vego = false;
             if(size != null)
             {
                 SizeofPage = size.Value ;
-            }
-            string search = Request.QueryString["search"];
+            }          
+     
+            var post = (IndexViewModel)Session["SearchFilter"];
             var recept = new List<Receptmodels>();
             var food = new Foodservices();
-            if (!string.IsNullOrEmpty(search))
+            if (post != null) //!string.IsNullOrEmpty(search)
             {
-                recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name), search);
-                ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+                var sql = food.CreateSearchString(post.ChickenFilter, post.VegoFilter, post.FishFilter, post.BeefFilter, post.PorkFilter, post.SausageFilter, post.MeatFilter, post.OtherFilter, post.Sökord,post.Cookingtime);
+                recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view"+sql, Convert.ToInt32(User.Identity.Name), post.Sökord);
+                chicken = post.ChickenFilter;
+                biff = post.BeefFilter;
+                search = post.Sökord;
+                fish = post.FishFilter;
+                meat = post.MeatFilter;
+                pork = post.PorkFilter;
+                sausager = post.SausageFilter;
+                vego = post.VegoFilter;
+                cookingtime = post.Cookingtime;
+               
             }
             else
             {
-                recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id", Convert.ToInt32(User.Identity.Name),null);
-                ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+                recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view", Convert.ToInt32(User.Identity.Name),null);
+               
             }
-            
+            ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             ViewBag.food = recept;
             var pager = new Pager(recept.Count, page, SizeofPage);
 
@@ -40,39 +53,81 @@ namespace Matslump.Controllers
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
                 Sökord = search,
-                Size = SizeofPage
+                Size = SizeofPage,
+                BeefFilter = biff,
+                ChickenFilter = chicken,
+                FishFilter = fish,
+                MeatFilter = meat,
+                PorkFilter = pork,
+                SausageFilter = sausager,
+                VegoFilter = vego,
+                Cookingtime = cookingtime
                 
-               
+
+
+
             };
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult All(IndexViewModel search)
+        public ActionResult All(FormCollection form, int? size)
         {
-            var recept = new List<Receptmodels>();
-            if (search == null)
+            int SizeofPage = 20;
+            if (size != null)
             {
-                return RedirectToAction("All");
+                SizeofPage = size.Value;
             }
-            if (search.Size == 0)
-                search.Size = 20;
-            Foodservices food = new Foodservices();
-            recept = food.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id WHERE name LIKE @search", Convert.ToInt32(User.Identity.Name),search.Sökord);
+            var Sökord = Request.Form["Sökord"];
+            var cookingtime = Request.Form["cookingtime"];
+            var ChickenFilter = Convert.ToBoolean(Request.Form["ChickenFilter"].Split(',')[0]);
+            var VegoFilter = Convert.ToBoolean(Request.Form["VegoFilter"].Split(',')[0]);
+            var FishFilter = Convert.ToBoolean(Request.Form["FishFilter"].Split(',')[0]);
+            var BeefFilter = Convert.ToBoolean(Request.Form["BeefFilter"].Split(',')[0]);
+            var PorkFilter = Convert.ToBoolean(Request.Form["PorkFilter"].Split(',')[0]);
+            var SausageFilter = Convert.ToBoolean(Request.Form["SausageFilter"].Split(',')[0]);
+            var MeatFilter = Convert.ToBoolean(Request.Form["MeatFilter"].Split(',')[0]);
+
+
+
+            var food = new Foodservices();
+            var recept = new List<Receptmodels>();
+            
+           var sql =food.CreateSearchString(ChickenFilter, VegoFilter, FishFilter, BeefFilter, PorkFilter, SausageFilter, MeatFilter, false, Sökord,cookingtime);
+
+           recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name),Sökord);
+
+
             ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
            
             ViewBag.food = recept;
 
-            var pager = new Pager(recept.Count, 1,search.Size);
+            var pager = new Pager(recept.Count, 1, SizeofPage);
 
             var viewModel = new IndexViewModel
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
-                Sökord = search.Sökord,
-                Size = search.Size
-        };
+                Sökord = Sökord,
+                Size = SizeofPage,
+                BeefFilter = BeefFilter,
+                ChickenFilter = ChickenFilter,
+                FishFilter = FishFilter,
+                MeatFilter = MeatFilter,
+                PorkFilter = PorkFilter,
+                SausageFilter = SausageFilter,
+                VegoFilter = VegoFilter,
+                Cookingtime = cookingtime
+                
+            };
+           Session["SearchFilter"] = viewModel;
+            
             return View(viewModel);
             
+        }
+        public ActionResult Clear()
+        {
+            Session.RemoveAll();
+            return RedirectToAction("ALL");
         }
         [Authorize(Roles = "Admin")]
         public ActionResult AddNewFood()

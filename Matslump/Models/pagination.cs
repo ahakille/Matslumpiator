@@ -9,6 +9,15 @@ namespace Matslump.Models
         public Pager Pager { get; set; }
         public string Sökord { get; set; }
         public int Size { get; set; }
+        public bool ChickenFilter { get; set; }
+        public bool VegoFilter { get; set; }
+        public bool FishFilter { get; set; }
+        public bool BeefFilter { get; set; }
+        public bool PorkFilter { get; set; }
+        public bool SausageFilter { get; set; }
+        public bool MeatFilter { get; set; }
+        public bool OtherFilter { get; set; }
+        public string Cookingtime { get; set; } 
     }
 
 
