@@ -3,15 +3,39 @@
 @{
     ViewBag.Title = "Recept";
 }
-<div class="container containermain">
+<div class="container color">
+    <div class="row">
+        <div class="col-md-8">
 
-    <div class="headninghelp">
+            <h2>Receptdatabasen</h2>
+        </div>
+        <div class="col-md">
+            <div class="row">
+               
+                    <label for="selectbox">Antalsidor</label>
+                    <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;"> 
+                        <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
+                                }>
+                            10
+                        </option>
+                        <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
+                                }>
+                            20
+                        </option>
+                        <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
+                                }>
+                            50
+                        </option>
+                        <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
+                                }>
+                            100
+                        </option>
+                    </select>
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+            </div>
+        </div>
+    </div>
 
-        <h2>Receptdatabasen</h2>
-    </div>
-    <div class="helpbutton">
-        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
-    </div>
 
 
 
@@ -72,8 +96,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="submit" class="btn btn-default">Sök</button>
-                                        @Html.ActionLink("Rensa", "Clear", null, new { @class = "btn btn-default" })
+                                        <button type="submit" class="btn btn-outline-dark">Sök</button>
+                                        @Html.ActionLink("Rensa", "Clear", null, new { @class = "btn btn-outline-dark" })
                                     </div>
                                     </div>
                                         <div class="col-10">                                                                                 
@@ -89,30 +113,7 @@
                                 </div>
                         </div>     
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group form-control-sm">
-                        <label for="selectbox">Antalsidor</label>
-                        <select id="selectbox" class="form-control form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                            <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
-                                    }>
-                                10
-                            </option>
-                            <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
-                                    }>
-                                20
-                            </option>
-                            <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
-                                    }>
-                                50
-                            </option>
-                            <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
-                                    }>
-                                100
-                            </option>
 
-                        </select>
-                    </div>
-                </div>
             </div>
 
 

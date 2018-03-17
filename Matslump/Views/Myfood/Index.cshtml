@@ -3,12 +3,37 @@
 @{
     ViewBag.Title = "Mina maträtter";
 }
-<div class="container containermain">
-    <div class="headninghelp">
-        <h2>Mina maträtter</h2>
-    </div>
-    <div class="helpbutton">
-        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+<div class="container color">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Mina maträtter</h2>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group form-control-sm">
+                <label for="selectbox">Antalsidor</label>
+                <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                    <option value="~/Myfood/index?size=10" @if (Model.Size == 10) { @: selected
+                            }>
+                        10
+                    </option>
+                    <option value="~/Myfood/index?size=20" @if (Model.Size == 20) { @: selected
+                            }>
+                        20
+                    </option>
+                    <option value="~/Myfood/index?size=50" @if (Model.Size == 50) { @: selected
+                            }>
+                        50
+                    </option>
+                    <option value="~/Myfood/index?size=100" @if (Model.Size == 100) { @: selected
+                            }>
+                        100
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+        </div>
     </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -17,8 +42,8 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Hjälp Receptdatabasen</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p>Här kan du skapa nya recept, ändra recept och även lägga till recept i din lista</p>
@@ -31,38 +56,14 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-    </div>
-    <div class="col-md-2 col-md-offset-2">
-        <div class="form-group form-control-sm">
-            <label for="selectbox">Antalsidor</label>
-            <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                <option value="~/Myfood/index?size=10" @if (Model.Size == 10) { @: selected
-                        }>
-                    10
-                </option>
-                <option value="~/Myfood/index?size=20" @if (Model.Size == 20) { @: selected
-                        }>
-                    20
-                </option>
-                <option value="~/Myfood/index?size=50" @if (Model.Size == 50) { @: selected
-                        }>
-                    50
-                </option>
-                <option value="~/Myfood/index?size=100" @if (Model.Size == 100) { @: selected
-                        }>
-                    100
-                </option>
 
-            </select>
-        </div>
-    </div>
-    <hr />
+<hr />
+<div class="row col-md-12">
     @foreach (var item in Model.Items)
     {
 
         <div class="row table">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
                 <div id="@item.Id" class="collapse">
                     <div class="row">
@@ -81,42 +82,42 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 @Html.ActionLink("Ta bort från min lista", "Delete", new { id = item.Id, page = Model.Pager.CurrentPage })
             </div>
         </div>
 
     }
+</div>
 
+@if (Model.Pager.EndPage > 1)
+{
+    <ul class="pagination">
+        @if (Model.Pager.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Myfood/index">Första</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size">Tidigare</a>
+            </li>
+        }
 
-    @if (Model.Pager.EndPage > 1)
-    {
-        <ul class="pagination">
-            @if (Model.Pager.CurrentPage > 1)
-            {
-                <li>
-                    <a href="~/Myfood/index">Första</a>
-                </li>
-                <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size">Tidigare</a>
-                </li>
-            }
+        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+        {
+            <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                <a class="page-link" href="~/Myfood/index?page=@page&size=@Model.Size">@page</a>
+            </li>}
 
-            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
-            {
-                <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a href="~/Myfood/index?page=@page&size=@Model.Size">@page</a>
-                </li>}
-
-            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-            {
-                <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size">Nästa</a>
-                </li>
-                <li>
-                    <a href="~/Myfood/index?page=@(Model.Pager.TotalPages)&size=@Model.Size">Sista</a>
-                </li>
-            }
-        </ul>
-    }
+        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size">Nästa</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.TotalPages)&size=@Model.Size">Sista</a>
+            </li>
+        }
+    </ul>
+}
 </div>
