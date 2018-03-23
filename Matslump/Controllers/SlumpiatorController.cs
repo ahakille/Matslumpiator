@@ -1,4 +1,5 @@
 ﻿using Matslump.Models;
+using Matslump.Services;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -77,7 +78,7 @@ namespace Matslump.Controllers
 
         public ActionResult AddRandomList(int food1,int food2,int food3)
         {
-            var re = new Receptmodels();
+            var re = new Foodservices();
             re.addFood_user(User.Identity.Name,food1);
             re.addFood_user(User.Identity.Name, food2);
             re.addFood_user(User.Identity.Name, food3);

@@ -136,7 +136,7 @@ namespace Matslump.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult AddNewFood(Receptmodels model)
+        public ActionResult AddNewFood(ReceptmodelsAddEditView model)
         {
             if(string.IsNullOrWhiteSpace(model.Url_pic))
             {
@@ -146,28 +146,23 @@ namespace Matslump.Controllers
             {
                 model.Url_recept = "#";
             }
-            Receptmodels re = new Receptmodels();
-            re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
+            var re = new Foodservices();
+            re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name),model.Ica_id,model.TypeOfFoodId,model.Occasions,model.Rating,model.CookingtimeId);
             return RedirectToAction("ALL", "Food");
         }
         [Authorize(Roles = "Admin")]
         public ActionResult EditFood(int id,int page)
         {
-            Receptmodels re = new Receptmodels();
+            var re = new ReceptmodelsAddEditView();
             var Foodlist = new Foodservices();
-            re.Recept = Foodlist.GetFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
-            re.Id = re.Recept[0].Id;
-            re.Name = re.Recept[0].Name;
-            re.Url_pic = re.Recept[0].Url_pic;
-            re.Url_recept = re.Recept[0].Url_recept;
-            re.Description = re.Recept[0].Description;
+            re = Foodlist.GetFoodForEditView("SELECT * FROM recept WHERE id_recept =@id_user", id);
             ViewBag.page = page;
             TempData["page"] = page;
             return View(re);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult EditFood(Receptmodels model)
+        public ActionResult EditFood(ReceptmodelsAddEditView model)
         {
             if (string.IsNullOrWhiteSpace(model.Url_pic))
             {
@@ -178,14 +173,16 @@ namespace Matslump.Controllers
                 model.Url_recept = "#";
             }
             int page = (int)TempData["page"];
-            Receptmodels re = new Receptmodels();
-            re.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept);
+            model.CookingtimeId = Convert.ToInt16(Request.Form["cookingtime"]);
+            model.TypeOfFoodId = Convert.ToInt16(Request.Form["typeoffood"]);
+            var re = new Foodservices();
+            re.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept, model.Ica_id, model.TypeOfFoodId, model.Occasions, model.Rating, model.CookingtimeId);
             return RedirectToAction("ALL", "Food",new { page = page });
         }
 
         public ActionResult AddToMyFood(int id ,int page)
         {
-            Receptmodels re = new Receptmodels();
+            var re = new Foodservices();
             re.addFood_user(User.Identity.Name, id);
             return RedirectToAction("ALL", "Food",new { page = page });
 

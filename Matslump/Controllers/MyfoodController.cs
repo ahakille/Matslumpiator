@@ -49,7 +49,7 @@ namespace Matslump.Controllers
         // GET: Myfood/Delete/5
         public ActionResult Delete(int id, int page)
         {
-            Receptmodels re = new Receptmodels();
+            var re = new Foodservices();
             re.removefood_user(User.Identity.Name, id);
             return RedirectToAction("index",new { page = page });
         }

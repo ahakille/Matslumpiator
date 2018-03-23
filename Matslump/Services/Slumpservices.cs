@@ -11,7 +11,7 @@ namespace Matslump.Services
         public List<Receptmodels> CreateRandomListOfRecept()
         {
             var Foodlist = new Foodservices();
-            var List =  Foodlist.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id", 1, null);
+            var List =  Foodlist.GetFoodListForReceptView("SELECT * FROM public.recept_search_view", 1, null);
             Random rnd = new Random();
             int maxnumber = List.Count;
             var ListOfrandom = new List<Receptmodels>();

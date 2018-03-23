@@ -1,4 +1,4 @@
-﻿@model Matslump.Models.Receptmodels
+﻿@model Matslump.Models.ReceptmodelsAddEditView
 
 @{
     ViewBag.Title = "AddNewFood";
@@ -42,44 +42,120 @@
     {
 
 
-        <div class="form-horizontal">
+    <div class="form-horizontal">
 
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" }) *
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "" }) *
+            <div>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class=" form-group">
+            <div>
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" }) *
                 <div>
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control test" }, style = "width:24%" })
+                    <div>
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+
                 </div>
             </div>
-            <div class=" form-group">
-                <div>
-                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "" }) *
-                    <div>
-                        @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control test" }, style = "width:24%" })
-                        <div>
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                        </div>
 
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url_pic, htmlAttributes: new { @class = "" }) *
+            <div>
+                @Html.EditorFor(model => model.Url_pic, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Url_pic, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url_recept, htmlAttributes: new { @class = "" }) *
+            <div>
+                @Html.EditorFor(model => model.Url_recept, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Url_recept, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CookingtimeId, htmlAttributes: new { @class = "" }) *
+            <div>
+                <select class="form-control" id="cookingtime" name="cookingtime">
+                    <option value="Under 15 minuter">
+                        Under 15 minuter
+                    </option>
+                    <option value="Under 30 minuter">
+                        Under 30 minuter
+                    </option>
+                    <option value="Under 45 minuter">
+                        Under 45 minuter
+                    </option>
+                    <option value="Under 60 minuter">
+                        Under 60 minuter
+                    </option>
+                    <option value="Över 60 minuter">
+                        Över 60 minuter
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeOfFoodId, htmlAttributes: new { @class = "" }) *
+                <div>
+                    <select class="form-control" id="cookingtime" name="cookingtime">
+                        <option value="1" >
+                            Kyckling
+                        </option>
+                        <option value="2" >
+                            Vegetarisk
+                        </option>
+                        <option value="3" >
+                            Fisk
+                        </option>
+                        <option value="4">
+                            Nöt
+                        </option>
+                        <option value="5">
+                            Fläsk
+                        </option>
+                        <option value="6">
+                            Korv
+                        </option>
+                        <option value="7">
+                            Kött
+                        </option>
+                        <option value="8">
+                            Övrigt
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Ica_id, htmlAttributes: new { @class = "" }) *
+                    <div>
+                        @Html.EditorFor(model => model.Ica_id, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Ica_id, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Occasions, htmlAttributes: new { @class = "" }) *
+                    <div>
+                        @Html.EditorFor(model => model.Occasions, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Occasions, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "" }) *
+                    <div>
+                        @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
 
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Url_pic, htmlAttributes: new { @class = "" }) *
-                <div>
-                    @Html.EditorFor(model => model.Url_pic, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Url_pic, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Url_recept, htmlAttributes: new { @class = "" }) *
-                <div>
-                    @Html.EditorFor(model => model.Url_recept, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Url_recept, "", new { @class = "text-danger" })
-                </div>
-            </div>
+
+
 
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-10">
@@ -87,12 +163,9 @@
                 </div>
             </div>
         </div>
-
+</div>
     }
 
-    <div>
-
-    </div>
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
