@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Recept";
 }
-<div class="container color">
+<div class="color">
     <div class="row">
         <div class="col-md-8">
 
@@ -103,11 +103,11 @@
                                         <div class="col-10">                                                                                 
                                             <div class="form-check form-check-inline">@Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt 
                                                     
-                                                    @Html.CheckBoxFor(Model => Model.SausageFilter, new  { @class = "form-check-input"  }) Korv
-                                                    @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött 
-                                                    @Html.CheckBoxFor(Model => Model.FishFilter, new  { @class = "form-check-input" }) Fisk 
-                                                    @Html.CheckBoxFor(Model => Model.PorkFilter, new  { @class = "form-check-input" }) Fläsk 
-                                                    @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego 
+                                                <div class="col">  @Html.CheckBoxFor(Model => Model.SausageFilter, new { @class = "form-check-input" }) Korv</div>
+                                                <div class="col">   @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött</div>
+                                                <div class="col">  @Html.CheckBoxFor(Model => Model.FishFilter, new  { @class = "form-check-input" }) Fisk</div>
+                                                <div class="col">   @Html.CheckBoxFor(Model => Model.PorkFilter, new { @class = "form-check-input" }) Fläsk</div>
+                                                <div class="col">   @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego</div>
                                             </div>                                     
                                             </div>                                   
                                 </div>
@@ -132,16 +132,15 @@
                 <div id="@item.Id" class="collapse">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
-                        </div>
-                        <div class="row">
+                           <p></p> <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name"  />
+                        </div>                
                             <div class="col-md-8">
                                 <p>@item.cookingtime Typ: @item.TypeOfFood  Betyg: @item.Rating</p>
                                 @item.Description <br /> @if (item.Url_recept != "#")
                                 {<a href="@item.Url_recept" target="_blank">Till receptet(extern sida)</a>}
                             </div>
 
-                        </div>
+                      
 
 
                     </div>
@@ -175,14 +174,14 @@
 
     @if (Model.Pager.EndPage > 1)
     {
-        <ul class="pagination">
+        <ul class="pagination pagination-sm">
             @if (Model.Pager.CurrentPage > 1)
             {
-                <li>
-                    <a href="~/Food/All">Första</a>
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All">Första</a>
                 </li>
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Tidigare</a>
 
@@ -191,21 +190,21 @@
 
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
             {
-                <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">@page</a>
                 </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Nästa</a>
                 </li>
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Sista</a>
                 </li>

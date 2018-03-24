@@ -68,15 +68,15 @@
                 <div id="@item.Id" class="collapse">
                     <div class="row">
                         <div class="col-md-3">
-                            <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
+                            <p></p>  <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
                         </div>
-                        <div class="row">
+                        
                             <div class="col-md-8">
                                 @item.Description <br />@if (item.Url_recept != "#")
                                 {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
                             </div>
 
-                        </div>
+                    
 
 
                     </div>
@@ -92,7 +92,7 @@
 
 @if (Model.Pager.EndPage > 1)
 {
-    <ul class="pagination">
+    <ul class="pagination-sm">
         @if (Model.Pager.CurrentPage > 1)
         {
             <li class="page-item">

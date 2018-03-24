@@ -47,11 +47,9 @@ textarea1 {
     display: inline-block;
 }
 .color {
-    margin: 10px 10px 10px 10px;
+
     background-color: #f6f6f7;
     background: rgba(255, 255, 255, 0.80);
-    padding: 2px 5px 5px 10px;
-    border-radius: 5px;
    
 }
 .containermain {
