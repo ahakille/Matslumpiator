@@ -31,9 +31,11 @@ textarea1 {
     background-color: #3d7ee1;
     border-color: #080808;
 }
+
     .navbar-inverse .navbar-brand {
         color: #e3eeee;
     }
+
     .navbar-inverse .navbar-nav > li > a {
         color: #e3eeee;
     }

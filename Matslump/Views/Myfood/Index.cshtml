@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Mina maträtter";
 }
-<div class="container color">
+<div class="container color p-lg-3">
     <div class="row">
         <div class="col-md-8">
             <h2>Mina maträtter</h2>
@@ -92,7 +92,7 @@
 
 @if (Model.Pager.EndPage > 1)
 {
-    <ul class="pagination-sm">
+    <ul class="pagination pagination-sm">
         @if (Model.Pager.CurrentPage > 1)
         {
             <li class="page-item">
