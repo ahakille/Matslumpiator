@@ -3,34 +3,38 @@
 @{
     ViewBag.Title = "Recept";
 }
-<div class="color p-3">
+<div class="container color p-3">
     <div class="row">
         <div class="col-md-8">
             <h2>Receptdatabasen</h2>
         </div>
-        <div class="col-md">
-            <label for="selectbox">Antalsidor</label>
-            <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
-                        }>
-                    10
-                </option>
-                <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
-                        }>
-                    20
-                </option>
-                <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
-                        }>
-                    50
-                </option>
-                <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
-                        }>
-                    100
-                </option>
-            </select>
-            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">Hjälp</button>
+        <div class="col-md-2">
+            <div class="form-group form-control-sm">
+                <label for="selectbox">Antalsidor</label>
+                <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                    <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
+                            }>
+                        10
+                    </option>
+                    <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
+                            }>
+                        20
+                    </option>
+                    <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
+                            }>
+                        50
+                    </option>
+                    <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
+                            }>
+                        100
+                    </option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">Hjälp</button>
+            </div>
         </div>
-    </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -89,23 +93,24 @@
                         @Html.ActionLink("Rensa", "Clear", null, new { @class = "btn btn-outline-dark" })
                     </div>
                 </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling
-                            @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt
-
-                            <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.SausageFilter, new { @class = "form-check-input" }) Korv</div>
-                            <div class="col-md-auto">   @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött</div>
-                            <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.FishFilter, new { @class = "form-check-input" }) Fisk</div>
-                            <div class="col-md-auto">   @Html.CheckBoxFor(Model => Model.PorkFilter, new { @class = "form-check-input" }) Fläsk</div>
-                            <div class="col-md-auto">   @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego</div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-auto"></div>
+                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling</div>
+                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt
                     </div>
 
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.SausageFilter, new { @class = "form-check-input" }) Korv</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.FishFilter, new { @class = "form-check-input" }) Fisk</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.PorkFilter, new { @class = "form-check-input" }) Fläsk</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego</div>
+
+                </div>
 
 
 
-                
+
+
 
             </div>
         </div>
@@ -163,49 +168,50 @@
             </div>
         }
     </div>
-    @if (Model.Pager.EndPage > 1)
+    <div class="col-md-10">
+        @if (Model.Pager.EndPage > 1)
     {
         <ul class="pagination pagination-sm">
             @if (Model.Pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" href="~/Food/All">Första</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All">Första</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Tidigare</a>
 
-                </li>
-            }
+            </li>
+    }
 
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
-            {
-                <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                <a class="page-link" href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">@page</a>
                 </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-            {
-                <li class="page-item">
-                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Nästa</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Sista</a>
-                </li>
+            </li>
 
-            }
-
-        </ul>
     }
 
+        </ul>
+}
 
+    </div>
 </div>
 
 
