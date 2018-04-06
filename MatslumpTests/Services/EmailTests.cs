@@ -14,7 +14,8 @@ namespace Matslump.Services.Tests
         [TestMethod()]
         public void SendEmailTest()
         {
-
+            Email.SendEmail("gorlingy@hotmail.com", "test", "test", "test");
+            
         }
     }
 }
