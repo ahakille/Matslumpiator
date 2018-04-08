@@ -56,37 +56,40 @@
             </div>
         </div>
     </div>
-    @using (Html.BeginForm())
-    {
+    <form method="post">
         <div class="row">
             <div class="col-md-10">
                 <div class="row">
                     <div class="col-md-4 p-3">
-                        @Html.EditorFor(m => Model.Sökord, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sök på valfrit ord..." } })
+                        <input asp-for="Sökord" class="form-control" placeholder="Sök på valfrit ord..."/>
+                       @*@Html.EditorFor(m => Model.Sökord, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sök på valfrit ord..." } })*@
                     </div>
                     <div class="col-md-4 p-3">
-                        <select class="form-control" id="cookingtime" name="cookingtime">
-                            <option value="Under 15 minuter" @if (Model.Cookingtime == "Under 15 minuter") { @: selected
+                        <select asp-for="Cookingtime" asp-items="@(new SelectList(ViewBag.Cookingtimes))"></select>
+
+
+                        @*<select class="form-control" id="cookingtime" name="cookingtime">
+                            <option value="Under 15 minuter" @if (Model.Cookingtime= ="Under 15 minuter" ) { @: selected
                                     }>
                                 Under 15 minuter
                             </option>
-                            <option value="Under 30 minuter" @if (Model.Cookingtime == "Under 30 minuter") { @: selected
+                            <option value="Under 30 minuter" @if (Model.Cookingtime= ="Under 30 minuter" ) { @: selected
                                     }>
                                 Under 30 minuter
                             </option>
-                            <option value="Under 45 minuter" @if (Model.Cookingtime == "Under 45 minuter") { @: selected
+                            <option value="Under 45 minuter" @if (Model.Cookingtime= ="Under 45 minuter" ) { @: selected
                                     }>
                                 Under 45 minuter
                             </option>
-                            <option value="Under 60 minuter" @if (Model.Cookingtime == "Under 60 minuter") { @: selected
+                            <option value="Under 60 minuter" @if (Model.Cookingtime= ="Under 60 minuter" ) { @: selected
                                     }>
                                 Under 60 minuter
                             </option>
-                            <option value="Över 60 minuter" @if (Model.Cookingtime == "Över 60 minuter") { @: selected
+                            <option value="Över 60 minuter" @if (Model.Cookingtime= ="Över 60 minuter" ) { @: selected
                                     }>
                                 Över 60 minuter
                             </option>
-                        </select>
+                        </select>*@
                     </div>
                     <div class="col-md-4 p-3">
                         <button type="submit" class="btn btn-outline-dark">Sök</button>
@@ -95,26 +98,17 @@
                 </div>
                 <div class="row">
                     <div class="col-md-auto"></div>
-                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling</div>
-                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt
-                    </div>
-
+                    <div class="col-md-auto"><input asp-for="ChickenFilter" /> @*@Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" })*@ Kyckling</div>
+                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt</div>
                     <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.SausageFilter, new { @class = "form-check-input" }) Korv</div>
                     <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött</div>
                     <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.FishFilter, new { @class = "form-check-input" }) Fisk</div>
                     <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.PorkFilter, new { @class = "form-check-input" }) Fläsk</div>
                     <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego</div>
-
                 </div>
-
-
-
-
-
-
             </div>
         </div>
-    }
+    </form>
     <div class="row">
         <hr />
     </div>
@@ -157,7 +151,10 @@
                     }
                     else
                     {
-                        @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage, size = Model.Size })
+                        
+                        <a href="~/Food/AddToMyFood/@item.Id?page=@(Model.Pager.CurrentPage)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")@Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Lägg till i min lista</a>
                     }
                     @if (User.IsInRole("Admin"))
                     {@:|
@@ -180,7 +177,7 @@
             <li class="page-item">
                 <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
                     {
-                     @Html.Raw("&search=")  @Model.Sökord }">Tidigare</a>
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Tidigare</a>
 
             </li>
     }
@@ -188,9 +185,9 @@
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
         {
             <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
-                <a class="page-link" href="~/Food/All?page= @(page)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                <a class="page-link" href="~/Food/All?page=@(page)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
-                     @Html.Raw("&search=")  @Model.Sökord }">@(page)</a>
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">@(page)</a>
                 </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
@@ -198,12 +195,12 @@
             <li class="page-item">
                 <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
-                     @Html.Raw("&search=")  @Model.Sökord }">Nästa</a>
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Nästa</a>
             </li>
             <li class="page-item">
                 <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
-                     @Html.Raw("&search=")  @Model.Sökord }">Sista</a>
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Sista</a>
             </li>
 
     }

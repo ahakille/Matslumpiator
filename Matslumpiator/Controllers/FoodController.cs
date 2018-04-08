@@ -14,39 +14,23 @@ namespace Matslumpiator.Controllers
     {
         // GET: Food
         [HttpGet]
-        public ActionResult All(int? page ,int? size )
+        public ActionResult All(int? page ,int? size,string search , bool chicken,bool beef , bool fish , bool meat, bool pork, bool sausage , bool vego,string cookingtime)
         {
             int SizeofPage =20;
-            string search = "" ,cookingtime = "Över 60 minuter";
-            bool chicken = false, biff = false ,fish = false , meat = false,pork = false,sausager = false,vego = false;
             if(size != null)
             {
                 SizeofPage = size.Value ;
-            }          
-     
-            //var post = (IndexViewModel)Session["SearchFilter"];
+            }  
+            if (string.IsNullOrEmpty(cookingtime))
+            {
+                cookingtime = "Över 60 minuter";
+            } 
+            
             var recept = new List<Receptmodels>();
             var food = new Foodservices();
-            //if (post != null) //!string.IsNullOrEmpty(search)
-            //{
-            //    var sql = food.CreateSearchString(post.ChickenFilter, post.VegoFilter, post.FishFilter, post.BeefFilter, post.PorkFilter, post.SausageFilter, post.MeatFilter, post.OtherFilter, post.Sökord,post.Cookingtime);
-            //    recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view"+sql, Convert.ToInt32(User.Identity.Name), post.Sökord);
-            //    chicken = post.ChickenFilter;
-            //    biff = post.BeefFilter;
-            //    search = post.Sökord;
-            //    fish = post.FishFilter;
-            //    meat = post.MeatFilter;
-            //    pork = post.PorkFilter;
-            //    sausager = post.SausageFilter;
-            //    vego = post.VegoFilter;
-            //    cookingtime = post.Cookingtime;
-               
-            //}
-            //else
-            //{
-                recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view", Convert.ToInt32(User.Identity.Name),null);
-               
-            //}
+          
+            var sql = food.CreateSearchString(chicken,vego, fish,beef, pork,sausage,meat, false,search,cookingtime);
+            recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name), search);        
             ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             ViewBag.food = recept;
             var pager = new Pager(recept.Count, page, SizeofPage);
@@ -57,12 +41,12 @@ namespace Matslumpiator.Controllers
                 Pager = pager,
                 Sökord = search,
                 Size = SizeofPage,
-                BeefFilter = biff,
+                BeefFilter = beef,
                 ChickenFilter = chicken,
                 FishFilter = fish,
                 MeatFilter = meat,
                 PorkFilter = pork,
-                SausageFilter = sausager,
+                SausageFilter = sausage,
                 VegoFilter = vego,
                 Cookingtime = cookingtime
                 
@@ -70,34 +54,25 @@ namespace Matslumpiator.Controllers
 
 
             };
+            var cooking = new List<string> { "Under 15 minuter", "Under 30 minuter", "Under 45 minuter", "Under 60 minuter", "Över 60 minuter" };
+            ViewBag.Cookingtimes = cooking;
             return View(viewModel);
         }
         [HttpPost]
-        public ActionResult All(FormCollection form, int? size)
+        public ActionResult All(IndexViewModel model, int? size)
         {
             int SizeofPage = 20;
             if (size != null)
             {
                 SizeofPage = size.Value;
             }
-            var Sökord = Request.Form["Sökord"];
-            var cookingtime = Request.Form["cookingtime"];
-            var ChickenFilter = Convert.ToBoolean(Request.Form["ChickenFilter"]);
-            var VegoFilter = Convert.ToBoolean(Request.Form["VegoFilter"]);
-            var FishFilter = Convert.ToBoolean(Request.Form["FishFilter"]);
-            var BeefFilter = Convert.ToBoolean(Request.Form["BeefFilter"]);
-            var PorkFilter = Convert.ToBoolean(Request.Form["PorkFilter"]);
-            var SausageFilter = Convert.ToBoolean(Request.Form["SausageFilter"]);
-            var MeatFilter = Convert.ToBoolean(Request.Form["MeatFilter"]);
-
-
 
             var food = new Foodservices();
             var recept = new List<Receptmodels>();
             
-            var sql =food.CreateSearchString(ChickenFilter, VegoFilter, FishFilter, BeefFilter, PorkFilter, SausageFilter, MeatFilter, false, Sökord,cookingtime);
+            var sql =food.CreateSearchString(model.ChickenFilter , model.VegoFilter, model.FishFilter, model.BeefFilter, model.PorkFilter, model.SausageFilter, model.MeatFilter, false, model.Sökord,model.Cookingtime);
 
-            recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name),Sökord);
+            recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name),model.Sökord);
 
 
             ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
@@ -110,20 +85,21 @@ namespace Matslumpiator.Controllers
             {
                 Items = recept.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
                 Pager = pager,
-                Sökord = Sökord,
+                Sökord = model.Sökord,
                 Size = SizeofPage,
-                BeefFilter = BeefFilter,
-                ChickenFilter = ChickenFilter,
-                FishFilter = FishFilter,
-                MeatFilter = MeatFilter,
-                PorkFilter = PorkFilter,
-                SausageFilter = SausageFilter,
-                VegoFilter = VegoFilter,
-                Cookingtime = cookingtime
+                BeefFilter = model.BeefFilter,
+                ChickenFilter = model.ChickenFilter,
+                FishFilter = model.FishFilter,
+                MeatFilter = model.MeatFilter,
+                PorkFilter = model.PorkFilter,
+                SausageFilter = model.SausageFilter,
+                VegoFilter = model.VegoFilter,
+                Cookingtime = model.Cookingtime
                 
             };
-           
-            
+            var cooking = new List<string> { "Under 15 minuter", "Under 30 minuter", "Under 45 minuter", "Under 60 minuter", "Över 60 minuter" };
+            ViewBag.Cookingtimes = cooking;
+
             return View(viewModel);
             
         }
@@ -185,11 +161,11 @@ namespace Matslumpiator.Controllers
             return RedirectToAction("ALL", "Food",new { page = page });
         }
 
-        public ActionResult AddToMyFood(int id ,int page)
+        public ActionResult AddToMyFood(int id ,int page, string search, bool chicken, bool beef, bool fish, bool meat, bool pork, bool sausage, bool vego, string cookingtime)
         {
             Receptmodels re = new Receptmodels();
             re.addFood_user(User.Identity.Name, id);
-            return RedirectToAction("ALL", "Food",new { page = page });
+            return RedirectToAction("ALL", "Food",new { page = page ,chicken = chicken ,beef=beef,fish = fish,meat = meat,pork = pork,sausage=sausage,vego=vego,cookingtime=cookingtime ,search});
 
         }
     }
