@@ -12,19 +12,19 @@
             <div class="form-group form-control-sm">
                 <label for="selectbox">Antalsidor</label>
                 <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                    <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
+                    <option value="/Food/All?size=10" @if (Model.Size == 10) { @: selected
                             }>
                         10
                     </option>
-                    <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
+                    <option value="/Food/All?size=20" @if (Model.Size == 20) { @: selected
                             }>
                         20
                     </option>
-                    <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
+                    <option value="/Food/All?size=50" @if (Model.Size == 50) { @: selected
                             }>
                         50
                     </option>
-                    <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
+                    <option value="/Food/All?size=100" @if (Model.Size == 100) { @: selected
                             }>
                         100
                     </option>
@@ -188,9 +188,9 @@
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
         {
             <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
-                <a class="page-link" href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                <a class="page-link" href="~/Food/All?page= @(page)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
-                     @Html.Raw("&search=")  @Model.Sökord }">@page</a>
+                     @Html.Raw("&search=")  @Model.Sökord }">@(page)</a>
                 </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)

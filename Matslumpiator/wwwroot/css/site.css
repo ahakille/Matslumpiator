@@ -3,33 +3,84 @@
     padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+test {
+    max-width: 280px;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+textarea1 {
+    width: 200px;
+    height: 80px;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+.navbar-inverse {
+    background-color: #3d7ee1;
+    border-color: #080808;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: #e3eeee;
     }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #e3eeee;
+    }
+
+.headninghelp {
+    width: 80%;
+    margin: 0px 0 0px 0;
+    padding: 0px;
+    display: inline-block;
 }
+
+.helpbutton {
+    display: inline-block;
+}
+
+.color {
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.containermain {
+    margin: 0px 0px 0px 0px;
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.90);
+    padding: 2px 0px 0px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.bodymat {
+    background-size: contain;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.test {
+    text-align: center;
+    width: auto;
+}
+
+body {
+    background-color: #f3f0eb;
+    /*background-image: url(pic/background-2369807_960_720.jpg);
+    background-size: cover*/
+}
+
