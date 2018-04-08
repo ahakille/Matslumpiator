@@ -1,0 +1,48 @@
+﻿@model Matslumpiator.Models.Receptmodels
+
+@{
+    ViewBag.Title = "Ditt matförslag för vecka "+ ViewBag.date;
+}
+<div class="container color py-lg-3 rounded">
+    <h2>Ditt matförslag för vecka @ViewBag.date</h2>
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            @Html.ActionLink("Slumpa fram ny", "Create", Model.Recept[0].Date, new { @class = "btn btn-outline-dark" })
+            @if (ViewBag.check != -10)
+            {<input type="submit" value="Spara veckomeny" class="btn btn-outline-dark" />}
+            @Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-outline-dark" })
+        </p>
+        foreach (var item in Model.Recept)
+        {
+        <div class="row table">
+        <div class="col-md-12">
+            <a href="#@item.Id" data-toggle="collapse">@item.Date.DayOfWeek <span> - </span>  @item.Name</a>
+            <div id="@item.Id" class="collapse">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:160px" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            @item.Description <br />@if (item.Url_recept != "#")
+                            {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        }
+
+
+
+
+
+
+
+    }
+</div>
+
+

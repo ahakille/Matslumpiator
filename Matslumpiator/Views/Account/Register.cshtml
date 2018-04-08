@@ -1,0 +1,102 @@
+﻿@model Matslumpiator.Models.CreateAccountViewmodel
+
+@{
+    ViewBag.Title = "Registera dig";
+}
+<div class="row color py-3 rounded">
+    <div class="col-md-auto">
+        <h2>Registera dig</h2>
+
+        @using (Html.BeginForm())
+        {
+
+
+        <div class="form-horizontal">
+            <p>Fyll i dina uppgifter, lösenord kommer på mailen</p>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.First_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Last_name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    Jag godkänner <a href="#" data-toggle="modal" data-target="#myModal">användarvilkoren*</a>
+                    @Html.CheckBoxFor(model => model.UserAgreement, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserAgreement, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Användarvilkor 2018-02-20</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        </div>
+                        <div class="modal-body">
+                            <h4>Allmänt</h4>
+                            <p>Avtalet gäller mellan Matslumpiator.se och den som registrerar sig för Matslumpiator.se tjänster, nedan kallad användaren.</p>
+                            <p>
+                                Matslumpiator.se kan komma att ändra detta avtal från tid till annan och kommer då att publicera de ändrade användarvillkoren på hemsidan. De ändrade villkoren blir gällande för nya användare från det datum de publiceras och tjänsten används. Användare har dock rätt att med omedelbar verkan säga upp sitt avtal om de nya villkoren inte kan accepteras.
+                            </p>
+                            <h4>Användning och ansvar</h4>
+                            <p>Användaren ansvarar för att hålla sina inloggningsuppgifter konfidentiella och får inte lämna sina inloggningsuppgifter vidare till tredje part. Detta innefattar att hålla en gott skydd för sina inloggningsuppgifter i såväl elektronisk som fysisk miljö.</p>
+                            <p>Matslumpiator.se tillhandahåller ett verktyg avsett att hjälpa användaren att hitta lämpliga middagsrecept men bär inte ansvar för att användandet av tjänsten leder till att användaren får en god middag. Användandet av tjänsten sker helt på egen risk. Matslumpiator.se ansvarar inte för felaktigheter, skrivfel eller andra felaktigheter i de recept som återfinns i tjänsten.  Matslumpiator.se är vidare inte ansvarig för någon typ av direkt eller indirekt skada oavsett form eller typ som har samband med användandet av denna tjänst.</p>
+                            <h4>Personuppgifter</h4>
+                            <p>Användaren godkänner att Matslumpiator.se sparar de personuppgifter som användaren uppger i sin kunddatabas tills användaren avregistrerar sig. Användaren ger även Matslumpiator.se tillåtelse att samla in information hur tjänsten används genom loggning och s.k. ”cookies”. Informationen som samlas kan innehålla tid/datum för besök, vilka sidor som besökts samt hur lång tid som tjänsten använts.</p>
+                            <p>Matslumpiator.se kommer dock aldrig att vidarebefordra ovan nämnda data till någon tredje part annat än när det behövs för att utföra tjänsten i enlighet med användarens vilja.</p>
+                            <h4>Tjänstens tillgänglighet</h4>
+                            <p>Matslumpiator.se kommer successivt att förbättra och anpassa sin tjänst utifrån teknikutvecklingen och användarnas önskemål. Matslumpiator.se kan dock inte garantera någon specifik funktion eller innehåll i tjänsten. Vidare innebär detta avtal inget åtagande avseende tjänstens tillförlitlighet, tillgänglighet eller tekniska standard. Motsvarande gäller eventuella underleverantörer eller distributörers åtagande eller innehåll i tjänsten.</p>
+                            <p>Matslumpiator.se förehåller sig vidare rätten att återkalla eller förändra tjänsten utan föregående meddelande.</p>
+                            <h4>Uppsägning av tjänsten</h4>
+                            <p>Om användaren bryter mot något av villkoren har matslumpiator.se rätt att stänga kontot med omedelbar verkan. Vid sådan stängning av användarens konto upphör alla användarens rättigheter till kontot och användandet av tjänsten.</p>
+                            <p>Matslumpiator.se förbehåller sig även rätten att omedelbart, och utan föregående varning, stänga användarens konto utan krav på motivering.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Stäng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Skapa användare" class="btn btn-outline-dark" />
+                </div>
+            </div>
+        </div>
+         }
+    </div>
+</div>
+

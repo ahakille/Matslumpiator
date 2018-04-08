@@ -1,0 +1,47 @@
+﻿@model Matslumpiator.Models.Accountmodels
+
+<div class="row"><div class="col"></div></div>
+<div class="row py-3">
+    <div class="col"></div>
+    <div class="col-md-4 color py-3 rounded">
+        <div class="col"></div>
+        <div class="col-md-auto">
+            <div class="line-login">
+                <h4>Vänligen logga in</h4>
+                <hr />
+            </div>
+            <section id="loginForm">
+                <form asp-controller="Account" asp-action="index" method="post">
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.user, new { @class = "col-md-8 control-label" })
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.user, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.user, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Logga in" class="btn btn-outline-dark" /> @Html.ActionLink("Glömt lösenord", "Forgetpassword", new { id = 2 }, new { @class = "btn btn-outline-dark" })
+                        </div>
+                    </div>
+
+                </form>
+            </section>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="col">
+    </div>
+</div>
+
+
