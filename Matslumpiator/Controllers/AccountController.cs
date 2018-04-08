@@ -50,9 +50,9 @@ namespace Matslumpiator.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity),authProperties);
 
-                if (!string.IsNullOrEmpty(Request.QueryString.Value))
+                if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
-                    return Redirect(Request.QueryString.Value);
+                      return Redirect(model.ReturnUrl);
                 }
 
                 return Redirect("home/index");

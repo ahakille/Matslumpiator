@@ -20,6 +20,7 @@ namespace Matslumpiator.Models
         [DataType(DataType.Password)]
         [Display(Name = "Lösenord")]
         public string Password { get; set; }
+        public string ReturnUrl { get; set; }
 
     }
     public class CreateAccountViewmodel

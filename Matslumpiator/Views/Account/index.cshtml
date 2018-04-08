@@ -13,6 +13,7 @@
             <section id="loginForm">
                 <form asp-controller="Account" asp-action="index" method="post">
                     @Html.AntiForgeryToken()
+                    <input asp-for="ReturnUrl" hidden value="@ViewBag.ReturnUrl" />
 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
