@@ -14,34 +14,32 @@
             {<input type="submit" value="Spara veckomeny" class="btn btn-outline-dark" />}
             @Html.ActionLink("Avbryt", "index", null, new { @class = "btn btn-outline-dark" })
         </p>
-        foreach (var item in Model.Recept)
+
+        
+        for (int i=0;i<5;i++)
         {
-        <div class="row table">
-        <div class="col-md-12">
-            <a href="#@item.Id" data-toggle="collapse">@item.Date.DayOfWeek <span> - </span>  @item.Name</a>
-            <div id="@item.Id" class="collapse">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:160px" />
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            @item.Description <br />@if (item.Url_recept != "#")
-                            {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
+            <input name="@(i)id" hidden value="@Model.Recept[i].Id" />
+            <input name="@(i)date" hidden value="@Model.Recept[i].Date" />
+            <div class="row table">
+                <div class="col-md-12">
+                    <a href="#@Model.Recept[i].Id" data-toggle="collapse">@Model.Recept[i].Date.DayOfWeek <span> - </span>  @Model.Recept[i].Name</a>
+                    <div id="@Model.Recept[i].Id" class="collapse">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="img-responsive img-rounded" src="~/Content/pic/@Model.Recept[i].Url_pic" alt="@Model.Recept[i].Name" style="width:160px" />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+
+                                    @Model.Recept[i].Description <br />@if (Model.Recept[i].Url_recept != "#")
+                                    {<a href="@Model.Recept[i].Url_recept" target="_blank">Till receptet(extern)</a>}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
         }
-
-
-
-
-
-
-
     }
 </div>
 

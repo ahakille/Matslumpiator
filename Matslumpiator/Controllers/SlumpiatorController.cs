@@ -1,5 +1,6 @@
 ﻿using Matslumpiator.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Matslumpiator.Controllers
     public class SlumpiatorController : Controller
     {
         // GET: Slumpiator
-       
+
         public ActionResult Index()
         {
             //Email.SendEmail("gorlingy@hotmail.com", "nicklas", "Testmail", "Hejhej");
@@ -40,17 +41,17 @@ namespace Matslumpiator.Controllers
         }
 
         // GET: Slumpiator/Create
-        public ActionResult Create(DateTime date)
+        public ActionResult Create(int id)
         {
-            if (date == null)
+            DateTime date = DateTime.Now;
+            if (id == 7)
             {
-                RedirectToAction("Index");
+                date = date.AddDays(7);
             }
             slump slumpe = new slump();
             Receptmodels re = new Receptmodels();
             re.Recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
             ViewBag.check = re.Recept[0].Id;
-            TempData["receptlista"] = re.Recept;
             ViewBag.date = slump.GetIso8601WeekOfYear(date);
             
             
@@ -59,20 +60,22 @@ namespace Matslumpiator.Controllers
 
         // POST: Slumpiator/Create
         [HttpPost]
-        public ActionResult Create(Receptmodels model)
+        public ActionResult Create(IFormCollection form)
         {
-            int user = Convert.ToInt16(User.Identity.Name);
-            model.Recept = (List<Receptmodels>)TempData["receptlista"];
-            slump checkslump = new slump();
-            bool check= checkslump.Checkslump(model.Recept[0].Date, user);
+           int user = Convert.ToInt16(User.Identity.Name);
             
-            
-            foreach (var item in model.Recept)
+           slump checkslump = new slump();
+           var datetime = Convert.ToDateTime(form["0date"]);
+           datetime =datetime.Date;
+           bool check= checkslump.Checkslump(datetime, user);
+            for (int i=0; i <5; i++ )
             {
-                slump slump = new slump();
-                slump.SaveSlump(item.Id, user, item.Date,check);
-            }
+                var id = Convert.ToInt16(form[i + "id"]);
+                var date = Convert.ToDateTime(form[i + "date"]);
 
+                slump slump = new slump();
+                slump.SaveSlump(id, user, date,check);
+            }
             return RedirectToAction("Index");
    
         }

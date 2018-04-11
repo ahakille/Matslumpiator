@@ -41,10 +41,10 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-5">
-                        @Html.ActionLink("Slumpa - Den här veckan", "create", DateTime.Now, new { @class = "btn btn-outline-dark" })
+                        @Html.ActionLink("Slumpa - Den här veckan", "create",new { id = 1}, new { @class = "btn btn-outline-dark" })
                     </div>
                     <div class="col-md-4">
-                        @Html.ActionLink("Slumpa - Nästa vecka", "create", DateTime.Now.AddDays(7), new { @class = "btn btn-outline-dark" })
+                        @Html.ActionLink("Slumpa - Nästa vecka", "create", new { id = 7 }, new { @class = "btn btn-outline-dark" })
                     </div>
                 </div>
                 <p>

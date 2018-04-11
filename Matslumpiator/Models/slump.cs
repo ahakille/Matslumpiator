@@ -7,6 +7,10 @@ using System.Globalization;
 
 namespace Matslumpiator.Models
 {
+    public class CreatSlumpView
+    {
+
+    }
     public class slump
     {
         public List<slump> list { get; set; }
