@@ -12,12 +12,11 @@
             <div class="form-group form-control-sm">
                 <label for="selectbox">Antalsidor</label>
                 <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                    <option value="/Food/All?size=10" @if (Model.Size == 10) { @: selected
-                            }>
+                    <option value="/Food/All?size=10 @if (!string.IsNullOrEmpty(Model.Sökord)){ @Html.Raw("&search=") @Model.Sökord} &chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime" @if (Model.Size == 10) { selected}>
                         10
                     </option>
-                    <option value="/Food/All?size=20" @if (Model.Size == 20) { @: selected
-                            }>
+                    <option value="/Food/All?size=20" @(if (Model.Size == 20) { @: selected
+                            })>
                         20
                     </option>
                     <option value="/Food/All?size=50" @if (Model.Size == 50) { @: selected

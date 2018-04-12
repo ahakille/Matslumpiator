@@ -24,8 +24,6 @@ namespace Matslumpiator
         public void ConfigureServices(IServiceCollection services)
         {
 
-
-
             services.AddMvc();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o => o.LoginPath = new PathString("/Account/index"));

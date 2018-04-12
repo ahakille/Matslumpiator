@@ -17,7 +17,7 @@ namespace Matslumpiator.Controllers
     {
         // GET: Account
         [AllowAnonymous]
-      //  [RequireHttps]
+        [RequireHttps]
         public ActionResult Index(string returnUrl)
         {
 
@@ -27,12 +27,11 @@ namespace Matslumpiator.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-    //    [RequireHttps]
+        [RequireHttps]
         public async Task<IActionResult> Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
             {
-                // om inte rätt format
                 return View(model);
             }
             Accountservice acc = new Accountservice();
@@ -47,9 +46,7 @@ namespace Matslumpiator.Controllers
                 };
                 var authProperties = new AuthenticationProperties { };
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity),authProperties);
-
                 if (!string.IsNullOrEmpty(model.ReturnUrl))
                 {
                       return Redirect(model.ReturnUrl);
