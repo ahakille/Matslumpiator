@@ -15,7 +15,6 @@ namespace Matslumpiator.Controllers
 
         public ActionResult Index()
         {
-            //Email.SendEmail("gorlingy@hotmail.com", "nicklas", "Testmail", "Hejhej");
             int user_id = Convert.ToInt32(User.Identity.Name);
             slump slumpe = new slump();
             DateTime date;
@@ -34,11 +33,6 @@ namespace Matslumpiator.Controllers
             return View(slumpe);
         }
 
-        // GET: Slumpiator/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: Slumpiator/Create
         public ActionResult Create(int id)

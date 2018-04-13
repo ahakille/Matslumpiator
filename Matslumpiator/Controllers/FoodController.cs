@@ -3,6 +3,7 @@ using Matslumpiator.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace Matslumpiator.Controllers
 
 
             };
+
             var cooking = new List<string> { "Under 15 minuter", "Under 30 minuter", "Under 45 minuter", "Under 60 minuter", "Över 60 minuter" };
             ViewBag.Cookingtimes = cooking;
             return View(viewModel);
