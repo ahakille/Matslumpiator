@@ -110,6 +110,7 @@ namespace Matslumpiator.Models
         }
         public void SaveSlump(int recept_id, int user_id, DateTime date, bool check)
         {
+            date = date.Date;
             string sql = "INSERT INTO foodlist (user_id,recept_id,date_now) values(@user_id,@recept_id,@date_now)";
             if (check)
             {

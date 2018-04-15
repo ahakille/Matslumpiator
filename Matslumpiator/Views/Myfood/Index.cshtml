@@ -12,22 +12,47 @@
             <div class="form-group form-control-sm">
                 <label for="selectbox">Antalsidor</label>
                 <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                    <option value="/Myfood/index?size=10" @if (Model.Size == 10) { @: selected
-                            }>
-                        10
-                    </option>
-                    <option value="/Myfood/index?size=20" @if (Model.Size == 20) { @: selected
-                            }>
-                        20
-                    </option>
-                    <option value="/Myfood/index?size=50" @if (Model.Size == 50) { @: selected
-                            }>
-                        50
-                    </option>
-                    <option value="/Myfood/index?size=100" @if (Model.Size == 100) { @: selected
-                            }>
-                        100
-                    </option>
+                    @if (Model.Size == 10)
+                    {
+                        <option value="/Myfood/index?size=10" selected>10</option>
+                    }
+                    else
+                    {
+                        <option value="/Myfood/index?size=10">10</option>
+
+                    }
+                    @if (Model.Size == 20)
+                    {
+
+                        <option value="/Myfood/index?size=20" selected>20</option>
+
+                    }
+                    else
+                    {
+                        <option value="/Myfood/index?size=20"> 20 </option>
+
+                    }
+                    @if (Model.Size == 50)
+                    {
+
+                        <option value="/Myfood/index?size=50" selected>50</option>
+                    }
+                    else
+                    {
+                        <option value="/Myfood/index?size=50">50</option>
+
+                    }
+                    @if (Model.Size == 100)
+                    {
+
+                        <option value="/Myfood/index?size=100" selected>100</option>
+                    }
+                    else
+                    {
+                        <option value="/Myfood/index?size=100">100</option>
+
+                    }
+
                 </select>
             </div>
         </div>
@@ -57,67 +82,67 @@
         </div>
     </div>
 
-<hr />
-<div class="row col-md-12">
-    @foreach (var item in Model.Items)
-    {
+    <hr />
+    <div class="row col-md-12">
+        @foreach (var item in Model.Items)
+        {
 
-        <div class="row table">
-            <div class="col-md-9">
-                <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
-                <div id="@item.Id" class="collapse">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p></p>  <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
-                        </div>
-                        
+            <div class="row table">
+                <div class="col-md-9">
+                    <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+                    <div id="@item.Id" class="collapse">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p></p>  <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
+                            </div>
+
                             <div class="col-md-8">
                                 @item.Description <br />@if (item.Url_recept != "#")
                                 {<a href="@item.Url_recept" target="_blank">Till receptet(extern)</a>}
                             </div>
 
-                    
 
 
+
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    @Html.ActionLink("Ta bort från min lista", "Delete", new { id = item.Id, page = Model.Pager.CurrentPage })
+                </div>
             </div>
-            <div class="col-md-3">
-                @Html.ActionLink("Ta bort från min lista", "Delete", new { id = item.Id, page = Model.Pager.CurrentPage })
-            </div>
-        </div>
 
+        }
+    </div>
+
+    @if (Model.Pager.EndPage > 1)
+    {
+        <ul class="pagination pagination-sm">
+            @if (Model.Pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="~/Myfood/index">Första</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size">Tidigare</a>
+                </li>
+            }
+
+            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="~/Myfood/index?page=@(page)&size=@Model.Size">@(page)</a>
+                </li>}
+
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size">Nästa</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.TotalPages)&size=@Model.Size">Sista</a>
+                </li>
+            }
+        </ul>
     }
-</div>
-
-@if (Model.Pager.EndPage > 1)
-{
-    <ul class="pagination pagination-sm">
-        @if (Model.Pager.CurrentPage > 1)
-        {
-            <li class="page-item">
-                <a class="page-link" href="~/Myfood/index">Första</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size">Tidigare</a>
-            </li>
-        }
-
-        @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
-        {
-            <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
-                <a class="page-link" href="~/Myfood/index?page=@(page)&size=@Model.Size">@(page)</a>
-            </li>}
-
-        @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-        {
-            <li class="page-item">
-                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size">Nästa</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="~/Myfood/index?page=@(Model.Pager.TotalPages)&size=@Model.Size">Sista</a>
-            </li>
-        }
-    </ul>
-}
 </div>
