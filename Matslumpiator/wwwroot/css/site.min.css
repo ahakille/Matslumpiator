@@ -1,0 +1,68 @@
+body{padding-top: 50px;padding-bottom: 20px;}.body-content{padding-left: 15px;padding-right: 15px;}.dl-horizontal dt { white-space: normal;
+}
+input,
+select,
+test {
+    max-width: 280px;
+}
+
+textarea1 {
+    width: 200px;
+    height: 80px;
+}
+
+.navbar-inverse {
+    background-color: #3d7ee1;
+    border-color: #080808;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: #e3eeee;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #e3eeee;
+    }
+
+.headninghelp {
+    width: 80%;
+    margin: 0px 0 0px 0;
+    padding: 0px;
+    display: inline-block;
+}
+
+.helpbutton {
+    display: inline-block;
+}
+
+.color {
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.80);
+}
+
+.containermain {
+    margin: 0px 0px 0px 0px;
+    background-color: #f6f6f7;
+    background: rgba(255, 255, 255, 0.90);
+    padding: 2px 0px 0px 15px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.bodymat {
+    background-size: contain;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.test {
+    text-align: center;
+    width: auto;
+}
+
+body {
+    background-color: #f3f0eb;
+    /*background-image: url(pic/background-2369807_960_720.jpg);
+    background-size: cover*/
+}

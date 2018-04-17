@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Matslumpiator</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg navbar-inverse fixed-top ">
+        <div class="container">
+            @Html.ActionLink("Matslumpiator.se", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">@Html.ActionLink("Slumpiator", "index", "Slumpiator", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Min Mat", "Index", "Myfood", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Recept", "All", "Food", null, new { @class = "nav-link" })</li>
+
+
+                if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                            Admin
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Lägg till ny maträtt", "addnewfood", "Food", null, new { @class = "dropdown-item" })</li>
+                            <li>@Html.ActionLink("Alla användare", "index", "Admin", null, new { @class = "dropdown-item" })</li>
+                            <li>@Html.ActionLink("Ny Användare", "NewUser", "Admin", null, new { @class = "dropdown-item" })</li>
+
+                        </ul>
+                    </li>
+
+            }
+        }
+                </ul>
+                <ul class="nav navbar-nav my-0">
+                    @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-user"></span>
+                            Inställningar
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="~/users/edit">Mina uppgifter</a></li>
+                            <li><a class="dropdown-item" href="~/Account/newpassword">Ändra lösenord</a></li>
+                            <li><a class="dropdown-item" href="~/Home/Useragreement">Användarvilkor</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="~/account/logoff"> Logga ut</a></li>
+            }
+            else
+            {
+                <li class="nav-item"><a class="nav-link" href="~/Account/Register"><span class="glyphicon glyphicon-user"></span> Registera</a></li>
+                <li class="nav-item"><a class="nav-link" href="~/Account/Index"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
+
+        }
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Matslumpiator</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

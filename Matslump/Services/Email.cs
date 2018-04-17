@@ -16,7 +16,7 @@ namespace Matslump.Services
 
             string Sender = "mat@nppc.se";
             string Password = "dapobuz1";
-            string Emailsmtp = "mail.nppc.se";
+            string Emailsmtp = "ns4.inleed.net";
             
 
             
@@ -25,7 +25,7 @@ namespace Matslump.Services
             MailMessage mail = new MailMessage();
 
                 
-                    client.EnableSsl = false;
+                    client.EnableSsl = true;
                     client.Timeout = 10000;
                     client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     client.UseDefaultCredentials = false;

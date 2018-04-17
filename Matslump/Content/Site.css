@@ -31,9 +31,11 @@ textarea1 {
     background-color: #3d7ee1;
     border-color: #080808;
 }
+
     .navbar-inverse .navbar-brand {
         color: #e3eeee;
     }
+
     .navbar-inverse .navbar-nav > li > a {
         color: #e3eeee;
     }
@@ -47,11 +49,9 @@ textarea1 {
     display: inline-block;
 }
 .color {
-    margin: 10px 10px 10px 10px;
+
     background-color: #f6f6f7;
     background: rgba(255, 255, 255, 0.80);
-    padding: 2px 5px 5px 10px;
-    border-radius: 5px;
    
 }
 .containermain {

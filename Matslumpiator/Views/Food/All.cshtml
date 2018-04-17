@@ -1,0 +1,238 @@
+﻿@model Matslumpiator.Models.IndexViewModel
+
+@{
+    ViewBag.Title = "Recept";
+}
+<div class="container color p-3">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Receptdatabasen</h2>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group form-control-sm">
+                <label for="selectbox">Antalsidor</label>
+                <select asp-for="Size" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                    @if (Model.Size == 10)
+                    {
+                        <option value="/Food/All?size=10 @if (!string.IsNullOrEmpty(Model.Sökord))
+                    { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime" selected>
+                            10
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="/Food/All?size=10 @if (!string.IsNullOrEmpty(Model.Sökord))
+                    { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">
+                            10
+                        </option>
+                    }
+                    @if (Model.Size == 20)
+                    {
+                        <option value="/Food/All?size=20 @if (!string.IsNullOrEmpty(Model.Sökord))
+                { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime" selected>
+                            20
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="/Food/All?size=20 @if (!string.IsNullOrEmpty(Model.Sökord))
+                { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">
+                            20
+                        </option>
+
+                    }
+                    @if (Model.Size == 50)
+                    {
+                        <option value="/Food/All?size=50 @if (!string.IsNullOrEmpty(Model.Sökord))
+                { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime" selected>
+                            50
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="/Food/All?size=50 @if (!string.IsNullOrEmpty(Model.Sökord))
+                { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">
+                            50
+                        </option>
+
+                    }
+                    @if (Model.Size == 100)
+                    {
+                        <option value="/Food/All?size=100 @if (!string.IsNullOrEmpty(Model.Sökord))
+                { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime" selected>
+                            100
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="/Food/All?size=100 @if (!string.IsNullOrEmpty(Model.Sökord))
+                            { @Html.Raw("&search=")@Model.Sökord}&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">
+                            100
+                        </option>
+
+                    }
+                    /**/
+                </select>
+            </div>
+
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">Hjälp</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Hjälp Receptdatabasen</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Här kan du skapa nya recept, ändra recept och även lägga till recept i din lista</p>
+                    <p>För att se beskrivning och bild klicka på rubriken på receptet, om de finns en extern länk visas den </p>
+                    <p>Texten med "Redan tillagd" betyder att recepten redan finns i din lista.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-4 p-3">
+                        <input asp-for="Sökord" class="form-control" placeholder="Sök på valfrit ord..." />
+                    </div>
+                    <div class="col-md-4 p-3">
+                        <select asp-for="Cookingtime" asp-items="@(new SelectList(ViewBag.Cookingtimes))"></select>
+
+                    </div>
+                    <div class="col-md-4 p-3">
+                        <button type="submit" class="btn btn-outline-dark">Sök</button>
+                        @Html.ActionLink("Rensa", "Clear", null, null, new { @class = "btn btn-outline-dark" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-auto"></div>
+                    <div class="col-md-auto"><input asp-for="ChickenFilter" />Kyckling</div>
+                    <div class="col-md-auto"><input asp-for="BeefFilter" />Nöt</div>
+                    <div class="col-md-auto"><input asp-for="SausageFilter" />Korv</div>
+                    <div class="col-md-auto"><input asp-for="MeatFilter" />Kött</div>
+                    <div class="col-md-auto"><input asp-for="FishFilter" />Fisk</div>
+                    <div class="col-md-auto"><input asp-for="PorkFilter" />Fläsk</div>
+                    <div class="col-md-auto"><input asp-for="VegoFilter" />Vego</div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <hr />
+    </div>
+    <div class="row col-md-12">
+        @foreach (var item in Model.Items)
+        {
+            bool check = false;
+            <div class="row table">
+                <div class="col-md-9">
+                    <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+                    <div id="@item.Id" class="collapse">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p></p> <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" />
+                            </div>
+                            <div class="col-md-8">
+                                <p>@item.cookingtime Typ: @item.TypeOfFood  Betyg: @item.Rating</p>
+                                @item.Description <br /> @if (item.Url_recept != "#")
+                                {<a href="@item.Url_recept" target="_blank">Till receptet(extern sida)</a>}
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    @foreach (var item1 in ViewBag.Myfood)
+                    {
+                        if (item.Id == item1.Id)
+                        {
+                            check = true;
+                        }
+
+                    }
+                    @if (check)
+                    {
+                        <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
+                    }
+                    else
+                    {
+
+                        <a href="~/Food/AddToMyFood/@item.Id?page=@(Model.Pager.CurrentPage)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")@Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Lägg till i min lista</a>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {@:|
+                        @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
+                    }
+
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-10 nav-scroller">
+        <nav class="nav d-flex">
+            @if (Model.Pager.EndPage > 1)
+        {
+            <ul class="pagination pagination-sm flex-wrap">
+                @if (Model.Pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All">Första</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Tidigare</a>
+
+                </li>
+        }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="~/Food/All?page=@(page)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">@(page)</a>
+                </li>}
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Nästa</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+                    {
+                     @Html.Raw("&search=")  @Model.Sökord }&chicken=@Model.ChickenFilter&beef=@Model.BeefFilter&fish=@Model.FishFilter&meat=@Model.MeatFilter&pork=@Model.PorkFilter&sausage=@Model.SausageFilter&vego=@Model.VegoFilter&cookingtime=@Model.Cookingtime">Sista</a>
+                </li>
+
+        }
+
+            </ul>
+    }
+            </nav>
+    </div>
+</div>
+
+
+

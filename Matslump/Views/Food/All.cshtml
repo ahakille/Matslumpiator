@@ -3,18 +3,38 @@
 @{
     ViewBag.Title = "Recept";
 }
-<div class="container containermain">
-
-    <div class="headninghelp">
-
-        <h2>Receptdatabasen</h2>
-    </div>
-    <div class="helpbutton">
-        <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
-    </div>
-
-
-
+<div class="container color p-3">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Receptdatabasen</h2>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group form-control-sm">
+                <label for="selectbox">Antalsidor</label>
+                <select id="selectbox" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                    <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
+                            }>
+                        10
+                    </option>
+                    <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
+                            }>
+                        20
+                    </option>
+                    <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
+                            }>
+                        50
+                    </option>
+                    <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
+                            }>
+                        100
+                    </option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">Hjälp</button>
+            </div>
+        </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -40,181 +60,158 @@
     {
         <div class="row">
             <div class="col-md-10">
-                <div class="col-md-10">                   
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        @Html.EditorFor(m => Model.Sökord, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sök på valfrit ord..." } })
-                                    </div>
-                                    <div class="col-md-4">
-                                        <select class="form-control" id="cookingtime" name="cookingtime">
-                                            <option value="Under 15 minuter" @if (Model.Cookingtime == "Under 15 minuter") { @: selected
-                                                    }>
-                                                Under 15 minuter
-                                            </option>
-                                            <option value="Under 30 minuter" @if (Model.Cookingtime == "Under 30 minuter") { @: selected
-                                                    }>
-                                                Under 30 minuter
-                                            </option>
-                                            <option value="Under 45 minuter" @if (Model.Cookingtime == "Under 45 minuter") { @: selected
-                                                    }>
-                                                Under 45 minuter
-                                            </option>
-                                            <option value="Under 60 minuter" @if (Model.Cookingtime == "Under 60 minuter") { @: selected
-                                                    }>
-                                                Under 60 minuter
-                                            </option>
-                                            <option value="Över 60 minuter" @if (Model.Cookingtime == "Över 60 minuter") { @: selected
-                                                    }>
-                                                Över 60 minuter
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-default">Sök</button>
-                                        @Html.ActionLink("Rensa", "Clear", null, new { @class = "btn btn-default" })
-                                    </div>
-                                    </div>
-                                        <div class="col-10">                                                                                 
-                                            <div class="form-check form-check-inline">@Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt 
-                                                    
-                                                    @Html.CheckBoxFor(Model => Model.SausageFilter, new  { @class = "form-check-input"  }) Korv
-                                                    @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött 
-                                                    @Html.CheckBoxFor(Model => Model.FishFilter, new  { @class = "form-check-input" }) Fisk 
-                                                    @Html.CheckBoxFor(Model => Model.PorkFilter, new  { @class = "form-check-input" }) Fläsk 
-                                                    @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego 
-                                            </div>                                     
-                                            </div>                                   
-                                </div>
-                        </div>     
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group form-control-sm">
-                        <label for="selectbox">Antalsidor</label>
-                        <select id="selectbox" class="form-control form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
-                            <option value="~/Food/All?size=10" @if (Model.Size == 10) { @: selected
+                <div class="row">
+                    <div class="col-md-4 p-3">
+                        @Html.EditorFor(m => Model.Sökord, new { htmlAttributes = new { @class = "form-control", @placeholder = "Sök på valfrit ord..." } })
+                    </div>
+                    <div class="col-md-4 p-3">
+                        <select class="form-control" id="cookingtime" name="cookingtime">
+                            <option value="Under 15 minuter" @if (Model.Cookingtime == "Under 15 minuter") { @: selected
                                     }>
-                                10
+                                Under 15 minuter
                             </option>
-                            <option value="~/Food/All?size=20" @if (Model.Size == 20) { @: selected
+                            <option value="Under 30 minuter" @if (Model.Cookingtime == "Under 30 minuter") { @: selected
                                     }>
-                                20
+                                Under 30 minuter
                             </option>
-                            <option value="~/Food/All?size=50" @if (Model.Size == 50) { @: selected
+                            <option value="Under 45 minuter" @if (Model.Cookingtime == "Under 45 minuter") { @: selected
                                     }>
-                                50
+                                Under 45 minuter
                             </option>
-                            <option value="~/Food/All?size=100" @if (Model.Size == 100) { @: selected
+                            <option value="Under 60 minuter" @if (Model.Cookingtime == "Under 60 minuter") { @: selected
                                     }>
-                                100
+                                Under 60 minuter
                             </option>
-
+                            <option value="Över 60 minuter" @if (Model.Cookingtime == "Över 60 minuter") { @: selected
+                                    }>
+                                Över 60 minuter
+                            </option>
                         </select>
                     </div>
+                    <div class="col-md-4 p-3">
+                        <button type="submit" class="btn btn-outline-dark">Sök</button>
+                        @Html.ActionLink("Rensa", "Clear", null, new { @class = "btn btn-outline-dark" })
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-auto"></div>
+                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.ChickenFilter, new { @class = "form-check-input" }) Kyckling</div>
+                    <div class="col-md-auto"> @Html.CheckBoxFor(Model => Model.BeefFilter, new { @class = "form-check-input" }) Nöt
+                    </div>
+
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.SausageFilter, new { @class = "form-check-input" }) Korv</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.MeatFilter, new { @class = "form-check-input" }) Kött</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.FishFilter, new { @class = "form-check-input" }) Fisk</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.PorkFilter, new { @class = "form-check-input" }) Fläsk</div>
+                    <div class="col-md-auto">  @Html.CheckBoxFor(Model => Model.VegoFilter, new { @class = "form-check-input" }) Vego</div>
+
+                </div>
+
+
+
+
+
+
             </div>
-
-
         </div>
     }
     <div class="row">
         <hr />
     </div>
-
-    @foreach (var item in Model.Items)
-    {
-        bool check = false;
-        <div class="row table">
-            <div class="col-md-8">
-                <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
-                <div id="@item.Id" class="collapse">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class="img-responsive img-rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" style="width:180px" />
-                        </div>
+    <div class="row col-md-12">
+        @foreach (var item in Model.Items)
+        {
+            bool check = false;
+            <div class="row table">
+                <div class="col-md-9">
+                    <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+                    <div id="@item.Id" class="collapse">
                         <div class="row">
+                            <div class="col-md-3">
+                                <p></p> <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" />
+                            </div>
                             <div class="col-md-8">
                                 <p>@item.cookingtime Typ: @item.TypeOfFood  Betyg: @item.Rating</p>
                                 @item.Description <br /> @if (item.Url_recept != "#")
                                 {<a href="@item.Url_recept" target="_blank">Till receptet(extern sida)</a>}
                             </div>
 
+
+
+
                         </div>
-
-
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                @foreach (var item1 in ViewBag.Myfood)
-                {
-                    if (item.Id == item1.Id)
+                <div class="col-md-3">
+                    @foreach (var item1 in ViewBag.Myfood)
                     {
-                        check = true;
+                        if (item.Id == item1.Id)
+                        {
+                            check = true;
+                        }
+
+                    }
+                    @if (check)
+                    {
+                        <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage, size = Model.Size })
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {@:|
+                        @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
                     }
 
-                }
-                @if (check)
-                {
-                    <i class="fa fa-check" style="color:forestgreen" aria-hidden="true"> Redan tillagd</i>
-                }
-                else
-                {
-                    @Html.ActionLink("Lägg till i Minlista", "AddToMyFood", new { id = item.Id, page = Model.Pager.CurrentPage, size = Model.Size })
-                }
-                @if (User.IsInRole("Admin"))
-                {@:|
-                    @Html.ActionLink("Ändra", "Editfood", new { id = item.Id, page = Model.Pager.CurrentPage })
-                }
-
+                </div>
             </div>
-        </div>
-    }
-
-    @if (Model.Pager.EndPage > 1)
+        }
+    </div>
+    <div class="col-md-10">
+        @if (Model.Pager.EndPage > 1)
     {
-        <ul class="pagination">
+        <ul class="pagination pagination-sm">
             @if (Model.Pager.CurrentPage > 1)
-            {
-                <li>
-                    <a href="~/Food/All">Första</a>
-                </li>
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All">Första</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage - 1)&size=@Model.Size @if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Tidigare</a>
 
-                </li>
-            }
+            </li>
+    }
 
             @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
-            {
-                <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
-                    <a href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                <a class="page-link" href="~/Food/All?page=@page&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">@page</a>
                 </li>}
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-            {
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+        {
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.CurrentPage + 1)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Nästa</a>
-                </li>
-                <li>
-                    <a href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="~/Food/All?page=@(Model.Pager.TotalPages)&size=@Model.Size@if (!string.IsNullOrEmpty(Model.Sökord))
                     {
                      @Html.Raw("&search=")  @Model.Sökord }">Sista</a>
-                </li>
+            </li>
 
-            }
-
-        </ul>
     }
 
+        </ul>
+}
 
+    </div>
 </div>
 
 

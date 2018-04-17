@@ -3,94 +3,97 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="col-md-12 color p-3">
+    
+    <h2>Användare</h2>
+    <p>
+     <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-envelope"></span> Skicka ut meddelande till alla användare</button>
+    </p>
+    <!-- Modal -->
+    @using (Html.BeginForm("sendmessage", "admin"))
+    {
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-<h2>Användare</h2>
-<p>
-    @Html.ActionLink("Skapa ny användare", "NewUser") <button type="button" class="btn btn-info helpbutton" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-envelope"></span> Skicka ut meddelande till alla användare</button>
-</p>
-<!-- Modal -->
-@using (Html.BeginForm("sendmessage","admin"))
-{
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Skicka meddelande</h4>
-            </div>
-            <div class="modal-body">
-                @Html.TextBox("subject")
-                <p>Här kan du skapa nya recept, ändra recept och även lägga till recept i din lista</p>
-                @Html.TextArea("message")
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-default">Skicka</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Skicka meddelande</h4>
+                    </div>
+                    <div class="modal-body">
+                        @Html.TextBox("subject")
+                        <p>Här kan du skapa nya recept, ändra recept och även lägga till recept i din lista</p>
+                        @Html.TextArea("message")
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default">Skicka</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Last_login)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in ViewBag.userlist)
+        {
+            <tr>
+                <td>
+                    @item.User
+                </td>
+                <td>
+                    @item.email
+                </td>
+                <td>
+                    @if (item.active == true)
+                    {
+                        <p>Aktivt</p>
+                    }
+                    else
+                    {
+                        <p>Ej aktiverat</p>
+                    }
+                </td>
+                <td>
+                    @if (item.Roles_id == 1)
+                    {
+                        <p>Admin</p>
+                    }
+                    else
+                    {
+                        <p>Användare</p>
+                    }
+
+
+                </td>
+                <td>
+                    @item.Last_login
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |
+                    @Html.ActionLink("Delete", "#", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>
 </div>
-}
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.active)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Roles_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Last_login)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in ViewBag.userlist) {
-    <tr>
-        <td>
-            @item.User
-        </td>
-        <td>
-            @item.email
-        </td>
-        <td>
-            @if (item.active == true)
-            {
-                <p>Aktivt</p>
-            }
-            else
-            {
-                <p>Ej aktiverat</p>
-            }
-        </td>
-        <td>
-            @if (item.Roles_id == 1)
-            {
-                <p>Admin</p>
-            }
-            else
-            {
-                <p>Användare</p>
-            }
-
-            
-        </td>
-        <td>
-            @item.Last_login
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |
-            @Html.ActionLink("Delete", "#", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
-
-</table>
