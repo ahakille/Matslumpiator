@@ -10,7 +10,7 @@ namespace Matslumpiator.Services
      public static void StartCron()
         {
             Users user = new Users();
-            slump checkslump = new slump();
+            Slumpservices checkslump = new Slumpservices();
             DateTime crondate = DateTime.Now;
             int checkcron = ((int)crondate.DayOfWeek == 0) ? 7 : (int)crondate.DayOfWeek;
             List<Users> list = user.GetuserAsAdmin(checkcron, "SELECT users.user_id, users.username, users.fname, users.last_name, users.email, users.acc_active,users.roles_id,users.settings_id,users.last_login FROM public.users LEFT JOIN usersettings ON users.settings_id = usersettings.setting_id  WHERE usersettings.day_of_slumpcron =@id ;");
@@ -28,7 +28,7 @@ namespace Matslumpiator.Services
                 else
                 {
                     
-                    slump slumpa = new slump();
+                    var slumpa = new Slumpservices();
                     List<Receptmodels> lista = slumpa.Slumplist(item.User_id, date);
                     if(lista[0].Id != -10)
                     {

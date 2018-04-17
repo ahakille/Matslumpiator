@@ -30,6 +30,7 @@ namespace Matslumpiator.Models
         public string Occasions { get; set; }
         public string Weeknumbers { get; set; }
         public DateTime Date { get; set; }
+        public string DateName { get; set; }
         public List<Receptmodels> Recept { get; set; }
 
  

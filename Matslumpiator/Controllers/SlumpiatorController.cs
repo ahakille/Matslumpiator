@@ -1,4 +1,5 @@
 ﻿using Matslumpiator.Models;
+using Matslumpiator.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +17,22 @@ namespace Matslumpiator.Controllers
         public ActionResult Index()
         {
             int user_id = Convert.ToInt32(User.Identity.Name);
-            slump slumpe = new slump();
+            var slumpe = new Slumpservices();
+            var Slumpmodel = new slump();
             DateTime date;
             date = DateTime.Now;
             date = slumpe.datefixer(date);
-            slumpe.recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
-            slumpe.list = slumpe.Weeknumbers(slumpe.recepts);
+            Slumpmodel.recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
+            Slumpmodel.list = slumpe.Weeknumbers(Slumpmodel.recepts);
             ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(6));
-            ViewBag.date = slump.GetIso8601WeekOfYear(DateTime.Now);
-            ViewBag.date1 = slump.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));
+            ViewBag.date = slumpe.GetIso8601WeekOfYear(DateTime.Now);
+            ViewBag.date1 = slumpe.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));
             date = DateTime.Now;
             date = slumpe.datefixer(date);
             ViewBag.nextweek = slumpe.Oldslumps(user_id, date.AddDays(6), date.AddDays(14));
 
 
-            return View(slumpe);
+            return View(Slumpmodel);
         }
 
 
@@ -42,11 +44,12 @@ namespace Matslumpiator.Controllers
             {
                 date = date.AddDays(7);
             }
-            slump slumpe = new slump();
+
+            var Slump = new Slumpservices();
             Receptmodels re = new Receptmodels();
-            re.Recept = slumpe.Slumplist(Convert.ToInt32(User.Identity.Name),date);
+            re.Recept = Slump.Slumplist(Convert.ToInt32(User.Identity.Name),date);
             ViewBag.check = re.Recept[0].Id;
-            ViewBag.date = slump.GetIso8601WeekOfYear(date);
+            ViewBag.date = Slump.GetIso8601WeekOfYear(date);
             
             
             return View(re);
@@ -57,8 +60,8 @@ namespace Matslumpiator.Controllers
         public ActionResult Create(IFormCollection form)
         {
            int user = Convert.ToInt16(User.Identity.Name);
-            
-           slump checkslump = new slump();
+
+            Slumpservices checkslump = new Slumpservices();
            var datetime = Convert.ToDateTime(form["0date"]);
            datetime =datetime.Date;
            bool check= checkslump.Checkslump(datetime, user);
@@ -67,7 +70,7 @@ namespace Matslumpiator.Controllers
                 var id = Convert.ToInt16(form[i + "id"]);
                 var date = Convert.ToDateTime(form[i + "date"]);
 
-                slump slump = new slump();
+                var slump = new Slumpservices();
                 slump.SaveSlump(id, user, date,check);
             }
             return RedirectToAction("Index");

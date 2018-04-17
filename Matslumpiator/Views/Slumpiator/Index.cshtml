@@ -65,7 +65,7 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Date.DayOfWeek<span> - </span>@item.Name
+                                    @item.DateName<span> - </span>@item.Name
                                 </td>
                             </tr>
 
@@ -84,7 +84,7 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Date.DayOfWeek<span> - </span>@item.Name
+                                    @item.DateName<span> - </span>@item.Name
                                 </td>
                             </tr>
 
@@ -123,7 +123,7 @@
                                         <td>
                                             @if (item1.Weeknumbers == item.Weeknumber)
                                             {
-                                                @item1.Date.DayOfWeek <span> - </span>
+                                                @item1.DateName <span> - </span>
                                                 @Html.DisplayFor(m => item1.Name)
                                             }
 
