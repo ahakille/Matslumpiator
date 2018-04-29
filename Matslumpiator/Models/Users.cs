@@ -1,4 +1,5 @@
 ﻿using Matslumpiator.Services;
+using Matslumpiator.Tools;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Matslumpiator.Models
         [EmailAddress]
         public string email { get; set; }
         [Display(Name = "Dag för automatisk slumpning")]
-        public int CronoDay { get; set; }
+        public string CronoDay { get; set; }
     }
     public class Users
     {
@@ -111,11 +112,8 @@ namespace Matslumpiator.Models
                 r.User = dr["username"].ToString();
                 r.email = (string)dr["email"];
                 r.First_name = (string)dr["fname"];
-                r.Last_name = (string)dr["last_name"];
-                r.CronoDay = (int)dr["day_of_slumpcron"];
-
-
-
+                r.Last_name = (string)dr["last_name"];                 
+                r.CronoDay= Weeklist.CheckCronoNumber((int)dr["day_of_slumpcron"]);
                 mt.Add(r);
             }
 

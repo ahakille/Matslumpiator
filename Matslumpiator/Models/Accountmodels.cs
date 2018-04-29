@@ -1,12 +1,4 @@
-﻿using Matslumpiator.Services;
-using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data;
-using System.Linq;
-using System.Security.Cryptography;
-
+﻿using System.ComponentModel.DataAnnotations;
 namespace Matslumpiator.Models
 {
     public class Accountmodels

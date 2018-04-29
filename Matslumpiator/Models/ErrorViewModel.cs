@@ -1,5 +1,3 @@
-using System;
-
 namespace Matslumpiator.Models
 {
     public class ErrorViewModel

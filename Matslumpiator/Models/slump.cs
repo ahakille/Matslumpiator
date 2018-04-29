@@ -1,9 +1,4 @@
-﻿using Matslumpiator.Services;
-using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
+﻿using System.Collections.Generic;
 
 namespace Matslumpiator.Models
 {

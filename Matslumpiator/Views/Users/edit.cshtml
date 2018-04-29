@@ -48,21 +48,13 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.CronoDay, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <select class="form-control" id="CronoDay" name="CronoDay" required>
-                        @foreach (var list in ViewBag.weeklist)
-                        {
-                            <option value="@list.Id" @if (list.Id == Model.CronoDay) { @: selected
-                                    }>
-                                @list.Name
-                            </option>
-                        }
-                    </select>
+                    <select asp-for="CronoDay" asp-items="@(new SelectList(ViewBag.weeklist))" ></select>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Uppdatera" class="btn btn-default" />
+                    <input type="submit" value="Uppdatera" class="btn btn-outline-dark" />
                 </div>
             </div>
         </div>
