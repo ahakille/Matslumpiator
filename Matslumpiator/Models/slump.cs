@@ -6,11 +6,11 @@ namespace Matslumpiator.Models
     {
 
     }
-    public class slump
+    public class Slump
     {
-        public List<slump> list { get; set; }
+        public List<Slump> List { get; set; }
         public string Weeknumber { get; set; }
-        public List<Receptmodels> recepts { get; set; }
+        public List<Receptmodels> Recepts { get; set; }
        
     }
 }

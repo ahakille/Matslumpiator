@@ -18,12 +18,12 @@ namespace Matslumpiator.Controllers
         {
             int user_id = Convert.ToInt32(User.Identity.Name);
             var slumpe = new Slumpservices();
-            var Slumpmodel = new slump();
+            var Slumpmodel = new Slump();
             DateTime date;
             date = DateTime.Now;
             date = slumpe.datefixer(date);
-            Slumpmodel.recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
-            Slumpmodel.list = slumpe.Weeknumbers(Slumpmodel.recepts);
+            Slumpmodel.Recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
+            Slumpmodel.List = slumpe.Weeknumbers(Slumpmodel.Recepts);
             ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(6));
             ViewBag.date = slumpe.GetIso8601WeekOfYear(DateTime.Now);
             ViewBag.date1 = slumpe.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));

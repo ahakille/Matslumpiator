@@ -167,11 +167,11 @@ namespace Matslumpiator.Services
         {
 
 
-            slump Slump = new slump();
+            Slump Slump = new Slump();
             postgres m = new postgres();
             List<Receptmodels> mt = new List<Receptmodels>();
             DataTable dt = new DataTable();
-            dt = m.SqlQuery("SELECT foodlist.date_now,foodlist.recept_id,recept.name FROM public.foodlist join public.recept on foodlist.recept_id = recept.id_recept Where foodlist.user_id = @id_user AND date_now BETWEEN @datefrom AND @dateto ORDER BY date_now DESC; ", postgres.list = new List<NpgsqlParameter>()
+            dt = m.SqlQuery("SELECT foodlist.date_now,foodlist.recept_id,recept.name,recept.description,recept.url_pic,recept.url_recept, cookingtime.time_name, type_of_food.type_name, recept.average_rating,recept.occasion_id FROM public.foodlist join public.recept on foodlist.recept_id = recept.id_recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id LEFT JOIN cookingtime ON recept.cookingtime_id = cookingtime.id Where foodlist.user_id = @id_user AND date_now BETWEEN @datefrom AND @dateto ORDER BY date_now DESC; ", postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@id_user", user_id),
                 new NpgsqlParameter("@dateto", dateto),
@@ -184,6 +184,13 @@ namespace Matslumpiator.Services
                 r.Id = (int)dr["recept_id"];
                 r.Name = dr["name"].ToString();
                 r.Date = (DateTime)dr["date_now"];
+                r.Description = (string)dr["description"];
+                r.Url_pic = (string)dr["url_pic"];
+                r.Url_recept = (string)dr["url_recept"];
+                r.cookingtime = (string)dr["time_name"];
+                r.TypeOfFood = (string)dr["type_name"];
+                r.Occasions = dr["occasion_id"].ToString();
+                r.Rating = (double)dr["average_rating"];
                 var dateName = new Slumpservices();
                 r.DateName = dateName.NameOfDay(r.Date);
                 r.Weeknumbers = GetIso8601WeekOfYear(r.Date).ToString();
@@ -199,16 +206,16 @@ namespace Matslumpiator.Services
 
             return mt;
         }
-        public List<slump> Weeknumbers(List<Receptmodels> lista)
+        public List<Slump> Weeknumbers(List<Receptmodels> lista)
         {
 
-            List<slump> list = new List<slump>();
+            List<Slump> list = new List<Slump>();
             string check = "";
             foreach (var item in lista)
             {
                 if (check != item.Weeknumbers)
                 {
-                    slump sl = new slump();
+                    Slump sl = new Slump();
                     sl.Weeknumber = item.Weeknumbers;
                     list.Add(sl);
                     check = item.Weeknumbers;

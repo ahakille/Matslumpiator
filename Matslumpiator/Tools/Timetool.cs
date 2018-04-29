@@ -46,16 +46,16 @@ namespace Matslumpiator.Tools
             }
                     return dayOfWeek;
         }
-        public List<slump> Weeknumbers(List<Receptmodels> lista)
+        public List<Slump> Weeknumbers(List<Receptmodels> lista)
         {
 
-            List<slump> list = new List<slump>();
+            List<Slump> list = new List<Slump>();
             string check = "";
             foreach (var item in lista)
             {
                 if (check != item.Weeknumbers)
                 {
-                    slump sl = new slump();
+                    Slump sl = new Slump();
                     sl.Weeknumber = item.Weeknumbers;
                     list.Add(sl);
                     check = item.Weeknumbers;
