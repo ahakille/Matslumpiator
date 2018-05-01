@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace Matslumpiator.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: Admin
