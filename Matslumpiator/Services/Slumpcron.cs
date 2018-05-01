@@ -20,38 +20,42 @@ namespace Matslumpiator.Services
                 DateTime date = checkslump.datefixer(DateTime.Now);
                 date = date.Date;
                 date = date.AddDays(7);
-                bool check = checkslump.Checkslump(date, item.User_id);
-                if (check)
+                if(item.active)
                 {
-                    
-                }
-                else
-                {
-                    
-                    var slumpa = new Slumpservices();
-                    List<Receptmodels> lista = slumpa.Slumplist(item.User_id, date);
-                    if(lista[0].Id != -10)
+                    bool check = checkslump.Checkslump(date, item.User_id);
+                    if (check)
                     {
-                        string body = Email.Emailslumplist(item.First_name, "Här kommer nästa veckas mat. Hoppas de ska smaka!", lista);
-                        Email.SendEmail(item.email, item.First_name, "Här kommer nästa veckas mat.", body);
-                        foreach (var items in lista)
-                        {
-
-                            slumpa.SaveSlump(items.Id, item.User_id, items.Date, false);
-                        }
-                        
 
                     }
                     else
                     {
-                        var getlist = new Slumpservices();
-                        var slumplist = getlist.CreateRandomListOfRecept();
-                        string body = Email.EmailRadomlist(item.User, "Tyvärr finns det inte tillräckligt med maträtter i din personliga lista. </br> Går gärna in och lägg till de rätter som passar dig så kan vi hjälpa dig med förslag till middag.<br> Vi skickade med några förslag",slumplist,item.User_id);
-                        Email.SendEmail(item.email, item.User, "Vi behöver din hjälp", body);
+
+                        var slumpa = new Slumpservices();
+                        List<Receptmodels> lista = slumpa.Slumplist(item.User_id, date);
+                        if (lista[0].Id != -10)
+                        {
+                            string body = Email.Emailslumplist(item.First_name, "Här kommer nästa veckas mat. Hoppas de ska smaka!", lista);
+                            Email.SendEmail(item.email, item.First_name, "Här kommer nästa veckas mat.", body);
+                            foreach (var items in lista)
+                            {
+
+                                slumpa.SaveSlump(items.Id, item.User_id, items.Date, false);
+                            }
+
+
+                        }
+                        else
+                        {
+                            var getlist = new Slumpservices();
+                            var slumplist = getlist.CreateRandomListOfRecept();
+                            string body = Email.EmailRadomlist(item.User, "Tyvärr finns det inte tillräckligt med maträtter i din personliga lista. </br> Går gärna in och lägg till de rätter som passar dig så kan vi hjälpa dig med förslag till middag.<br> Vi skickade med några förslag", slumplist, item.User_id);
+                            Email.SendEmail(item.email, item.User, "Vi behöver din hjälp", body);
+                        }
+
+
                     }
-                   
-                   
                 }
+                
             }
         }
     }

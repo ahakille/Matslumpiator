@@ -1,4 +1,5 @@
 ﻿using Matslumpiator.Models;
+using Matslumpiator.Services;
 using Matslumpiator.Tools;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -35,5 +36,13 @@ namespace Matslumpiator.Controllers
             us.UpdateUser(model.User_id, model.User, model.email, model.First_name,model.Last_name,numberofDay);
             return RedirectToAction("Edit");
         }
+        public ActionResult ForgetMe()
+        {
+            int id = Convert.ToInt32(User.Identity.Name);
+            var remove = new Accountservice();
+            remove.DeleteUser(id);
+            return RedirectToActionPermanent("LogOff", "Account", null);
+        }
+
     }
 }

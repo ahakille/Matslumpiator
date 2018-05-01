@@ -8,56 +8,83 @@
 
     @using (Html.BeginForm())
     {
-        @*@Html.AntiForgeryToken()*@
 
-        <div class="form-horizontal">
-            @Html.HiddenFor(model => model.User_id)
-            <hr />
-            <div class="form-group">
-                @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
-                </div>
+
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.User_id)
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.User, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.User, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.User, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.First_name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.First_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.First_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.First_name, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Last_name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Last_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Last_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Last_name, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.CronoDay, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <select asp-for="CronoDay" asp-items="@(new SelectList(ViewBag.weeklist))" class="form-control"></select>
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CronoDay, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select asp-for="CronoDay" asp-items="@(new SelectList(ViewBag.weeklist))" class="form-control"></select>
             </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <button type="button" class="btn btn-danger btn-outline-danger" data-toggle="modal" data-target="#myModal">Ta bort kontot</button>
+            </div>
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Uppdatera" class="btn btn-outline-dark" />
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Ta bort ditt konto</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        </div>
+                        <div class="modal-body">
+                            <p>Om du tar bort ditt konto kommer du inte kunna logga in igen.</p>
+                            <p>Ingen data kommer sparas, den här åtgärde går inte att backa</p>
+
+                        </div>
+                        <div class="modal-footer">
+                            @Html.ActionLink("Ta bort mig!", "ForgetMe","Users", null, new { @class = "btn btn-danger btn-outline-danger" })
+                            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Stäng</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Uppdatera" class="btn btn-outline-dark" />
+            </div>
+        </div>
+    </div>
     }
 
 </div>

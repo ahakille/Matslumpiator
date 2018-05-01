@@ -1,11 +1,7 @@
-﻿using Matslump.Services;
-using Quartz;
+﻿using Quartz;
 using Quartz.Impl;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace matslump.Crono
 {
@@ -34,8 +30,17 @@ namespace matslump.Crono
         {
             public void Execute(IJobExecutionContext context)
             {
-                Slumpcron.StartCron();
-                Console.WriteLine("Crono run " + DateTime.Now);
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = client.GetAsync("https://matslumpiator.se/Slumpiator/RunSlump?code=asdfg").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Crono run " + DateTime.Now);
+                }
+                else
+                {
+                    Console.WriteLine("Error  " + DateTime.Now);
+                }
+                
             }
 
         }

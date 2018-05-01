@@ -17,7 +17,7 @@ namespace Matslumpiator.Services
             int user_id = 0;
             postgres m = new postgres();
             string role = "";
-            bool active;
+            bool active = false;
             string sql;
             userNameOrEmail = userNameOrEmail.ToLower();
             sql = "select user_id, name, acc_active , login.salt , login.hash from users LEFT JOIN roles ON roles_id = id_roles LEFT JOIN login ON users.login_id = login.login_id where email =@par1 or users.username =@par1 ";
@@ -43,7 +43,7 @@ namespace Matslumpiator.Services
 
             }
 
-            if (salt != null)
+            if (salt != null && active == true)
             {
                 using (var deriveBytes = new Rfc2898DeriveBytes(ppassword, salt))
                 {
@@ -181,6 +181,17 @@ namespace Matslumpiator.Services
             }
 
             return Tuple.Create(login_id, false, username);
+        }
+
+        public void DeleteUser(int User_id)
+        {
+            postgres sql = new postgres();
+            sql.SqlNonQuery("UPDATE Users SET acc_active = false WHERE user_id = @user_id", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@user_id", User_id)
+
+
+            });
         }
     }
 }

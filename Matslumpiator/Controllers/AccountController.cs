@@ -17,7 +17,7 @@ namespace Matslumpiator.Controllers
     {
         // GET: Account
         [AllowAnonymous]
-   //     [RequireHttps]
+        [RequireHttps]
         public ActionResult Index(string returnUrl)
         {
 
@@ -27,7 +27,7 @@ namespace Matslumpiator.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-     //   [RequireHttps]
+        [RequireHttps]
         public async Task<IActionResult> Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
@@ -35,7 +35,7 @@ namespace Matslumpiator.Controllers
                 return View(model);
             }
             Accountservice acc = new Accountservice();
-            var result = acc.AuthenticationUser(model.Password, model.user);
+            var result = acc.AuthenticationUser(model.Password, model.User);
             if (result.Item2 == true)
             {
 
@@ -114,7 +114,7 @@ namespace Matslumpiator.Controllers
         [RequireHttps]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Forgetpassword(Users model)
+        public ActionResult Forgetpassword(Accountmodels model)
         {
             Accountservice acc = new Accountservice();
 

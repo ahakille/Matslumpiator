@@ -86,6 +86,18 @@ namespace Matslumpiator.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult RunSlump(string code)
+        {
+            if(code == "asdfg")
+            {
+                Slumpcron.StartCron();
+                return Ok();
+            }
+            return BadRequest("Wrong");
+           
+        }
+
         
 
        

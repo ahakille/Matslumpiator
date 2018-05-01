@@ -12,11 +12,7 @@ namespace Matslump.Controllers.Tests
     public class SlumpiatorControllerTests
     {
 
-            // Act
-            ViewResult result = controller.Index() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
-        }
+         
+        
     }
 }

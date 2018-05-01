@@ -6,7 +6,7 @@ namespace Matslumpiator.Models
         [Required]
         [Display(Name = "Användarnamn eller Email")]
         // [EmailAddress]
-        public string user { get; set; }
+        public string User { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
