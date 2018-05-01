@@ -11,7 +11,7 @@
         <div class="col-md-2">
             <div class="form-group form-control-sm">
                 <label for="selectbox">Antalsidor</label>
-                <select asp-for="Size" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
+                <select asp-for="Size" class="form-control-sm" name="Antal Sidor:" onchange="javascript:location.href = this.value;">
                     @if (Model.Size == 10)
                     {
                         <option value="/Food/All?size=10 @if (!string.IsNullOrEmpty(Model.Sökord))
@@ -110,7 +110,7 @@
                         <input asp-for="Sökord" class="form-control" placeholder="Sök på valfrit ord..." />
                     </div>
                     <div class="col-md-4 p-3">
-                        <select asp-for="Cookingtime" asp-items="@(new SelectList(ViewBag.Cookingtimes))"></select>
+                        <select asp-for="Cookingtime" asp-items="@(new SelectList(ViewBag.Cookingtimes))" class="form-control"></select>
 
                     </div>
                     <div class="col-md-4 p-3">
