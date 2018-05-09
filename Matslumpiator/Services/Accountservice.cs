@@ -1,4 +1,5 @@
 ﻿using Matslumpiator.Models;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,15 @@ using System.Security.Cryptography;
 
 namespace Matslumpiator.Services
 {
-    public class Accountservice
+    public class Accountservice : IAccountService
     {
+        //private readonly IUserServices _userServices;
+        private readonly IEmailService _emailService;
+
+        public Accountservice( IEmailService emailService)
+        {
+            _emailService = emailService;
+        }
         public Tuple<int, bool, string> AuthenticationUser(string ppassword, string userNameOrEmail)
         {
 
@@ -99,9 +107,10 @@ namespace Matslumpiator.Services
         {
 
             string pass = GeneratePassword(7);
-            Users us = new Users();
-            us.CreateUser(username, email, true, pass, fname, last_name);
-            Email.SendEmail(email, username, "Ditt lösenord", Email.EmailOther("Ditt lösenord är: ", pass));
+           
+            CreateUser(username, email, true, pass, fname, last_name);
+          
+            _emailService.SendEmail(email, username, "Ditt lösenord", EmailService.EmailOther("Ditt lösenord är: ", pass));
         }
         public bool Forgetpassword(string username)
         {
@@ -120,7 +129,7 @@ namespace Matslumpiator.Services
                         {
                          new NpgsqlParameter("@username", username)
                          });
-            Users r = new Users();
+            UserService r = new UserService();
             foreach (DataRow dr in dt.Rows)
             {
 
@@ -147,8 +156,9 @@ namespace Matslumpiator.Services
                          new NpgsqlParameter("@hash",hash),
                          new NpgsqlParameter("@time",date)
                          });
-            string message = Email.EmailOther(r.User, "Här kommer din återställningslänk: <a href=\"https://matslumpiator.se/Account/Resetpassword?validate=" + hash + "\" target=\"_blank\" >Återställlösenordet </a>");
-            Email.SendEmail(r.email, r.User, "Återställning Lösenord", message);
+            string message = EmailService.EmailOther(r.User, "Här kommer din återställningslänk: <a href=\"https://matslumpiator.se/Account/Resetpassword?validate=" + hash + "\" target=\"_blank\" >Återställlösenordet </a>");
+            
+            _emailService.SendEmail(r.email, r.User, "Återställning Lösenord", message);
             return true;
 
         }
@@ -183,15 +193,56 @@ namespace Matslumpiator.Services
             return Tuple.Create(login_id, false, username);
         }
 
-        public void DeleteUser(int User_id)
-        {
-            postgres sql = new postgres();
-            sql.SqlNonQuery("UPDATE Users SET acc_active = false WHERE user_id = @user_id", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@user_id", User_id)
 
+        public void Newpassword(int login_id, string newpassword)
+        {
+
+            Tuple<byte[], byte[]> password = Generatepass(newpassword);
+            postgres sql = new postgres();
+            // behöver skrivas om! klart
+            sql.SqlNonQuery("UPDATE login set salt= @par2, hash =@par3 WHERE login_id =@par1", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", login_id),
+                new NpgsqlParameter("@par2", password.Item1),
+                new NpgsqlParameter("@par3", password.Item2)
+            });
+        }
+        private void CreateUser(string user, string email, bool active, string Password, string fname, string last_name)
+        {
+
+            Tuple<byte[], byte[]> password = Generatepass(Password);
+            postgres sql = new postgres();
+            // Behöver skrivas om! klart!
+            postgres sql2 = new postgres();
+
+            int id = sql2.SqlQueryString("INSERT INTO login (salt, hash, reset_time, reset_hash) VALUES (@salt ,@hash, @time, 1) RETURNING login_id;", postgres.list = new List<NpgsqlParameter>()
+            {
+
+                new NpgsqlParameter("@salt", password.Item1),
+                new NpgsqlParameter("@hash", password.Item2),
+                new NpgsqlParameter("@time", Convert.ToDateTime("1970-01-01 00:00:00"))
+            });
+            postgres sql3 = new postgres();
+            int id_setting = sql3.SqlQueryString("INSERT INTO usersettings (day_of_slumpcron) VALUES (6) RETURNING setting_id;", postgres.list = new List<NpgsqlParameter>()
+            {
+            });
+
+            sql.SqlNonQuery("INSERT INTO users (username,roles_id,email,acc_active,last_login,login_id,settings_id,fname,last_name) VALUES (@par1,'2',@email,@active,@last_login,@login_id,@settings_id,@fname,@last_name)", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@par1", user),
+                new NpgsqlParameter("@email", email),
+                new NpgsqlParameter("@active", active),
+                new NpgsqlParameter("@login_id", id),
+                new NpgsqlParameter("@settings_id", id_setting),
+                new NpgsqlParameter("@last_login", DateTime.Now),
+                new NpgsqlParameter("@fname", fname),
+                new NpgsqlParameter("@last_name", last_name)
 
             });
+
+
+
+
         }
     }
 }

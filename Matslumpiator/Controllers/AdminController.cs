@@ -3,6 +3,7 @@ using Matslumpiator.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,21 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class AdminController : Controller
     {
+        private readonly IUserServices _userServices;
+
+        public AdminController(IUserServices userServices)
+        {
+            _userServices = userServices;
+
+        }
         // GET: Admin
         [HttpGet]
         [Authorize(Roles= "Admin")]
         public ActionResult Index()
         {
-            Users us = new Users();
+
             //Behöver skrivas om! klar
-            ViewBag.userlist= us.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users ORDER BY users.last_login DESC");
+            ViewBag.userlist= _userServices.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users ORDER BY users.last_login DESC");
             
             return View();
         }
@@ -31,36 +39,25 @@ namespace Matslumpiator.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            Users us = new Users();
-            List<Users> list = new List<Users>();
+            
+            List<UserService> list = new List<UserService>();
+            UserService user = new UserService();
             // Behöver skrivas om! klar
-            list = us.GetuserAsAdmin(id, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id,last_login,users.settings_id FROM public.users WHERE user_id = @id");
-            us.active = list[0].active;
-            us.email = list[0].email;
-            us.User = list[0].User;
-            us.Roles_id = list[0].Roles_id;
-            us.User_id = id;
-            return View(us);
+            list = _userServices.GetuserAsAdmin(id, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id,last_login,users.settings_id FROM public.users WHERE user_id = @id");
+            user.active = list[0].active;
+            user.email = list[0].email;
+            user.User = list[0].User;
+            user.Roles_id = list[0].Roles_id;
+            user.User_id = id;
+            return View(user);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult NewUser(Users model)
+        public ActionResult NewUser(UserService model)
         {
             try
             {
-                Accountservice User = new Accountservice();
-                Tuple<byte[], byte[]> password = User.Generatepass(model.Password);
-                postgres sql = new postgres();
-                // Behöver skrivas om
-                sql.SqlNonQuery("INSERT INTO login (salt, key ,username,roles_id,email,acc_active,last_login) VALUES (@par2,@par3,@par1,'2',@email,@active,@last_login)", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@par1", model.User),
-                new NpgsqlParameter("@par2", password.Item1),
-                new NpgsqlParameter("@email", model.email),
-                new NpgsqlParameter("@active", model.active),
-                new NpgsqlParameter("@last_login", DateTime.Now),
-                new NpgsqlParameter("@par3", password.Item2)
-            });
+                
 
                 return RedirectToAction("index", "admin");
             }
@@ -70,18 +67,13 @@ namespace Matslumpiator.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        public ActionResult SendMessage(FormCollection form)
+        public ActionResult SendMessage(IFormCollection form)
         {
-            string message =Request.Form["message"];
-            string subject = Request.Form["subject"];
-            Users us = new Users();
-            // Behöver skrivas om! klar
-            List<Users> list = us.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login,users.settings_id FROM public.users");
-            foreach (var item in list)
-            {
-                Email.SendEmail(item.email, item.User, subject,Email.EmailOther(subject,message));
-                
-            }
+            string message =form["message"];
+            string subject = form["subject"];
+
+            _userServices.SendMessagesToAllUsers(subject, message);
+
             return RedirectToAction("index", "admin");
         }
     }

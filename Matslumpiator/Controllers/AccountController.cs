@@ -15,9 +15,15 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        // GET: Account
+        private readonly IAccountService _accountService;
+
+        public AccountController(IAccountService options)
+        {
+            _accountService = options;
+
+        }
         [AllowAnonymous]
-        [RequireHttps]
+     //   [RequireHttps]
         public ActionResult Index(string returnUrl)
         {
 
@@ -27,15 +33,15 @@ namespace Matslumpiator.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequireHttps]
+   //     [RequireHttps]
         public async Task<IActionResult> Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            Accountservice acc = new Accountservice();
-            var result = acc.AuthenticationUser(model.Password, model.User);
+            
+            var result = _accountService.AuthenticationUser(model.Password, model.User);
             if (result.Item2 == true)
             {
 
@@ -84,8 +90,8 @@ namespace Matslumpiator.Controllers
             bool check = sql.SqlQueryExist("Select exists(SELECT users.username FROM public.users WHERE users.username = @par1);", postgres.list = new List<NpgsqlParameter>() { new NpgsqlParameter("@par1", model.User) });
             if (!check)
             {
-                Accountservice User = new Accountservice();
-                User.RegisterNewUser(model.User, model.email, model.First_name, model.Last_name);
+               
+                _accountService.RegisterNewUser(model.User, model.email, model.First_name, model.Last_name);
                 return RedirectToAction("Index", "Account");
             }
             else
@@ -116,9 +122,9 @@ namespace Matslumpiator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Forgetpassword(Accountmodels model)
         {
-            Accountservice acc = new Accountservice();
+          
 
-            bool result = acc.Forgetpassword(model.User);
+            bool result = _accountService.Forgetpassword(model.User);
             if (result)
             {
                 return RedirectToAction("Index", "Home");
@@ -133,9 +139,9 @@ namespace Matslumpiator.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            Users us = new Users();
-            Accountservice acc = new Accountservice();
-            Tuple<int, bool, string> reset = acc.Resetpassword(validate);
+            UserService us = new UserService();
+            
+            Tuple<int, bool, string> reset = _accountService.Resetpassword(validate);
             if (reset.Item2)
             {
                 us.Login_id = reset.Item1;
@@ -147,10 +153,9 @@ namespace Matslumpiator.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Resetpassword(Users model)
+        public ActionResult Resetpassword(UserService model)
         {
-            Users us = new Users();
-            us.Newpassword(model.Login_id, model.Password);
+            _accountService.Newpassword(model.Login_id, model.Password);
             return RedirectToAction("Index", "Account");
         }
 
@@ -166,7 +171,7 @@ namespace Matslumpiator.Controllers
         }
         [RequireHttps]
         [HttpPost]
-        public ActionResult Newpassword(Users model)
+        public ActionResult Newpassword(UserService model)
         {
 
             try
@@ -174,8 +179,8 @@ namespace Matslumpiator.Controllers
                 postgres sql = new postgres();
                 int id = sql.SqlQueryString("SELECT login_id FROM users WHERE user_id = @id", postgres.list = new List<NpgsqlParameter>()
                      {  new NpgsqlParameter("@id",Convert.ToInt16(User.Identity.Name)) });
-                Users us = new Users();
-                us.Newpassword(id, model.Password);
+
+                _accountService.Newpassword(id, model.Password);
 
                 return RedirectToAction("index", "users");
             }

@@ -9,13 +9,23 @@ using System.Threading.Tasks;
 
 namespace Matslumpiator.Services
 {
-    public class UserServices
+    public class UserServices : IUserServices
     {
-        public List<Users> GetuserAsAdmin(int id, string sql)
+        private readonly IAccountService _accountService;
+        private readonly IEmailService _emailService;
+
+        public UserServices(IAccountService accountServices, IEmailService emailService)
+        {
+            _accountService = accountServices;
+            _emailService = emailService;
+
+
+        }
+        public List<UserService> GetuserAsAdmin(int id, string sql)
         {
             postgres m = new postgres();
             DataTable dt = new DataTable();
-            List<Users> mt = new List<Users>();
+            List<UserService> mt = new List<UserService>();
             dt = m.SqlQuery(sql, postgres.list = new List<NpgsqlParameter>()
             {
                 new NpgsqlParameter("@id", id)
@@ -23,7 +33,7 @@ namespace Matslumpiator.Services
             foreach (DataRow dr in dt.Rows)
             {
 
-                Users r = new Users();
+                UserService r = new UserService();
                 r.User_id = (int)dr["user_id"];
                 r.User = dr["username"].ToString();
                 r.email = (string)dr["email"];
@@ -64,43 +74,7 @@ namespace Matslumpiator.Services
 
             return mt;
         }
-        public void CreateUser(string user, string email, bool active, string Password, string fname, string last_name)
-        {
-            Accountservice User = new Accountservice();
-            Tuple<byte[], byte[]> password = User.Generatepass(Password);
-            postgres sql = new postgres();
-            // Behöver skrivas om! klart!
-            postgres sql2 = new postgres();
-
-            int id = sql2.SqlQueryString("INSERT INTO login (salt, hash, reset_time, reset_hash) VALUES (@salt ,@hash, @time, 1) RETURNING login_id;", postgres.list = new List<NpgsqlParameter>()
-            {
-
-                new NpgsqlParameter("@salt", password.Item1),
-                new NpgsqlParameter("@hash", password.Item2),
-                new NpgsqlParameter("@time", Convert.ToDateTime("1970-01-01 00:00:00"))
-            });
-            postgres sql3 = new postgres();
-            int id_setting = sql3.SqlQueryString("INSERT INTO usersettings (day_of_slumpcron) VALUES (6) RETURNING setting_id;", postgres.list = new List<NpgsqlParameter>()
-            {
-            });
-
-            sql.SqlNonQuery("INSERT INTO users (username,roles_id,email,acc_active,last_login,login_id,settings_id,fname,last_name) VALUES (@par1,'2',@email,@active,@last_login,@login_id,@settings_id,@fname,@last_name)", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@par1", user),
-                new NpgsqlParameter("@email", email),
-                new NpgsqlParameter("@active", active),
-                new NpgsqlParameter("@login_id", id),
-                new NpgsqlParameter("@settings_id", id_setting),
-                new NpgsqlParameter("@last_login", DateTime.Now),
-                new NpgsqlParameter("@fname", fname),
-                new NpgsqlParameter("@last_name", last_name)
-
-            });
-
-
-
-
-        }
+        
         public void UpdateUser(int User_id, string username, string email, string first_name, string last_name, int Slumpday)
         {
             postgres sql = new postgres();
@@ -119,8 +93,8 @@ namespace Matslumpiator.Services
         }
         public void Newpassword(int login_id, string newpassword)
         {
-            Accountservice User1 = new Accountservice();
-            Tuple<byte[], byte[]> password = User1.Generatepass(newpassword);
+          
+            Tuple<byte[], byte[]> password = _accountService.Generatepass(newpassword);
             postgres sql = new postgres();
             // behöver skrivas om! klart
             sql.SqlNonQuery("UPDATE login set salt= @par2, hash =@par3 WHERE login_id =@par1", postgres.list = new List<NpgsqlParameter>()
@@ -128,6 +102,28 @@ namespace Matslumpiator.Services
                 new NpgsqlParameter("@par1", login_id),
                 new NpgsqlParameter("@par2", password.Item1),
                 new NpgsqlParameter("@par3", password.Item2)
+            });
+        }
+        public void SendMessagesToAllUsers(string subject, string message)
+        {
+            List<UserService> list = GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login,users.settings_id FROM public.users");
+            foreach (var item in list)
+            {
+                
+                _emailService.SendEmail(item.email, item.User, subject, EmailService.EmailOther(item.First_name + " " + item.Last_name, message));
+
+            }
+        }
+        public void DeleteUser(int User_id)
+        {
+            postgres sql = new postgres();
+            sql.SqlNonQuery("UPDATE Users SET username=@user, email=@email, acc_active = false WHERE user_id = @user_id", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@user_id", User_id),
+                new NpgsqlParameter("@user","test"),
+                new NpgsqlParameter("@email","mat@nppc.se")
+
+
             });
         }
     }

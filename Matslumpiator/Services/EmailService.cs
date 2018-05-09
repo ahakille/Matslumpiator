@@ -1,5 +1,6 @@
 ﻿using Matslumpiator.Models;
 using Matslumpiator.Tools;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -8,19 +9,27 @@ using System.Text;
 
 namespace Matslumpiator.Services
 {
-    public class Email
+    public class EmailService : IEmailService
     {
-        public static void SendEmail(string epost , string name, string Subject, string body)
+        private readonly EmailConnection slumpisOptions;
+
+        public EmailService(IOptions<EmailConnection> options)
+        {
+            slumpisOptions = options.Value;
+                
+        }
+
+        public void SendEmail(string epost , string name, string subject, string body)
         {
 
-            string Sender = "mat@nppc.se";
-            string Password = "dapobuz1";
-            string Emailsmtp = "ns4.inleed.net";
-            
+            string Sender = slumpisOptions.Sender;
+            string Password = slumpisOptions.Password;
+            string Emailsmtp = slumpisOptions.Emailsmtp;
 
-            
-            
-            SmtpClient client = new SmtpClient(Emailsmtp, 587);
+
+
+
+            SmtpClient client = new SmtpClient(Emailsmtp, 25);
             MailMessage mail = new MailMessage();
 
                 
@@ -41,7 +50,7 @@ namespace Matslumpiator.Services
                     //<p>Med vänliga hälsningar Matslumpiatorn</p> 
                     //", "Hej " + name , Message /*,inlineLogo.ContentId*/);
 
-                    mail = new MailMessage(Sender, epost, Subject, body);
+                    mail = new MailMessage(Sender, epost, subject, body);
                     mail.BodyEncoding = Encoding.UTF8;
                     mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 

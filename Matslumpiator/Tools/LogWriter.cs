@@ -11,7 +11,7 @@ namespace Matslumpiator.Tools
         private string m_exePath = string.Empty;
         public LogWriter(string logMessage)
         {
-           Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", logMessage);
+        //   Email.SendEmail("gorlingy@hotmail.com", "Serverfel", "Serverfel", logMessage);
         }
       
 

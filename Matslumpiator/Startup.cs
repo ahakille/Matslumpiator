@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Matslumpiator.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace Matslumpiator
 {
@@ -27,6 +25,13 @@ namespace Matslumpiator
             services.AddMvc();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o => o.LoginPath = new PathString("/Account/index"));
+            services.AddOptions();
+            services.Configure<EmailConnection>(Configuration.GetSection("EmailConnection"));
+
+            services.AddTransient<IAccountService, Accountservice>();
+            services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<IEmailService, EmailService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,8 +47,8 @@ namespace Matslumpiator
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            app.UseStaticFiles();
+            
+           
 
             app.UseMvc(routes =>
             {

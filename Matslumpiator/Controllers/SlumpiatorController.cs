@@ -3,6 +3,7 @@ using Matslumpiator.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,13 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class SlumpiatorController : Controller
     {
-        // GET: Slumpiator
+        private readonly EmailConnection slumpisOptions;
+
+        public SlumpiatorController(IOptions<EmailConnection> options)
+        {
+            slumpisOptions = options.Value;
+
+        }
 
         public ActionResult Index()
         {
@@ -91,7 +98,8 @@ namespace Matslumpiator.Controllers
         {
             if(code == "asdfg")
             {
-                Slumpcron.StartCron();
+           //     var Start = new Slumpcron();
+           //     Start.StartCron();
                 return Ok();
             }
             return BadRequest("Wrong");
