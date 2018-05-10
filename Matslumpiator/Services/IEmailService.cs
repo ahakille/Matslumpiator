@@ -7,6 +7,6 @@ namespace Matslumpiator.Services
 {
     public interface IEmailService
     {
-        void SendEmail(string epost, string name, string subject, string body);
+        Task SendEmail(string epost, string name, string subject, string body);
     }
 }

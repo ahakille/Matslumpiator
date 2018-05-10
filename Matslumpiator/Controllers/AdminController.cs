@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Matslumpiator.Controllers
 {
@@ -67,12 +68,12 @@ namespace Matslumpiator.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        public ActionResult SendMessage(IFormCollection form)
+        public async Task<ActionResult> SendMessage(IFormCollection form)
         {
             string message =form["message"];
             string subject = form["subject"];
 
-            _userServices.SendMessagesToAllUsers(subject, message);
+            await _userServices.SendMessagesToAllUsers(subject, message);
 
             return RedirectToAction("index", "admin");
         }

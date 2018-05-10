@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Matslumpiator.Services
 {
@@ -19,7 +20,7 @@ namespace Matslumpiator.Services
                 
         }
 
-        public void SendEmail(string epost , string name, string subject, string body)
+        public Task SendEmail(string epost , string name, string subject, string body)
         {
 
             string Sender = slumpisOptions.Sender;
@@ -67,6 +68,7 @@ namespace Matslumpiator.Services
                 {
                     string error = ex.Message;
                 }
+            return Task.CompletedTask;
             
         }
         public static string Emailslumplist(string name , string Message, List<Receptmodels> lista)

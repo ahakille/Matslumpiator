@@ -104,15 +104,20 @@ namespace Matslumpiator.Services
                 new NpgsqlParameter("@par3", password.Item2)
             });
         }
-        public void SendMessagesToAllUsers(string subject, string message)
+        public async Task SendMessagesToAllUsers(string subject, string message)
         {
             List<UserService> list = GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login,users.settings_id FROM public.users");
             foreach (var item in list)
             {
                 
-                _emailService.SendEmail(item.email, item.User, subject, EmailService.EmailOther(item.First_name + " " + item.Last_name, message));
+                
+                await _emailService.SendEmail(item.email, item.User, subject, EmailService.EmailOther(item.First_name + " " + item.Last_name, message));
+                
+                   
 
             }
+           
+
         }
         public void DeleteUser(int User_id)
         {
