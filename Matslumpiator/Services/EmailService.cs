@@ -26,11 +26,12 @@ namespace Matslumpiator.Services
             string Sender = slumpisOptions.Sender;
             string Password = slumpisOptions.Password;
             string Emailsmtp = slumpisOptions.Emailsmtp;
+            int port = Convert.ToInt16(slumpisOptions.Port);
 
 
 
 
-            SmtpClient client = new SmtpClient(Emailsmtp, 25);
+            SmtpClient client = new SmtpClient(Emailsmtp, port);
             MailMessage mail = new MailMessage();
 
                 

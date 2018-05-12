@@ -10,6 +10,7 @@ namespace Matslumpiator
         public string Sender { get; set; }
         public string Password { get; set; }
         public string Emailsmtp { get; set; }
+        public string Port { get; set; }
     }
 
 
