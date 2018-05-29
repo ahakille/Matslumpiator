@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Matslumpiator.Services
 {
-    public class Slumpcron
+    public class Slumpcron: ISlumpCronService
     {
         private readonly IEmailService _emailService;
         private readonly IUserServices _userServices;

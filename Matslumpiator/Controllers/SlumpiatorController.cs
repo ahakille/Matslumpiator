@@ -13,11 +13,11 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class SlumpiatorController : Controller
     {
-        private readonly EmailConnection slumpisOptions;
+        private readonly ISlumpCronService _slumpCronService;
 
-        public SlumpiatorController(IOptions<EmailConnection> options)
+        public SlumpiatorController(ISlumpCronService slumpCronService)
         {
-            slumpisOptions = options.Value;
+            _slumpCronService = slumpCronService;
 
         }
 
@@ -98,8 +98,7 @@ namespace Matslumpiator.Controllers
         {
             if(code == "asdfg")
             {
-           //     var Start = new Slumpcron();
-           //     Start.StartCron();
+                _slumpCronService.StartCron();
                 return Ok();
             }
             return BadRequest("Wrong");

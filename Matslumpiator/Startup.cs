@@ -31,6 +31,8 @@ namespace Matslumpiator
             services.AddTransient<IAccountService, Accountservice>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ISlumpCronService, Slumpcron>();
+
 
         }
 
