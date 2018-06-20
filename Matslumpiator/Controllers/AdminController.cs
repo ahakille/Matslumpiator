@@ -26,8 +26,6 @@ namespace Matslumpiator.Controllers
         [Authorize(Roles= "Admin")]
         public ActionResult Index()
         {
-
-            //Behöver skrivas om! klar
             ViewBag.userlist= _userServices.GetuserAsAdmin(0, "SELECT users.user_id,users.username, users.fname, users.last_name, users.email,users.acc_active,users.roles_id ,users.last_login ,users.settings_id  FROM public.users ORDER BY users.last_login DESC");
             
             return View();

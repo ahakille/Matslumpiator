@@ -37,10 +37,13 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                Namn
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                Cronodag
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.active)
@@ -56,43 +59,46 @@
 
         @foreach (var item in ViewBag.userlist)
         {
-            <tr>
-                <td>
-                    @item.User
-                </td>
-                <td>
-                    @item.email
-                </td>
-                <td>
-                    @if (item.active == true)
-                    {
-                        <p>Aktivt</p>
-                    }
-                    else
-                    {
-                        <p>Ej aktiverat</p>
-                    }
-                </td>
-                <td>
-                    @if (item.Roles_id == 1)
-                    {
-                        <p>Admin</p>
-                    }
-                    else
-                    {
-                        <p>Användare</p>
-                    }
+        <tr>
+            <td>
+                @item.First_name @item.Last_name
+            </td>
+            <td>
+                @item.email
+            </td>
+            <td>
+                Crono
+            </td>
+            <td>
+                @if (item.active == true)
+        {
+            <p>Aktivt</p>
+}
+else
+{
+        <p>Ej aktiverat</p>
+}
+            </td>
+            <td>
+                @if (item.Roles_id == 1)
+        {
+            <p>Admin</p>
+}
+else
+{
+        <p>Användare</p>
+}
 
 
-                </td>
-                <td>
-                    @item.Last_login
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |
-                    @Html.ActionLink("Delete", "#", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+            </td>
+            <td>
+                @item.Last_login
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.User_id }) |
+                @Html.ActionLink("Delete", "#", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
         }
 
     </table>
