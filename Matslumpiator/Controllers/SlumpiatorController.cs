@@ -14,29 +14,33 @@ namespace Matslumpiator.Controllers
     public class SlumpiatorController : Controller
     {
         private readonly ISlumpCronService _slumpCronService;
+        private readonly ISlumpServices _slumpServices;
+        private readonly IFoodServices _foodServices;
 
-        public SlumpiatorController(ISlumpCronService slumpCronService)
+        public SlumpiatorController(ISlumpCronService slumpCronService,ISlumpServices slumpServices, IFoodServices foodServices)
         {
             _slumpCronService = slumpCronService;
+            _slumpServices = slumpServices;
+            _foodServices = foodServices;
 
         }
 
         public ActionResult Index()
         {
             int user_id = Convert.ToInt32(User.Identity.Name);
-            var slumpe = new Slumpservices();
+         //   var slumpe = new Slumpservices();
             var Slumpmodel = new Slump();
             DateTime date;
             date = DateTime.Now;
-            date = slumpe.datefixer(date);
-            Slumpmodel.Recepts =slumpe.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
-            Slumpmodel.List = slumpe.Weeknumbers(Slumpmodel.Recepts);
-            ViewBag.thisweek = slumpe.Oldslumps(user_id, date.AddDays(-1), date.AddDays(6));
-            ViewBag.date = slumpe.GetIso8601WeekOfYear(DateTime.Now);
-            ViewBag.date1 = slumpe.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));
+            date = _slumpServices.datefixer(date);
+            Slumpmodel.Recepts = _slumpServices.Oldslumps(user_id, date.AddDays(-30) ,date.AddDays(-1));
+            Slumpmodel.List = _slumpServices.Weeknumbers(Slumpmodel.Recepts);
+            ViewBag.thisweek = _slumpServices.Oldslumps(user_id, date.AddDays(-1), date.AddDays(6));
+            ViewBag.date = _slumpServices.GetIso8601WeekOfYear(DateTime.Now);
+            ViewBag.date1 = _slumpServices.GetIso8601WeekOfYear(DateTime.Now.AddDays(7));
             date = DateTime.Now;
-            date = slumpe.datefixer(date);
-            ViewBag.nextweek = slumpe.Oldslumps(user_id, date.AddDays(6), date.AddDays(14));
+            date = _slumpServices.datefixer(date);
+            ViewBag.nextweek = _slumpServices.Oldslumps(user_id, date.AddDays(6), date.AddDays(14));
 
 
             return View(Slumpmodel);
@@ -52,11 +56,11 @@ namespace Matslumpiator.Controllers
                 date = date.AddDays(7);
             }
 
-            var Slump = new Slumpservices();
+          //  var Slump = new Slumpservices();
             Receptmodels re = new Receptmodels();
-            re.Recept = Slump.Slumplist(Convert.ToInt32(User.Identity.Name),date);
+            re.Recept = _slumpServices.Slumplist(Convert.ToInt32(User.Identity.Name),date);
             ViewBag.check = re.Recept[0].Id;
-            ViewBag.date = Slump.GetIso8601WeekOfYear(date);
+            ViewBag.date = _slumpServices.GetIso8601WeekOfYear(date);
             
             
             return View(re);
@@ -68,17 +72,17 @@ namespace Matslumpiator.Controllers
         {
            int user = Convert.ToInt16(User.Identity.Name);
 
-            Slumpservices checkslump = new Slumpservices();
+          //  Slumpservices checkslump = new Slumpservices();
            var datetime = Convert.ToDateTime(form["0date"]);
            datetime =datetime.Date;
-           bool check= checkslump.Checkslump(datetime, user);
+           bool check= _slumpServices.Checkslump(datetime, user);
             for (int i=0; i <5; i++ )
             {
                 var id = Convert.ToInt16(form[i + "id"]);
                 var date = Convert.ToDateTime(form[i + "date"]);
 
-                var slump = new Slumpservices();
-                slump.SaveSlump(id, user, date,check);
+                // var slump = new Slumpservices();
+                _slumpServices.SaveSlump(id, user, date,check);
             }
             return RedirectToAction("Index");
    
@@ -87,9 +91,9 @@ namespace Matslumpiator.Controllers
         public ActionResult AddRandomList(int food1,int food2,int food3)
         {
             var re = new Receptmodels();
-            re.addFood_user(User.Identity.Name,food1);
-            re.addFood_user(User.Identity.Name, food2);
-            re.addFood_user(User.Identity.Name, food3);
+            _foodServices.AddFoodToUser(User.Identity.Name,food1);
+            _foodServices.AddFoodToUser(User.Identity.Name, food2);
+            _foodServices.AddFoodToUser(User.Identity.Name, food3);
             return View();
         }
 

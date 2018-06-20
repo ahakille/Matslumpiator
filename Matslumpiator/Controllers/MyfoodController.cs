@@ -11,7 +11,12 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class MyfoodController : Controller
     {
-        // GET: Myfood
+        private readonly IFoodServices _foodServices;
+
+        public MyfoodController(IFoodServices foodServices)
+        {
+            _foodServices = foodServices;
+        }
         public ActionResult Index(int? page, int? size)
         {
             int SizeofPage = 20;
@@ -34,25 +39,11 @@ namespace Matslumpiator.Controllers
             
         }
 
-        // GET: Myfood/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-               
-
-        // GET: Myfood/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
         // GET: Myfood/Delete/5
         public ActionResult Delete(int id, int page)
         {
-            Receptmodels re = new Receptmodels();
-            re.removefood_user(User.Identity.Name, id);
+
+            _foodServices.RemovefoodFromUser(User.Identity.Name, id);
             return RedirectToAction("index",new { page = page });
         }
 

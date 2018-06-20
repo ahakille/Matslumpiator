@@ -55,6 +55,7 @@ namespace Matslumpiator.Services
                     mail = new MailMessage(Sender, epost, subject, body);
                     mail.BodyEncoding = Encoding.UTF8;
                     mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+            
 
                     var view = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
                     //view.LinkedResources.Add(inlineLogo);

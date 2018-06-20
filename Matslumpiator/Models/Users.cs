@@ -67,25 +67,5 @@ namespace Matslumpiator.Models
         public int Login_id { get; set; }
 
 
-      
-      
-        public void UpdateUser(int User_id,string username,string email,string first_name, string last_name,int Slumpday)
-        {
-            postgres sql = new postgres();
-            //Behöver skrivas OM! klar
-            sql.SqlNonQuery("Select update_user(@username,@email,@first_name,@lastname,@cronoday,@user_id)", postgres.list = new List<NpgsqlParameter>()
-            {
-                new NpgsqlParameter("@username", username),
-                new NpgsqlParameter("@email", email),
-                new NpgsqlParameter("@first_name", first_name),
-                new NpgsqlParameter("@lastname", last_name),
-                new NpgsqlParameter("@cronoday", Slumpday),
-                new NpgsqlParameter("@user_id", User_id)
-              
-               
-            });
-        }
-
-
     }
 }

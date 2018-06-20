@@ -38,8 +38,7 @@ namespace Matslumpiator.Controllers
         public ActionResult Edit(UsersEditViewmodel model)
         {
             int numberofDay= Weeklist.CheckCronoDay(model.CronoDay);
-            UserService us = new UserService();
-            us.UpdateUser(model.User_id, model.User, model.email, model.First_name,model.Last_name,numberofDay);
+            _userServices.UpdateUser(model.User_id, model.User, model.email, model.First_name,model.Last_name,numberofDay);
             return RedirectToAction("Edit");
         }
         public ActionResult ForgetMe()

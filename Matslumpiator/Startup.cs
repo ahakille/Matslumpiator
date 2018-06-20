@@ -28,6 +28,8 @@ namespace Matslumpiator
             services.AddOptions();
             services.Configure<EmailConnection>(Configuration.GetSection("EmailConnection"));
 
+            services.AddTransient<ISlumpServices, Slumpservices>();
+            services.AddTransient<IFoodServices, Foodservices>();          
             services.AddTransient<IAccountService, Accountservice>();
             services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IEmailService, EmailService>();

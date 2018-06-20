@@ -11,7 +11,11 @@ namespace Matslumpiator.Controllers
     [Authorize]
     public class FoodController : Controller
     {
-        // GET: Food
+        private readonly IFoodServices _foodservice;
+        public FoodController(IFoodServices foodServices)
+        {
+            _foodservice = foodServices;
+        }
         [HttpGet]
         public ActionResult All(int? page ,int? size,string search , bool chicken,bool beef , bool fish , bool meat, bool pork, bool sausage , bool vego,string cookingtime)
         {
@@ -26,11 +30,10 @@ namespace Matslumpiator.Controllers
             } 
             
             var recept = new List<Receptmodels>();
-            var food = new Foodservices();
           
-            var sql = food.CreateSearchString(chicken,vego, fish,beef, pork,sausage,meat, false,search,cookingtime);
-            recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name), search);        
-            ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            var sql = _foodservice.CreateSearchString(chicken,vego, fish,beef, pork,sausage,meat, false,search,cookingtime);
+            recept = _foodservice.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name), search);        
+            ViewBag.Myfood = _foodservice.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
             ViewBag.food = recept;
             var pager = new Pager(recept.Count, page, SizeofPage);
 
@@ -67,15 +70,15 @@ namespace Matslumpiator.Controllers
                 SizeofPage = size.Value;
             }
 
-            var food = new Foodservices();
+
             var recept = new List<Receptmodels>();
             
-            var sql =food.CreateSearchString(model.ChickenFilter , model.VegoFilter, model.FishFilter, model.BeefFilter, model.PorkFilter, model.SausageFilter, model.MeatFilter, false, model.Sökord,model.Cookingtime);
+            var sql = _foodservice.CreateSearchString(model.ChickenFilter , model.VegoFilter, model.FishFilter, model.BeefFilter, model.PorkFilter, model.SausageFilter, model.MeatFilter, false, model.Sökord,model.Cookingtime);
 
-            recept = food.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name),model.Sökord);
+            recept = _foodservice.GetFoodListForReceptView("SELECT * FROM public.recept_search_view" + sql, Convert.ToInt32(User.Identity.Name),model.Sökord);
 
 
-            ViewBag.Myfood = food.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
+            ViewBag.Myfood = _foodservice.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32(User.Identity.Name));
            
             ViewBag.food = recept;
 
@@ -124,16 +127,14 @@ namespace Matslumpiator.Controllers
             {
                 model.Url_recept = "#";
             }
-            Receptmodels re = new Receptmodels();
-            re.addNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
+            _foodservice.AddNewFood(model.Name,model.Description,model.Url_pic,model.Url_recept,Convert.ToInt16(User.Identity.Name));
             return RedirectToAction("ALL", "Food");
         }
         [Authorize(Roles = "Admin")]
         public ActionResult EditFood(int id,int page)
         {
             Receptmodels re = new Receptmodels();
-            var Foodlist = new Foodservices();
-            re.Recept = Foodlist.GetFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
+            re.Recept = _foodservice.GetFood("SELECT * FROM recept WHERE id_recept =@id_user", id);
             re.Id = re.Recept[0].Id;
             re.Name = re.Recept[0].Name;
             re.Url_pic = re.Recept[0].Url_pic;
@@ -156,15 +157,15 @@ namespace Matslumpiator.Controllers
                 model.Url_recept = "#";
             }
             int page = (int)TempData["page"];
-            Receptmodels re = new Receptmodels();
-            re.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept);
+           
+            _foodservice.EditFood(model.Id, model.Name, model.Description,model.Url_pic,model.Url_recept);
             return RedirectToAction("ALL", "Food",new { page = page });
         }
 
         public ActionResult AddToMyFood(int id ,int page, string search, bool chicken, bool beef, bool fish, bool meat, bool pork, bool sausage, bool vego, string cookingtime)
         {
-            Receptmodels re = new Receptmodels();
-            re.addFood_user(User.Identity.Name, id);
+            
+            _foodservice.AddFoodToUser(User.Identity.Name, id);
             return RedirectToAction("ALL", "Food",new { page = page ,chicken = chicken ,beef=beef,fish = fish,meat = meat,pork = pork,sausage=sausage,vego=vego,cookingtime=cookingtime ,search});
 
         }

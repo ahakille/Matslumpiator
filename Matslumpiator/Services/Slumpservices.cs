@@ -7,12 +7,17 @@ using System.Globalization;
 
 namespace Matslumpiator.Services
 {
-    public class Slumpservices
+    public class Slumpservices: ISlumpServices
     {
+        private readonly IFoodServices _foodServices;
+
+        public Slumpservices(IFoodServices foodServices)
+        {
+            _foodServices = foodServices;
+        }
         public List<Receptmodels> CreateRandomListOfRecept()
         {
-            var Foodlist = new Foodservices();
-            var List =  Foodlist.GetFoodListForReceptView("SELECT recept.id_recept, recept.name, recept.description,recept.url_pic,recept.url_recept,recept.cookingtime,type_of_food.type_name,recept.average_rating,recept.occasion_id  FROM recept LEFT JOIN type_of_food ON recept.type_of_food_id = type_of_food.id", 1, null);
+            var List = _foodServices.GetFoodListForReceptView("SELECT * FROM public.recept_search_view", 1, null);
             Random rnd = new Random();
             int maxnumber = List.Count;
             var ListOfrandom = new List<Receptmodels>();
@@ -24,6 +29,7 @@ namespace Matslumpiator.Services
             return ListOfrandom;
 
         }
+
         public string NameOfDay(DateTime date)
         {
             var DateEN = date.DayOfWeek.ToString();
@@ -60,8 +66,7 @@ namespace Matslumpiator.Services
             date = datefixer(date);
             List<Receptmodels> food_list = new List<Receptmodels>();
             Receptmodels re = new Receptmodels();
-            var recpet = new Foodservices();
-            food_list = recpet.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", user_id);
+            food_list = _foodServices.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", user_id);
             int maxdays = 5;
             int maxnumber = food_list.Count;
             Random rnd = new Random();
@@ -167,7 +172,7 @@ namespace Matslumpiator.Services
         {
 
 
-            Slump Slump = new Slump();
+          //  Slump Slump = new Slump();
             postgres m = new postgres();
             List<Receptmodels> mt = new List<Receptmodels>();
             DataTable dt = new DataTable();
@@ -191,8 +196,8 @@ namespace Matslumpiator.Services
                 r.TypeOfFood = (string)dr["type_name"];
                 r.Occasions = dr["occasion_id"].ToString();
                 r.Rating = (double)dr["average_rating"];
-                var dateName = new Slumpservices();
-                r.DateName = dateName.NameOfDay(r.Date);
+  //              var dateName = new Slumpservices();
+                r.DateName = NameOfDay(r.Date);
                 r.Weeknumbers = GetIso8601WeekOfYear(r.Date).ToString();
 
 
