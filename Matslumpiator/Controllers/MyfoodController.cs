@@ -12,10 +12,12 @@ namespace Matslumpiator.Controllers
     public class MyfoodController : Controller
     {
         private readonly IFoodServices _foodServices;
+        private readonly ISlumpServices _slumpServices;
 
-        public MyfoodController(IFoodServices foodServices)
+        public MyfoodController(IFoodServices foodServices, ISlumpServices slumpServices)
         {
             _foodServices = foodServices;
+            _slumpServices = slumpServices;
         }
         public ActionResult Index(int? page, int? size)
         {
@@ -25,8 +27,7 @@ namespace Matslumpiator.Controllers
                 SizeofPage = size.Value;
             }
             var food_list = new List<Receptmodels>();
-            var re = new Foodservices();
-            food_list = re.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
+            food_list = _foodServices.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
             var pager = new Pager(food_list.Count, page, SizeofPage);
 
             var viewModel = new IndexViewModel
@@ -46,7 +47,15 @@ namespace Matslumpiator.Controllers
             _foodServices.RemovefoodFromUser(User.Identity.Name, id);
             return RedirectToAction("index",new { page = page });
         }
+        [AllowAnonymous]
+        public ActionResult NewSuggestions()
+        {
+            ViewBag.recepts =  _slumpServices.CreateRandomListOfRecept();
 
-        
+            return View();
+        }
+
+
+
     }
 }
