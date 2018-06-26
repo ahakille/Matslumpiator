@@ -87,16 +87,17 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Hjälp Mina Maträtter</h4>
+                    <h4 class="modal-title">Mera maträtter</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Här kan du se och ta bort maträtter som finns med i din personliga lista</p>
-                    <p>För att se beskrivning och bild klicka på rubriken på receptet, om de finns en extern länk visas den </p>
-                    <p>För att ta bort en maträtt, tryck på länken "Ta bort från min lista"</p>
+                    <p>Du saknar maträtter för att kunna slumpa fram en veckomeny</p>
+                    <p>Använd vår tjänst och slumpa fram god maträtter! </p>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                    <a asp-action="NewSuggestions" class="btn btn-outline-dark">Slumpa fram recept</a>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Stäng</button>
                 </div>
             </div>
         </div>
@@ -165,3 +166,12 @@
         </ul>
     }
 </div>
+
+@if (ViewBag.Count <8)
+{
+    <script>
+        $(document).ready(function () {
+            $("#AddRandom").modal();
+        });
+    </script>
+}

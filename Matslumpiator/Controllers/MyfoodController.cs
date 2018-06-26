@@ -29,7 +29,7 @@ namespace Matslumpiator.Controllers
             var food_list = new List<Receptmodels>();
             food_list = _foodServices.GetFood("SELECT * FROM recept WHERE id_recept IN (SELECT recept_id FROM users_has_recept WHERE user_id =@id_user)", Convert.ToInt32( User.Identity.Name));
             var pager = new Pager(food_list.Count, page, SizeofPage);
-
+            ViewBag.Count = food_list.Count;
             var viewModel = new IndexViewModel
             {
                 Items = food_list.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize),
