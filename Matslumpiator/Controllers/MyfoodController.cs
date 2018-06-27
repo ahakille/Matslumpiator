@@ -54,6 +54,11 @@ namespace Matslumpiator.Controllers
 
             return View();
         }
+        public ActionResult AddNewSuggestions(int id)
+        {
+            _foodServices.AddFoodToUser(User.Identity.Name, id);
+            return RedirectToAction("NewSuggestions");
+        }
 
 
 
