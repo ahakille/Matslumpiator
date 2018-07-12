@@ -45,7 +45,7 @@
             <div class="row table">
                 <div class="col-md-9">
                     <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
-                    <div id="@item.Id" class="collapse">
+                    <div id="@item.Id" class="collapse show">
                         <div class="row">
                             <div class="col-md-3">
                                 <p></p> <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" />
@@ -72,6 +72,8 @@
 
         }
     </div>
+    <a asp-action="NewSuggestions" class="btn btn-outline-dark">Slumpa igen</a>
+    <a asp-action="index" class="btn btn-outline-dark">Avbryt</a>
 
 
 </div>
