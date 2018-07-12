@@ -23,7 +23,7 @@ namespace Matslumpiator.Controllers
 
         }
         [AllowAnonymous]
-     //   [RequireHttps]
+        [RequireHttps]
         public ActionResult Index(string returnUrl)
         {
 
@@ -33,7 +33,7 @@ namespace Matslumpiator.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-   //     [RequireHttps]
+        [RequireHttps]
         public async Task<IActionResult> Index(Accountmodels model)
         {
             if (!ModelState.IsValid)
