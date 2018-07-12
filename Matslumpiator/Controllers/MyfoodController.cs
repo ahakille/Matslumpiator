@@ -47,7 +47,7 @@ namespace Matslumpiator.Controllers
             _foodServices.RemovefoodFromUser(User.Identity.Name, id);
             return RedirectToAction("index",new { page = page });
         }
-        [AllowAnonymous]
+        
         public ActionResult NewSuggestions()
         {
             ViewBag.recepts =  _slumpServices.CreateRandomListOfRecept();
