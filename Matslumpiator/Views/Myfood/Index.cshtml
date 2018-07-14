@@ -60,6 +60,15 @@
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-4 p-3">
+                    @Html.ActionLink("Slumpa fram förslag på nya maträtter", "NewSuggestions", null, null, new { @class = "btn btn-outline-dark" })
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -167,7 +176,7 @@
     }
 </div>
 
-@if (ViewBag.Count <8)
+@if (ViewBag.Count < 8)
 {
     <script>
         $(document).ready(function () {
