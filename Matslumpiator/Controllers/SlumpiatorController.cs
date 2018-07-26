@@ -28,7 +28,6 @@ namespace Matslumpiator.Controllers
         public ActionResult Index()
         {
             int user_id = Convert.ToInt32(User.Identity.Name);
-         //   var slumpe = new Slumpservices();
             var Slumpmodel = new Slump();
             DateTime date;
             date = DateTime.Now;
@@ -46,8 +45,6 @@ namespace Matslumpiator.Controllers
             return View(Slumpmodel);
         }
 
-
-        // GET: Slumpiator/Create
         public ActionResult Create(int id)
         {
             DateTime date = DateTime.Now;
@@ -56,7 +53,6 @@ namespace Matslumpiator.Controllers
                 date = date.AddDays(7);
             }
 
-          //  var Slump = new Slumpservices();
             Receptmodels re = new Receptmodels();
             re.Recept = _slumpServices.Slumplist(Convert.ToInt32(User.Identity.Name),date);
             ViewBag.check = re.Recept[0].Id;
@@ -66,13 +62,11 @@ namespace Matslumpiator.Controllers
             return View(re);
         }
 
-        // POST: Slumpiator/Create
         [HttpPost]
         public ActionResult Create(IFormCollection form)
         {
            int user = Convert.ToInt16(User.Identity.Name);
 
-          //  Slumpservices checkslump = new Slumpservices();
            var datetime = Convert.ToDateTime(form["0date"]);
            datetime =datetime.Date;
            bool check= _slumpServices.Checkslump(datetime, user);
@@ -80,8 +74,6 @@ namespace Matslumpiator.Controllers
             {
                 var id = Convert.ToInt16(form[i + "id"]);
                 var date = Convert.ToDateTime(form[i + "date"]);
-
-                // var slump = new Slumpservices();
                 _slumpServices.SaveSlump(id, user, date,check);
             }
             return RedirectToAction("Index");
@@ -108,9 +100,6 @@ namespace Matslumpiator.Controllers
             return BadRequest("Wrong");
            
         }
-
-        
-
        
     }
 }
