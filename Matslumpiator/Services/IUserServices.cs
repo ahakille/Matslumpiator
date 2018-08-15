@@ -14,5 +14,6 @@ namespace Matslumpiator.Services
         void Newpassword(int login_id, string newpassword);
         Task SendMessagesToAllUsers(string subject, string message);
         void DeleteUser(int User_id);
+        void HardDeletOfUser(int userId);
     }
 }

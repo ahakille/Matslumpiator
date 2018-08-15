@@ -131,5 +131,13 @@ namespace Matslumpiator.Services
 
             });
         }
+        public void HardDeletOfUser(int userId)
+        {
+            postgres sql = new postgres();
+            sql.SqlNonQuery("SELECT harddeleteofuser(@user_id)", postgres.list = new List<NpgsqlParameter>()
+            {
+                new NpgsqlParameter("@user_id", userId)
+            });
+        }
     }
 }

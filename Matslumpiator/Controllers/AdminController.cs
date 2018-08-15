@@ -72,5 +72,10 @@ namespace Matslumpiator.Controllers
 
             return RedirectToAction("index", "admin");
         }
+        public ActionResult Deleteuser(int userId)
+        {
+            _userServices.HardDeletOfUser(userId);
+            return RedirectToAction("index", "admin");
+        }
     }
 }
