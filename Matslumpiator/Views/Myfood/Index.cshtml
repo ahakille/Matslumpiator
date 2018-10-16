@@ -60,6 +60,15 @@
             <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-4 p-3">
+                    @Html.ActionLink("Slumpa fram förslag på nya maträtter", "NewSuggestions", null, null, new { @class = "btn btn-outline-dark" })
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -81,7 +90,27 @@
             </div>
         </div>
     </div>
+    <div id="AddRandom" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Mera maträtter</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Du saknar maträtter för att kunna slumpa fram en veckomeny</p>
+                    <p>Använd vår tjänst och slumpa fram god maträtter! </p>
+
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="NewSuggestions" class="btn btn-outline-dark">Slumpa fram recept</a>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Stäng</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr />
     <div class="row col-md-12">
         @foreach (var item in Model.Items)
@@ -146,3 +175,12 @@
         </ul>
     }
 </div>
+
+@if (ViewBag.Count < 8)
+{
+    <script>
+        $(document).ready(function () {
+            $("#AddRandom").modal();
+        });
+    </script>
+}

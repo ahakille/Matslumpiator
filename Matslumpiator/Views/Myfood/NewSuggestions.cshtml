@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewData["Title"] = "Förslag på goda grejer";
+}
+
+<div class="container color p-lg-3">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Förslag på goda grejer</h2>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span> Hjälp</button>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hjälp Mina Maträtter</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Här kan du se och ta bort maträtter som finns med i din personliga lista</p>
+                    <p>För att se beskrivning och bild klicka på rubriken på receptet, om de finns en extern länk visas den </p>
+                    <p>För att ta bort en maträtt, tryck på länken "Ta bort från min lista"</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="row col-md-12">
+        @foreach (var item in ViewBag.recepts)
+        {
+
+            <div class="row table">
+                <div class="col-md-9">
+                    <a href="#@item.Id" data-toggle="collapse">@item.Name</a>
+                    <div id="@item.Id" class="collapse show">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p></p> <img class="img-fluid rounded" src="~/Content/pic/@item.Url_pic" alt="@item.Name" />
+                            </div>
+                            <div class="col-md-8">
+                                <p>@item.cookingtime Typ: @item.TypeOfFood  Betyg: @item.Rating</p>
+                                @item.Description <br /> @if (item.Url_recept != "#")
+                                {<a href="@item.Url_recept" target="_blank">Till receptet(extern sida)</a>}
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                @Html.ActionLink("Lägg till", "AddNewSuggestions", new { id = item.Id })
+
+
+            </div>
+
+
+        }
+    </div>
+    <a asp-action="NewSuggestions" class="btn btn-outline-dark">Slumpa igen</a>
+    <a asp-action="index" class="btn btn-outline-dark">Avbryt</a>
+
+
+</div>
+
