@@ -75,10 +75,6 @@
       <Project>{58647b2e-c3c6-4933-b178-e296e351f24c}</Project>
       <Name>matslump.Crono</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Matslump\Matslump.csproj">
-      <Project>{F514DBC7-0DAC-47F1-B02B-F9315FA2F36A}</Project>
-      <Name>Matslump</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
